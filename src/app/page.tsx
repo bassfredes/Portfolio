@@ -188,16 +188,19 @@ export default function Home() {
           <div className="flex flex-col items-center gap-6 mb-8 w-full">
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full">
               <div className="flex-shrink-0 flex flex-col items-center">
-                <Image
-                  src="/me.jpg"
-                  alt="Bastian Fredes profile"
-                  width={112}
-                  height={112}
-                  className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover ring-4 ring-blue-400/40 shadow-xl border-4 border-[#232946] bg-[#232946]"
-                  priority
-                  loading="eager"
-                  sizes="(max-width: 768px) 96px, 112px"
-                />
+                <div className="relative group">
+                  <span className="absolute -inset-2 z-0 rounded-full bg-gradient-to-tr from-blue-400 via-purple-500 to-pink-400 blur opacity-60 animate-blob-move"></span>
+                  <Image
+                    src="/me.jpg"
+                    alt="Bastian Fredes profile"
+                    width={112}
+                    height={112}
+                    className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover ring-4 ring-blue-400/40 shadow-xl border-4 border-[#232946] bg-[#232946] relative z-10 group-hover:scale-105 group-hover:rotate-2 transition-transform duration-500"
+                    priority
+                    loading="eager"
+                    sizes="(max-width: 768px) 96px, 112px"
+                  />
+                </div>
               </div>
               <div className="flex flex-col items-center sm:items-start w-full">
                 <a
@@ -207,7 +210,7 @@ export default function Home() {
                   className="flex items-center transition md:justify-center md:hover:scale-105 mb-4"
                 >
                   <div className="flex items-center">
-                    <span className="relative inline-flex overflow-hidden rounded-full p-[1px]">
+                    <span className="relative inline-flex overflow-hidden rounded-full p-[1px] animate-gradient-x">
                       <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#51E4B8_0%,#21554E_50%,#51E4B8_100%)]"></span>
                       <div className="inline-flex items-center justify-center w-full px-3 py-1 text-sm text-green-800 bg-green-100 rounded-full cursor-pointer dark:bg-gray-800 dark:text-white/80 backdrop-blur-3xl whitespace-nowrap">
                         Open to work
@@ -218,13 +221,13 @@ export default function Home() {
               </div>
             </div>
             <div className="flex flex-col w-full">
-              <h1 className="text-5xl md:text-6xl font-extrabold text-white leading-tight m-0 p-0 text-left drop-shadow-lg">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-white leading-tight m-0 p-0 text-left drop-shadow-lg animate-slide-in-down">
                 Hey, I&apos;m <span className="text-yellow-400">Bastian</span>
               </h1>
-              <span className="text-sm text-gray-400 font-mono mt-2 mb-4 text-left">
+              <span className="text-sm text-gray-400 font-mono mt-2 mb-4 text-left animate-fade-in-delay">
                 Galway, Ireland
               </span>
-              <p className="text-lg md:text-2xl text-gray-200 mb-2 max-w-2xl text-left font-medium">
+              <p className="text-lg md:text-2xl text-gray-200 mb-2 max-w-2xl text-left font-medium animate-fade-in-delay2">
                 10+ years of experience. <br className="inline md:hidden" />
                 <span className="text-yellow-400 font-bold">
                   Solution Architect &amp; Tech Lead
@@ -232,7 +235,7 @@ export default function Home() {
                 <br />
                 Specialized in building unique, high-performance webs.
               </p>
-              <div className="flex flex-wrap gap-3 mt-2 justify-left w-full">
+              <div className="flex flex-wrap gap-3 mt-2 justify-left w-full animate-fade-in-delay3">
                 <ContactScrollButton />
               </div>
             </div>
@@ -242,7 +245,7 @@ export default function Home() {
         {/* EXPERIENCIA */}
         <SectionContainer
           id="experience"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-slide-in-up mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           title="Experience"
           ariaLabel="Work experience"
           role="region"
@@ -318,13 +321,13 @@ export default function Home() {
           ariaLabel="About me"
           role="region"
         >
-          <SectionTitle className="text-2xl font-bold flex items-center gap-2 mb-8">
+          <SectionTitle className="text-2xl font-bold flex items-center gap-2 mb-8 animate-slide-in-left">
             <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
             <span className="text-white">About me</span>
           </SectionTitle>
           <div className="flex flex-col gap-6 w-full">
             {/* Primer párrafo a ancho completo */}
-            <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-2 w-full">
+            <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-2 w-full animate-fade-in-delay2">
               Hi! I&apos;m{" "}
               <span className="font-bold text-blue-300">Bastian Fredes</span>, a
               passionate{" "}
@@ -349,7 +352,7 @@ export default function Home() {
             </p>
             {/* Luego grid para texto final + lista + imagen */}
             <div className="grid md:grid-cols-[minmax(0,1fr)_auto] gap-10 items-center w-full">
-              <div className="md:max-w-2xl lg:max-w-3xl xl:max-w-4xl flex flex-col gap-4">
+              <div className="md:max-w-2xl lg:max-w-3xl xl:max-w-4xl flex flex-col gap-4 animate-fade-in-delay3">
                 <ul className="list-disc list-inside text-gray-400 mb-2 space-y-1">
                   <li>
                     <span className="font-semibold text-blue-200">
@@ -387,15 +390,15 @@ export default function Home() {
                   tech, reading, or going on motorcycle adventures.
                 </p>
               </div>
-              <div className="flex justify-center md:justify-end md:pl-8">
+              <div className="flex justify-center md:justify-end md:pl-8 animate-float">
                 <div className="relative group w-40 h-40 md:w-56 md:h-56">
-                  <div className="absolute inset-0 z-0 bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-60 group-hover:opacity-80 transition duration-500"></div>
+                  <div className="absolute inset-0 z-0 bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-60 group-hover:opacity-80 transition duration-500 animate-blob-move"></div>
                   <Image
                     src="/me.jpg"
                     alt="Bastian Fredes profile"
                     width={220}
                     height={220}
-                    className="rounded-3xl object-cover w-40 h-40 md:w-56 md:h-56 border-4 border-[#232946] shadow-xl rotate-2 group-hover:rotate-0 transition-transform duration-500 relative z-10"
+                    className="rounded-3xl object-cover w-40 h-40 md:w-56 md:h-56 border-4 border-[#232946] shadow-xl rotate-2 group-hover:rotate-0 transition-transform duration-500 relative z-10 animate-float"
                     loading="lazy"
                     sizes="(max-width: 768px) 160px, 220px"
                     priority={false}
@@ -414,24 +417,24 @@ export default function Home() {
           ariaLabel="Contact"
           role="region"
         >
-          <SectionTitle className="mb-6 text-blue-400 flex items-center gap-2 text-lg md:text-xl">
+          <SectionTitle className="mb-6 text-blue-400 flex items-center gap-2 text-lg md:text-xl animate-slide-in-up">
             <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
             <span>Contact</span>
           </SectionTitle>
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="flex-1 text-center md:text-left">
-              <h4 className="text-2xl md:text-3xl font-extrabold mb-2 text-white drop-shadow-lg">
+              <h4 className="text-2xl md:text-3xl font-extrabold mb-2 text-white drop-shadow-lg animate-fade-in-delay2">
                 Let&apos;s work together!
               </h4>
-              <p className="text-base md:text-lg text-slate-300 mb-6 max-w-xl mx-auto md:mx-0">
+              <p className="text-base md:text-lg text-slate-300 mb-6 max-w-xl mx-auto md:mx-0 animate-fade-in-delay3">
                 I&apos;m open to new opportunities, collaborations, and
                 freelance projects. You can contact me using the form or
                 directly by email.
               </p>
-              <div className="flex justify-center md:justify-start gap-4 mb-4">
+              <div className="flex justify-center md:justify-start gap-4 mb-4 animate-fade-in-delay4">
                 <a
                   href="mailto:me@bassfredes.dev"
-                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-red-400 via-pink-500 to-yellow-400 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-red-400"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-red-400 via-pink-500 to-yellow-400 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-red-400 animate-bounce-slow"
                   aria-label="Email"
                 >
                   <FaEnvelope
@@ -443,7 +446,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/bassfredes/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 via-cyan-400 to-blue-700 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 via-cyan-400 to-blue-700 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-400 animate-bounce-slow"
                   aria-label="LinkedIn"
                 >
                   <FaLinkedin
@@ -455,7 +458,7 @@ export default function Home() {
                   href="https://github.com/bassfredes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-gray-700 via-gray-900 to-black shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-gray-700 via-gray-900 to-black shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-gray-400 animate-bounce-slow"
                   aria-label="GitHub"
                 >
                   <FaGithub
@@ -473,3 +476,51 @@ export default function Home() {
     </>
   );
 }
+
+/*
+  Tailwind custom animations (agregar en tailwind.config.js):
+  'blob-move': {
+    '0%, 100%': { transform: 'scale(1) translateY(0px)' },
+    '50%': { transform: 'scale(1.08) translateY(-8px)' },
+  },
+  'float': {
+    '0%, 100%': { transform: 'translateY(0px)' },
+    '50%': { transform: 'translateY(-12px)' },
+  },
+  'slide-in-down': {
+    '0%': { opacity: 0, transform: 'translateY(-40px)' },
+    '100%': { opacity: 1, transform: 'translateY(0)' },
+  },
+  'slide-in-left': {
+    '0%': { opacity: 0, transform: 'translateX(-40px)' },
+    '100%': { opacity: 1, transform: 'translateX(0)' },
+  },
+  'slide-in-up': {
+    '0%': { opacity: 0, transform: 'translateY(40px)' },
+    '100%': { opacity: 1, transform: 'translateY(0)' },
+  },
+  'fade-in-delay': {
+    '0%': { opacity: 0 },
+    '100%': { opacity: 1 },
+  },
+  'fade-in-delay2': {
+    '0%': { opacity: 0 },
+    '100%': { opacity: 1 },
+  },
+  'fade-in-delay3': {
+    '0%': { opacity: 0 },
+    '100%': { opacity: 1 },
+  },
+  'fade-in-delay4': {
+    '0%': { opacity: 0 },
+    '100%': { opacity: 1 },
+  },
+  'bounce-slow': {
+    '0%, 100%': { transform: 'translateY(0)' },
+    '50%': { transform: 'translateY(-8px)' },
+  },
+  'gradient-x': {
+    '0%, 100%': { backgroundPosition: '0% 50%' },
+    '50%': { backgroundPosition: '100% 50%' },
+  },
+*/
