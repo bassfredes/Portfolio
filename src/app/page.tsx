@@ -196,6 +196,7 @@ export default function Home() {
                   className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover ring-4 ring-blue-400/40 shadow-xl border-4 border-[#232946] bg-[#232946]"
                   priority
                   loading="eager"
+                  sizes="(max-width: 768px) 96px, 112px"
                 />
               </div>
               <div className="flex flex-col items-center sm:items-start w-full">
@@ -335,6 +336,7 @@ export default function Home() {
                 height={180}
                 className="rounded-xl ring-1 ring-gray-700 object-cover w-40 h-40 md:w-44 md:h-44"
                 loading="lazy"
+                sizes="(max-width: 768px) 160px, 180px"
               />
             </div>
           </div>
