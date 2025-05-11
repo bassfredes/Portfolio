@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: "Bastian Fredes - Portfolio",
     images: [
       {
-        url: "https://www.Bastian Fredes.dev/og-image.png",
+        url: "https://www.Bastian Fredes.dev/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Bastian Fredes - Portfolio",
