@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { FaEnvelope } from "react-icons/fa";
+import React, { useEffect } from "react";
+import { FaEnvelope, FaLinkedin } from "react-icons/fa";
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -32,15 +32,26 @@ const ContactScrollButton: React.FC<ContactScrollButtonProps> = ({ className = "
   }, [pathname]);
 
   return (
-    <button
-      type="button"
-      className={`flex items-center gap-2 px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-colors text-base focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer scroll-smooth duration-300 ${className}`}
-      onClick={() => {
-        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-      }}
-    >
-      <FaEnvelope size={16} /> Contact me
-    </button>
+    <div className={`flex gap-3 ${className}`}>
+      <button
+        type="button"
+        className="flex items-center gap-2 px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-colors text-base focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer scroll-smooth duration-300"
+        onClick={() => {
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      >
+        <FaEnvelope size={16} /> Contact me
+      </button>
+      <a
+        href="https://www.linkedin.com/in/bassfredes/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 px-6 py-2 rounded-full border-2 border-blue-400 text-blue-400 bg-transparent hover:bg-blue-50 dark:hover:bg-[#181c2a] font-semibold transition-colors text-base focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer duration-300 shadow-sm hover:border-blue-500 hover:text-blue-600"
+        style={{ textDecoration: 'none' }}
+      >
+        <FaLinkedin size={16} /> LinkedIn
+      </a>
+    </div>
   );
 };
 

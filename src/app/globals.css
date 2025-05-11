@@ -49,8 +49,13 @@ section {
   }
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3 {
   color: var(--foreground);
+  letter-spacing: -0.5px;
+  transition: color 0.3s ease;
+}
+
+h4 {
   letter-spacing: -0.5px;
   transition: color 0.3s ease;
 }

@@ -231,31 +231,37 @@ export default function Home() {
           ariaLabel="Work experience"
           role="region"
         >
-          <SectionTitle className="text-2xl font-bold flex items-center gap-2">
-            <span className="text-white">Experience</span>
+          <SectionTitle className="text-2xl font-bold flex items-center gap-2 mb-10">
             <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+            <span className="text-yellow-400">Experience</span>
           </SectionTitle>
-          <div className="relative mt-12">
-            <div className="absolute left-5 top-0 bottom-0 border-l-2 border-yellow-400"></div>
-            <div className="space-y-16">
-              {profile.experience.map((exp, idx) => (
-                <div key={idx} className="relative pl-12">
-                  <span className="absolute left-4 top-2 w-3 h-3 bg-yellow-400 rounded-full"></span>
-                  <h4 className="text-xl text-yellow-400 font-semibold mb-1">
-                    {exp.role}
-                  </h4>
-                  <p className="text-gray-300 mb-2">
-                    {exp.company}{" "}
-                    <span className="text-gray-500">| {exp.duration}</span>
-                  </p>
-                  <ul className="list-disc list-inside text-gray-400 leading-relaxed ml-2">
+          <div className="relative w-full grid grid-cols-1 md:grid-cols-12 gap-y-16 gap-x-10 md:gap-x-16">
+            {/* Línea de tiempo continua, visible en mobile y desktop, ahora en gris */}
+            <div className="absolute left-6 md:left-4 top-0 bottom-0 w-0.5 bg-gray-500/60 rounded-full z-0" style={{ minHeight: '100%' }}></div>
+            {profile.experience.map((exp, idx) => (
+              <React.Fragment key={idx}>
+                {/* Columna izquierda: timeline y datos */}
+                <div className="relative md:col-span-5 flex flex-col mb-4 md:mb-0 z-10">
+                  {/* Punto perfectamente centrado sobre la línea */}
+                  <div className="flex flex-col items-start pl-14 md:pl-12 sm:pl-10 w-full relative">
+                    <span className="absolute top-2 left-6 md:left-4 w-4 h-4 bg-yellow-400 rounded-full border-4 border-gray-500/60 shadow-md z-10" style={{ transform: 'translateX(-50%)' }}></span>
+                    <h4 className="flex items-center gap-2 text-lg md:text-xl font-bold mb-0.5 leading-tight text-yellow-400">
+                      {exp.role}
+                    </h4>
+                    <div className="text-base md:text-lg text-white font-semibold mb-0.5">{exp.company}</div>
+                    <div className="text-xs md:text-sm text-gray-400 mb-2">{exp.duration}</div>
+                  </div>
+                </div>
+                {/* Columna derecha: responsabilidades */}
+                <div className="md:col-span-7 flex flex-col justify-center h-full gap-2">
+                  <ul className="list-none text-gray-300 leading-relaxed text-base md:text-lg">
                     {exp.responsibilities.map((res, i) => (
-                      <li key={i}>{res}</li>
+                      <li key={i} className="mb-2 last:mb-0">{res}</li>
                     ))}
                   </ul>
                 </div>
-              ))}
-            </div>
+              </React.Fragment>
+            ))}
           </div>
         </SectionContainer>
 
@@ -327,7 +333,9 @@ export default function Home() {
                 Let&apos;s work together!
               </h4>
               <p className="text-base md:text-lg text-slate-300 mb-4">
-                I&apos;m open to new opportunities, collaborations, and freelance projects. You can contact me using the form or directly by email.
+                I&apos;m open to new opportunities, collaborations, and
+                freelance projects. You can contact me using the form or
+                directly by email.
               </p>
               <div className="flex justify-center md:justify-start gap-2 mb-4">
                 <a

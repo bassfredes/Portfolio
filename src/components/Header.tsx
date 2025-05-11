@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "../context/ThemeProvider";
 import { FaMoon, FaSun, FaDesktop } from "react-icons/fa";
 
 const NAV_LINKS = [
