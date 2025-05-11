@@ -1,7 +1,14 @@
-import React from 'react';
-import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
+import React from "react";
+import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import SectionContainer from "@/components/SectionContainer";
+import ContactForm from "@/components/ContactForm";
+import SectionTitle from "@/components/SectionTitle";
+import Image from "next/image";
+import ProjectCard from "@/components/ProjectCard";
+import ContactScrollButton from "@/components/ContactScrollButton";
 
-// Define types for the data
 interface Experience {
   role: string;
   company: string;
@@ -24,14 +31,15 @@ const profile = {
   name: "Bastian Fredes",
   title: "Solution Architect | Tech Lead | Frontend Developer.",
   location: "Galway, Ireland",
-  summary: "Solution Architect with over 10 years of experience in fullstack development, team leadership, and technical strategy. Specialized in eCommerce ecosystems, cloud-native architectures, and high-performance frontend/backend integrations. Hands-on expertise in VTEX IO, React, Node.js, and GraphQL. Adept at translating complex business requirements into scalable, maintainable solutions. Passionate about clean code, DX, and modern development practices.",
+  summary:
+    "I'm a passionate architect and developer with over 10 years of experience building scalable, maintainable, and delightful digital products. I love collaborating, mentoring, and learning new things every day. My mission is to create solutions that empower people and businesses. When I&apos;m not coding, you&apos;ll find me exploring new tech, reading, or enjoying the outdoors in Galway, Ireland.",
   coreHighlights: [
-    "Led architecture for complex VTEX IO integrations (payments, Icecat, ERP sync) across LATAM and EU markets.",
+    "Led architecture for complex Vtex IO integrations (payments, Icecat, ERP sync) across LATAM and EU markets.",
     "Tech Lead for distributed teams across frontend and backend domains (React, Node.js, Python).",
     "Delivered scalable cloud-native solutions with CI/CD, GitHub Actions, Docker, RESTful APIs.",
     "Integrated multi-merchant payment flows using SeQura, Cybersource, Adyen.",
     "Strong communicator in bilingual environments (English / Spanish), comfortable in client-facing roles.",
-    "Certified in VTEX IO development; experienced with Agile/Scrum and stakeholder alignment."
+    "Certified in Vtex IO development; experienced with Agile/Scrum and stakeholder alignment.",
   ],
   experience: [
     {
@@ -39,7 +47,7 @@ const profile = {
       company: "Digital eCommerce Agency",
       duration: "2020 – Present",
       responsibilities: [
-        "Designed and implemented full-stack architectures for eCommerce clients on VTEX IO platform.",
+        "Designed and implemented full-stack architectures for eCommerce clients on Vtex IO platform.",
         "Oversaw large-scale integrations: PIM for product data, ERP for SKU sync, third-party logistics.",
         "Supported teams with DevOps practices: API authentication, cold-start mitigation, S3 security.",
         "Advised clients on technical feasibility, performance, and long-term scalability.",
@@ -67,127 +75,293 @@ const profile = {
     "Other: SQL, Excel automation, pandas, multithreaded data pipelines",
   ],
   certifications: [
-    { name: "VTEX IO Certified Developer", institution: "EICOM" }, // Institution not provided in the text
+    { name: "Vtex IO Certified Developer", institution: "EICOM" },
   ] as Certification[],
   education: [
-    { degree: "Bachelor’s in Computer Engineering", institution: "University of Andres Bello", duration: "" }, // Duration not provided
+    {
+      degree: "Bachelor’s in Computer Engineering",
+      institution: "University of Andres Bello",
+      duration: "",
+    },
   ] as Education[],
   socialLinks: {
-    linkedin: "https://www.linkedin.com/in/bassfredes/", // Placeholder from provided text
-    github: "https://github.com/bassfredes",     // Placeholder from provided text
-    email: "me@bassfredes.dev",       // Placeholder from provided text
-    phone: "+353 8308 898 60",       // Placeholder from provided text
-    portfolio: "https://www.bassfredes.dev" // Placeholder from provided text
+    linkedin: "https://www.linkedin.com/in/bassfredes/",
+    github: "https://github.com/bassfredes",
+    email: "me@bassfredes.dev",
+    phone: "+353 8308 898 60",
+    portfolio: "https://www.bassfredes.dev",
   },
-  // Added for clarity based on the text
   keywords: [
-    "Solution Architect", "Fullstack Developer", "Tech Lead", "eCommerce", "VTEX IO", "React", "Node.js", "GraphQL",
-    "Cloud-native architectures", "CI/CD", "GitHub Actions", "Docker", "RESTful APIs", "Payment gateways",
+    "Solution Architect",
+    "Fullstack Developer",
+    "Tech Lead",
+    "eCommerce",
+    "Vtex IO",
+    "React",
+    "Node.js",
+    "GraphQL",
+    "Cloud-native architectures",
+    "CI/CD",
+    "GitHub Actions",
+    "Docker",
+    "RESTful APIs",
+    "Payment gateways",
     "TypeScript",
-    "Tailwind", "Styled Components", "Express", "Firebase", "Icecat", "VTEX MasterData", "Cybersource",
-    "SeQura", "AWS", "S3", "Lambda", "Google Cloud", "SQL", "Excel automation", "pandas",
-    "multithreaded data pipelines", "Agile", "Scrum", "Stakeholder alignment", "Clean code", "DX"
+    "Tailwind",
+    "Styled Components",
+    "Express",
+    "Firebase",
+    "Icecat",
+    "Vtex MasterData",
+    "Cybersource",
+    "SeQura",
+    "AWS",
+    "S3",
+    "Lambda",
+    "Google Cloud",
+    "SQL",
+    "Excel automation",
+    "pandas",
+    "multithreaded data pipelines",
+    "Agile",
+    "Scrum",
+    "Stakeholder alignment",
+    "Clean code",
+    "DX",
   ],
 };
 
-
+// Agregar badge "Featured" a los proyectos destacados
+const projects = [
+  {
+    title: "SVGL – A beautiful library with SVG logos",
+    description:
+      "SVG logo library of the most popular brands. 100+ logos in one month. 24+ SVGs downloaded. Built from scratch with NextJS, React, and Tailwind CSS.",
+    tech: ["Next.js", "React", "Tailwind CSS"],
+    image: "/vercel.svg",
+    links: {
+      code: "https://github.com/bassfredes/svgl",
+      preview: "https://svgl.dev",
+    },
+    badge: "Featured",
+  },
+  {
+    title: "AdventJS – JavaScript and TypeScript Coding Challenges",
+    description:
+      "Free platform with coding challenges. Over 1 million views in one month. 50+ challenges completed. Built from scratch with NextJS, React, and Tailwind CSS.",
+    tech: ["Next.js", "React", "Tailwind CSS"],
+    image: "/globe.svg",
+    links: {
+      code: "https://github.com/bassfredes/adventjs",
+      preview: "https://adventjs.dev",
+    },
+    badge: "Featured",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Profile Section */}
-      <section className="text-center py-12 md:py-16">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3">{profile.name}</h1>
-        <h2 className="text-lg md:text-xl text-gray-700 mb-3">{profile.title}</h2>
-        <p className="text-md text-gray-600 mb-6">{profile.location}</p>
-        <div className="flex justify-center space-x-6">
-          <a href={profile.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900"><FaLinkedin size={24} /></a>
-          <a href={profile.socialLinks.github} target="_blank" rel="noopener noreferrer" className="text-gray-800 hover:text-gray-600"><FaGithub size={24} /></a>
-          <a href={profile.socialLinks.email} className="text-red-600 hover:text-red-800"><FaEnvelope size={24} /></a>
-        </div>
-      </section>
-
-      {/* Summary Section */}
-      <section className="mb-12">
-        <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-gray-800">Professional Summary</h3>
-        <p className="text-lg text-gray-700 leading-relaxed">{profile.summary}</p>
-      </section>
-
-      {/* Core Highlights */}
-      <section className="mb-12">
-        <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-gray-800">Core Highlights</h3>
-        <ul className="list-disc list-inside ml-6 text-lg text-gray-700 space-y-2">
-          {profile.coreHighlights.map((highlight, index) => (
-            <li key={index}>{highlight}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Experience Section */}
-      <section className="mb-12">
-        <h3 className="text-2xl font-semibold mb-4">Experience</h3>
-        {profile.experience.map((exp, index) => (
-          <div key={index} className="mb-6 last:mb-0 p-6 border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out bg-white">
-            <h4 className="text-xl font-bold text-gray-800 mb-1">{exp.role}</h4>
-            <p className="text-md text-gray-600 mb-3">{exp.company} | {exp.duration}</p>
-            <ul className="list-disc list-inside mt-2 text-gray-700">
-              {exp.responsibilities.map((res, resIndex) => (
-                <li key={resIndex}>{res}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </section>
-
-      {/* Technical Stack Section */}
-      <section className="mb-12">
-        <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-800">Technical Stack</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-gray-700">
-          {profile.technicalStack.map((tech, index) => (
-            <div key={index}>
-              {/* Split the string to get the category and the list of technologies */}
-              {(() => {
-                const parts = tech.split(': ');
-                const category = parts[0];
-                const technologies = parts[1].split(', ');
-                return (
-                  <>
-                    <h4 className="text-xl font-bold mb-2 text-gray-800">{category}</h4>
-                    <ul className="list-disc list-inside ml-6 space-y-1">
-                      {technologies.map((t, tIndex) => (
-                        <li key={tIndex}>{t}</li>
-                      ))}
-                    </ul>
-                  </>
-                );
-              })()}
+    <>
+      <Header />
+      <main className="flex flex-col items-center w-full min-h-screen px-4 pt-20">
+        {/* HERO / PRESENTACIÓN */}
+        <SectionContainer
+          id="hero"
+          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          ariaLabel="Hero section"
+          role="region"
+        >
+          <div className="flex flex-col items-center gap-6 mb-8 w-full">
+            <div className="flex flex-col sm:flex-row items-center gap-6 w-full">
+              <div className="flex-shrink-0 flex flex-col items-center">
+                <Image
+                  src="/me.jpg"
+                  alt="Bastian Fredes profile"
+                  width={112}
+                  height={112}
+                  className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover ring-4 ring-blue-400/40 shadow-xl border-4 border-[#232946] bg-[#232946]"
+                  priority
+                />
+              </div>
+              <div className="flex flex-col items-center sm:items-start w-full">
+                <a
+                  href={profile.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center transition md:justify-center md:hover:scale-105 mb-4"
+                >
+                  <div className="flex items-center">
+                    <span className="relative inline-flex overflow-hidden rounded-full p-[1px]">
+                      <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#51E4B8_0%,#21554E_50%,#51E4B8_100%)]"></span>
+                      <div className="inline-flex items-center justify-center w-full px-3 py-1 text-sm text-green-800 bg-green-100 rounded-full cursor-pointer dark:bg-gray-800 dark:text-white/80 backdrop-blur-3xl whitespace-nowrap">
+                        Available for work
+                      </div>
+                    </span>
+                  </div>
+                </a>
+              </div>
             </div>
-          ))}
-        </div>
-      </section>
-      {/* Certifications and Education Section */}
-      <section className="mb-12">
-        <h3 className="text-2xl font-semibold mb-4">Certifications & Education</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700">
-          <div>
-            <h4 className="text-xl font-bold mb-2">Certifications</h4>
-            <ul className="list-disc list-inside ml-6 space-y-1">
-              {profile.certifications.map((cert, index) => (
-                <li key={index}>{cert.name} ({cert.institution})</li>
-              ))}
-            </ul>
+            <div className="flex flex-col w-full">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-white leading-tight m-0 p-0 text-left drop-shadow-lg">
+                Hey, I&apos;m <span className="text-yellow-400">Bastian</span>
+              </h1>
+              <span className="text-sm text-gray-400 font-mono mt-2 mb-4 text-left">
+                Galway, Ireland
+              </span>
+              <p className="text-lg md:text-2xl text-gray-200 mb-2 max-w-2xl text-left font-medium">
+                10+ years of experience.{" "}
+                <span className="text-yellow-400 font-bold">
+                  Solution Architect &amp; Tech Lead
+                </span>
+                <br />
+                Specialized in building unique, high-performance webs.
+              </p>
+              <div className="flex flex-wrap gap-3 mt-2 justify-left w-full">
+                <ContactScrollButton />
+              </div>
+            </div>
           </div>
-          <div>
-            <h4 className="text-xl font-bold mb-2 ">Education</h4>
-            <ul className="list-disc list-inside text-gray-700">
-              {profile.education.map((edu, index) => (
-                <li key={index}>{edu.degree} from {edu.institution} {edu.duration ? `(${edu.duration})` : ''}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+        </SectionContainer>
 
-    </div>
+        {/* EXPERIENCIA */}
+        <SectionContainer
+          id="experience"
+          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          title="Experience"
+          ariaLabel="Work experience"
+          role="region"
+        >
+          <SectionTitle className="text-2xl font-bold flex items-center gap-2">
+            <span className="text-white">Experience</span>
+            <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+          </SectionTitle>
+          <div className="relative mt-12">
+            <div className="absolute left-5 top-0 bottom-0 border-l-2 border-yellow-400"></div>
+            <div className="space-y-16">
+              {profile.experience.map((exp, idx) => (
+                <div key={idx} className="relative pl-12">
+                  <span className="absolute left-4 top-2 w-3 h-3 bg-yellow-400 rounded-full"></span>
+                  <h4 className="text-xl text-yellow-400 font-semibold mb-1">
+                    {exp.role}
+                  </h4>
+                  <p className="text-gray-300 mb-2">
+                    {exp.company}{" "}
+                    <span className="text-gray-500">| {exp.duration}</span>
+                  </p>
+                  <ul className="list-disc list-inside text-gray-400 leading-relaxed ml-2">
+                    {exp.responsibilities.map((res, i) => (
+                      <li key={i}>{res}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </SectionContainer>
+
+        {/* PROYECTOS */}
+        <SectionContainer
+          id="projects"
+          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          title="Projects"
+          ariaLabel="Projects"
+          role="region"
+        >
+          <SectionTitle className="text-2xl font-bold flex items-center gap-2">
+            <span className="text-white">Projects</span>
+            <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+          </SectionTitle>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+            {projects.map((project, idx) => (
+              <ProjectCard key={idx} {...project} />
+            ))}
+          </div>
+        </SectionContainer>
+
+        {/* SOBRE MÍ */}
+        <SectionContainer
+          id="about"
+          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          title="About me"
+          ariaLabel="About me"
+          role="region"
+        >
+          <SectionTitle className="text-2xl font-bold flex items-center gap-2 mb-8">
+            <span className="text-white">About me</span>
+            <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+          </SectionTitle>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <p className="text-gray-300 leading-relaxed text-base md:text-lg">
+                {profile.summary}
+              </p>
+            </div>
+            <div className="flex justify-center md:justify-end">
+              <Image
+                src="/me.jpg"
+                alt="Bastian Fredes profile"
+                width={180}
+                height={180}
+                className="rounded-xl ring-1 ring-gray-700 object-cover w-40 h-40 md:w-44 md:h-44"
+                priority
+              />
+            </div>
+          </div>
+        </SectionContainer>
+
+        {/* CONTACTO */}
+        <SectionContainer
+          id="contact"
+          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-24 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          title="Contact"
+          ariaLabel="Contact"
+          role="region"
+        >
+          <SectionTitle className="mb-6 text-blue-400 flex items-center gap-2 text-lg md:text-xl">
+            <span>Contact</span>
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+          </SectionTitle>
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            <div className="flex-1 text-center md:text-left">
+              <h4 className="text-xl md:text-2xl font-bold mb-2 text-white">
+                Let&apos;s work together!
+              </h4>
+              <p className="text-base md:text-lg text-slate-300 mb-4">
+                I&apos;m open to new opportunities, collaborations, and freelance projects. You can contact me using the form or directly by email.
+              </p>
+              <div className="flex justify-center md:justify-start gap-2 mb-4">
+                <a
+                  href="mailto:me@bassfredes.dev"
+                  className="text-red-400 hover:scale-110 transition-transform"
+                  aria-label="Email"
+                >
+                  <FaEnvelope size={16} className="drop-shadow-sm" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/bassfredes/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:scale-110 transition-transform"
+                  aria-label="LinkedIn"
+                >
+                  <FaLinkedin size={16} className="drop-shadow-sm" />
+                </a>
+                <a
+                  href="https://github.com/bassfredes"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-200 hover:scale-110 transition-transform"
+                  aria-label="GitHub"
+                >
+                  <FaGithub size={16} className="drop-shadow-sm" />
+                </a>
+              </div>
+            </div>
+            <ContactForm />
+          </div>
+        </SectionContainer>
+      </main>
+      <Footer />
+    </>
   );
 }
