@@ -29,7 +29,7 @@ const ContactScrollButton: React.FC<ContactScrollButtonProps> = ({ className = "
   const router = useRouter();
 
   useEffect(() => {
-    if (!GA_MEASUREMENT_ID) return;
+    if (!GA_MEASUREMENT_ID || !pathname) return;
     pageview(pathname);
   }, [pathname]);
 
