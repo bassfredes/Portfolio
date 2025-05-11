@@ -39,7 +39,7 @@ const profile = {
     "Tech Lead for distributed teams across frontend and backend domains (React, Node.js, Python).",
     "Delivered scalable cloud-native solutions with CI/CD, GitHub Actions, Docker, RESTful APIs.",
     "Integrated multi-merchant payment flows using SeQura, Cybersource, Adyen.",
-    "Strong communicator in bilingual environments (English / Spanish), comfortable in client-facing roles.",
+    "Able to communicate in bilingual environments (English/Spanish) and comfortable in client-facing roles.",
     "Certified in Vtex IO development; experienced with Agile/Scrum and stakeholder alignment.",
   ],
   experience: [
@@ -322,22 +322,86 @@ export default function Home() {
             <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
             <span className="text-white">About me</span>
           </SectionTitle>
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <p className="text-gray-300 leading-relaxed text-base md:text-lg">
-                {profile.summary}
-              </p>
-            </div>
-            <div className="flex justify-center md:justify-end">
-              <Image
-                src="/me.jpg"
-                alt="Bastian Fredes profile"
-                width={180}
-                height={180}
-                className="rounded-xl ring-1 ring-gray-700 object-cover w-40 h-40 md:w-44 md:h-44"
-                loading="lazy"
-                sizes="(max-width: 768px) 160px, 180px"
-              />
+          <div className="flex flex-col gap-6 w-full">
+            {/* Primer párrafo a ancho completo */}
+            <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-2 w-full">
+              Hi! I&apos;m{" "}
+              <span className="font-bold text-blue-300">Bastian Fredes</span>, a
+              passionate{" "}
+              <span className="font-semibold text-yellow-300">
+                Solution Architect
+              </span>{" "}
+              and{" "}
+              <span className="font-semibold text-green-300">Tech Lead</span>{" "}
+              based in{" "}
+              <span className="font-semibold text-purple-300">
+                Galway, Ireland
+              </span>
+              .<br className="hidden md:inline" />
+              <br />I have{" "}
+              <span className="font-bold text-yellow-400">
+                10+ years of experience
+              </span>{" "}
+              building scalable, maintainable, and delightful digital products
+              for companies and startups worldwide. My journey started as a
+              hobby in high school, and today I lead distributed teams, design
+              cloud-native architectures, and deliver high-impact solutions.
+            </p>
+            {/* Luego grid para texto final + lista + imagen */}
+            <div className="grid md:grid-cols-[minmax(0,1fr)_auto] gap-10 items-center w-full">
+              <div className="md:max-w-2xl lg:max-w-3xl xl:max-w-4xl flex flex-col gap-4">
+                <ul className="list-disc list-inside text-gray-400 mb-2 space-y-1">
+                  <li>
+                    <span className="font-semibold text-blue-200">
+                      Led architecture
+                    </span>{" "}
+                    for complex Vtex IO integrations (payments, Icecat, ERP
+                    sync) across LATAM and EU markets.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-green-200">
+                      Tech Lead
+                    </span>{" "}
+                    for distributed teams (React, Node.js, Python).
+                  </li>
+                  <li>
+                    <span className="font-semibold text-pink-200">
+                      Cloud-native
+                    </span>{" "}
+                    solutions with CI/CD, GitHub Actions, Docker, RESTful APIs.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-purple-200">
+                      Certified
+                    </span>{" "}
+                    in Vtex IO development; experienced with Agile/Scrum.
+                  </li>
+                </ul>
+                <p className="text-gray-400 text-base md:text-lg">
+                  My mission is to{" "}
+                  <span className="font-semibold text-blue-300">
+                    empower people and businesses
+                  </span>{" "}
+                  through technology, mentoring, and continuous learning. <br />
+                  When I&apos;m not coding, you&apos;ll find me exploring new
+                  tech, reading, or going on motorcycle adventures.
+                </p>
+              </div>
+              <div className="flex justify-center md:justify-end md:pl-8">
+                <div className="relative group w-40 h-40 md:w-56 md:h-56">
+                  <div className="absolute inset-0 z-0 bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-60 group-hover:opacity-80 transition duration-500"></div>
+                  <Image
+                    src="/me.jpg"
+                    alt="Bastian Fredes profile"
+                    width={220}
+                    height={220}
+                    className="rounded-3xl object-cover w-40 h-40 md:w-56 md:h-56 border-4 border-[#232946] shadow-xl rotate-2 group-hover:rotate-0 transition-transform duration-500 relative z-10"
+                    loading="lazy"
+                    sizes="(max-width: 768px) 160px, 220px"
+                    priority={false}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </SectionContainer>
@@ -356,39 +420,48 @@ export default function Home() {
           </SectionTitle>
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="flex-1 text-center md:text-left">
-              <h4 className="text-xl md:text-2xl font-bold mb-2 text-white">
+              <h4 className="text-2xl md:text-3xl font-extrabold mb-2 text-white drop-shadow-lg">
                 Let&apos;s work together!
               </h4>
-              <p className="text-base md:text-lg text-slate-300 mb-4">
+              <p className="text-base md:text-lg text-slate-300 mb-6 max-w-xl mx-auto md:mx-0">
                 I&apos;m open to new opportunities, collaborations, and
                 freelance projects. You can contact me using the form or
                 directly by email.
               </p>
-              <div className="flex justify-center md:justify-start gap-2 mb-4">
+              <div className="flex justify-center md:justify-start gap-4 mb-4">
                 <a
                   href="mailto:me@bassfredes.dev"
-                  className="text-red-400 hover:scale-110 transition-transform"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-red-400 via-pink-500 to-yellow-400 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-red-400"
                   aria-label="Email"
                 >
-                  <FaEnvelope size={16} className="drop-shadow-sm" />
+                  <FaEnvelope
+                    size={36}
+                    className="text-white drop-shadow-md group-hover:text-yellow-200 transition-colors"
+                  />
                 </a>
                 <a
                   href="https://www.linkedin.com/in/bassfredes/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:scale-110 transition-transform"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 via-cyan-400 to-blue-700 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-400"
                   aria-label="LinkedIn"
                 >
-                  <FaLinkedin size={16} className="drop-shadow-sm" />
+                  <FaLinkedin
+                    size={36}
+                    className="text-white drop-shadow-md group-hover:text-blue-200 transition-colors"
+                  />
                 </a>
                 <a
                   href="https://github.com/bassfredes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-200 hover:scale-110 transition-transform"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-gray-700 via-gray-900 to-black shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-gray-400"
                   aria-label="GitHub"
                 >
-                  <FaGithub size={16} className="drop-shadow-sm" />
+                  <FaGithub
+                    size={36}
+                    className="text-white drop-shadow-md group-hover:text-gray-300 transition-colors"
+                  />
                 </a>
               </div>
             </div>
