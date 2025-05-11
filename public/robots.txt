@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Bloquear carpetas internas de Next.js y archivos sensibles
+Disallow: /_next/
+Disallow: /api/
+Disallow: /server/
+Disallow: /private/
+Disallow: /drafts/
+
+# Permitir acceso a LLMs y crawlers modernos
+User-agent: Google-Extended
+Allow: /
+User-agent: GPTBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+
+# Sitemap
+Sitemap: https://www.bassfredes.dev/sitemap.xml

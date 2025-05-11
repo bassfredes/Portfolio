@@ -1,5 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { FaEnvelope, FaLinkedin } from "react-icons/fa";
 
@@ -25,6 +26,7 @@ interface ContactScrollButtonProps {
 
 const ContactScrollButton: React.FC<ContactScrollButtonProps> = ({ className = "" }) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     if (!GA_MEASUREMENT_ID) return;
@@ -37,7 +39,11 @@ const ContactScrollButton: React.FC<ContactScrollButtonProps> = ({ className = "
         type="button"
         className="flex items-center gap-2 px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-colors text-base focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer scroll-smooth duration-300"
         onClick={() => {
-          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          if (pathname !== "/contact") {
+            router.push("/contact");
+          } else {
+            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          }
         }}
       >
         <FaEnvelope size={16} /> Contact me

@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeProvider";
 import { FaMoon, FaSun, FaDesktop } from "react-icons/fa";
+import { useRouter, usePathname } from "next/navigation";
 
 const NAV_LINKS = [
-  { id: "hero", label: "About" },
-  { id: "experience", label: "Experience" },
-  { id: "projects", label: "Projects" },
-  { id: "contact", label: "Contact" },
+  { id: "hero", label: "About", path: "/" },
+  { id: "experience", label: "Experience", path: "/experience" },
+  { id: "projects", label: "Projects", path: "/projects" },
+  { id: "contact", label: "Contact", path: "/contact" },
 ];
 
 type Theme = "light" | "dark" | "system";
@@ -39,6 +40,8 @@ const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const [activeSection, setActiveSection] = useState<string>(NAV_LINKS[0].id);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,11 +69,27 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Smooth scroll con animación
-  const handleNavClick = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Navegación SPA con rutas limpias y scroll a sección
+  const handleNavClick = (id: string, path: string) => {
+    // Si ya estoy en una ruta de sección (ej: /about, /projects, /contact, /experience, /)
+    // y hago click en otra sección, solo cambiar la url y hacer scroll, sin refrescar/transicionar
+    const isSectionRoute = ["/", "/about", "/projects", "/contact", "/experience"].includes(pathname);
+    if (isSectionRoute && pathname !== path) {
+      window.history.replaceState(null, "", path);
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else if (pathname === path) {
+      // Si hago click en la misma sección, solo scroll
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      // Si vengo de otra página (no una sección), navega normalmente
+      router.push(path);
+      // El scroll se hará en el useEffect de la página
     }
   };
   
@@ -91,13 +110,13 @@ const Header: React.FC = () => {
           style={{ minHeight: "40px", maxWidth: "fit-content" }}
         >
           <nav className="flex items-center gap-x-4 text-xs md:text-sm font-semibold">
-            {NAV_LINKS.map(({ id, label }) => (
+            {NAV_LINKS.map(({ id, label, path }) => (
               <button
                 key={id}
-                onClick={() => handleNavClick(id)}
-                className={`px-1 md:px-2 transition-colors duration-200 focus:outline-none text-gray-200 hover:text-white ${
-                  activeSection === id ? "font-semibold" : ""
-                }`}
+                onClick={() => handleNavClick(id, path)}
+                className={`px-1 md:px-2 transition-colors duration-200 focus:outline-none hover:text-white relative
+                  ${activeSection === id ? "font-semibold text-blue-400" : "text-gray-200"}
+                `}
                 aria-current={activeSection === id ? "page" : undefined}
                 tabIndex={0}
               >
