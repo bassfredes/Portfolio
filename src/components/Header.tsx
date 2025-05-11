@@ -71,6 +71,7 @@ const Header: React.FC = () => {
 
   // Navegación SPA con rutas limpias y scroll a sección
   const handleNavClick = (id: string, path: string) => {
+    if (!pathname) return; // Protección contra null
     // Si ya estoy en una ruta de sección (ej: /about, /projects, /contact, /experience, /)
     // y hago click en otra sección, solo cambiar la url y hacer scroll, sin refrescar/transicionar
     const isSectionRoute = ["/", "/about", "/projects", "/contact", "/experience"].includes(pathname);
