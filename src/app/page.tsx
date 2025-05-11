@@ -6,7 +6,6 @@ import SectionContainer from "@/components/SectionContainer";
 import ContactForm from "@/components/ContactForm";
 import SectionTitle from "@/components/SectionTitle";
 import Image from "next/image";
-import ProjectCard from "@/components/ProjectCard";
 import ContactScrollButton from "@/components/ContactScrollButton";
 
 interface Experience {
@@ -44,7 +43,7 @@ const profile = {
   experience: [
     {
       role: "Solution Architect / Tech Leader",
-      company: "Digital eCommerce Agency",
+      company: "Corebiz/WPP/VML - Digital eCommerce Agency",
       duration: "2020 – Present",
       responsibilities: [
         "Designed and implemented full-stack architectures for eCommerce clients on Vtex IO platform.",
@@ -56,13 +55,25 @@ const profile = {
     },
     {
       role: "Senior Frontend Developer",
-      company: "Various clients",
-      duration: "2015 – 2020",
+      company: "Mitocondria - Digital Agency",
+      duration: "2014 – 2020",
       responsibilities: [
         "Managed technical delivery of React and Node.js applications.",
         "Mentored junior developers, introduced code review pipelines and performance metrics.",
         "Architected custom integrations with third-party services (CRMs, payment gateways).",
         "Created internal tools in Python for automation of catalog, shipping, and policy rules.",
+      ],
+    },
+    {
+      role: "Frontend Developer",
+      company: "Various clients",
+      duration: "2006 – 2014",
+      responsibilities: [
+        "Began building websites as a hobby in high school for personal projects.",
+        "Developed and maintained web applications using HTML, CSS, JavaScript, and PHP.",
+        "Freelanced while studying, gaining experience with various technologies and frameworks.",
+        "Created Arduino and Raspberry Pi projects for IoT and automation.",
+        "Started freelancing as a developer, building websites and applications for local businesses.",
       ],
     },
   ] as Experience[],
@@ -194,7 +205,7 @@ export default function Home() {
                     <span className="relative inline-flex overflow-hidden rounded-full p-[1px]">
                       <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#51E4B8_0%,#21554E_50%,#51E4B8_100%)]"></span>
                       <div className="inline-flex items-center justify-center w-full px-3 py-1 text-sm text-green-800 bg-green-100 rounded-full cursor-pointer dark:bg-gray-800 dark:text-white/80 backdrop-blur-3xl whitespace-nowrap">
-                        Available for work
+                        Open to work
                       </div>
                     </span>
                   </div>
@@ -210,6 +221,7 @@ export default function Home() {
               </span>
               <p className="text-lg md:text-2xl text-gray-200 mb-2 max-w-2xl text-left font-medium">
                 10+ years of experience.{" "}
+                <br className="inline md:hidden" />
                 <span className="text-yellow-400 font-bold">
                   Solution Architect &amp; Tech Lead
                 </span>
@@ -233,30 +245,40 @@ export default function Home() {
         >
           <SectionTitle className="text-2xl font-bold flex items-center gap-2 mb-10">
             <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
-            <span className="text-yellow-400">Experience</span>
+            <span className="text-white">Experience</span>
           </SectionTitle>
-          <div className="relative w-full grid grid-cols-1 md:grid-cols-12 gap-y-16 gap-x-10 md:gap-x-16">
+          <div className="relative w-full grid grid-cols-1 md:grid-cols-12 gap-y-0 md:gap-y-16 gap-x-10 md:gap-x-16">
             {/* Línea de tiempo continua, visible en mobile y desktop, ahora en gris */}
-            <div className="absolute left-6 md:left-4 top-0 bottom-0 w-0.5 bg-gray-500/60 rounded-full z-0" style={{ minHeight: '100%' }}></div>
+            <div
+              className="absolute left-2 md:left-4 top-0 bottom-0 w-1 bg-gray-500/60 rounded-full z-0"
+              style={{ minHeight: "100%" }}
+            ></div>
             {profile.experience.map((exp, idx) => (
               <React.Fragment key={idx}>
                 {/* Columna izquierda: timeline y datos */}
-                <div className="relative md:col-span-5 flex flex-col mb-4 md:mb-0 z-10">
+                <div className="relative md:col-span-5 flex flex-col pl-8 md:pl-12">
                   {/* Punto perfectamente centrado sobre la línea */}
-                  <div className="flex flex-col items-start pl-14 md:pl-12 sm:pl-10 w-full relative">
-                    <span className="absolute top-2 left-6 md:left-4 w-4 h-4 bg-yellow-400 rounded-full border-4 border-gray-500/60 shadow-md z-10" style={{ transform: 'translateX(-50%)' }}></span>
-                    <h4 className="flex items-center gap-2 text-lg md:text-xl font-bold mb-0.5 leading-tight text-yellow-400">
-                      {exp.role}
-                    </h4>
-                    <div className="text-base md:text-lg text-white font-semibold mb-0.5">{exp.company}</div>
-                    <div className="text-xs md:text-sm text-gray-400 mb-2">{exp.duration}</div>
+                  <span
+                    className="absolute top-2 left-2 md:left-4 w-4 h-4 bg-yellow-400 rounded-full border-4 border-gray-500/60 shadow-md z-10"
+                    style={{ transform: "translateX(-50%)" }}
+                  ></span>
+                  <h4 className="flex items-center gap-2 text-lg md:text-xl font-bold mb-0.5 leading-tight text-yellow-400">
+                    {exp.role}
+                  </h4>
+                  <div className="text-base md:text-lg text-white font-semibold mb-0.5">
+                    {exp.company}
+                  </div>
+                  <div className="text-xs md:text-sm text-gray-400 mb-2">
+                    {exp.duration}
                   </div>
                 </div>
                 {/* Columna derecha: responsabilidades */}
-                <div className="md:col-span-7 flex flex-col justify-center h-full gap-2">
+                <div className="md:col-span-7 flex flex-col justify-start md:justify-center h-full gap-2 pl-8 md:pl-0 mb-8 md:mb-0">
                   <ul className="list-none text-gray-300 leading-relaxed text-base md:text-lg">
                     {exp.responsibilities.map((res, i) => (
-                      <li key={i} className="mb-2 last:mb-0">{res}</li>
+                      <li key={i} className="mb-2 last:mb-0">
+                        {res}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -268,18 +290,60 @@ export default function Home() {
         {/* PROYECTOS */}
         <SectionContainer
           id="projects"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-5xl md:max-w-3xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           title="Projects"
           ariaLabel="Projects"
           role="region"
         >
-          <SectionTitle className="text-2xl font-bold flex items-center gap-2">
-            <span className="text-white">Projects</span>
-            <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+          <SectionTitle className="text-3xl md:text-4xl font-extrabold flex items-center gap-3 mb-12 text-white">
+            <span className="text-2xl md:text-3xl text-blue-400"><svg xmlns='http://www.w3.org/2000/svg' className='inline-block' width='1em' height='1em' viewBox='0 0 24 24'><path fill='currentColor' d='M9.4 16.6L4.8 12l4.6-4.6l1.4 1.4L7.6 12l3.2 3.2zm5.2 0l-1.4-1.4L16.4 12l-3.2-3.2l1.4-1.4l4.6 4.6z'/></svg></span>
+            <span>Projects</span>
           </SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+          <div className="flex flex-col gap-12 w-full">
             {projects.map((project, idx) => (
-              <ProjectCard key={idx} {...project} />
+              <div key={idx} className="flex flex-col md:flex-row gap-8 md:gap-12 items-center bg-[#181c2a]/80 dark:bg-[#181c2a]/80 rounded-2xl shadow-xl p-6 md:p-8 border border-gray-800/40 hover:shadow-2xl transition-all group">
+                <div className="w-full md:w-2/5 flex-shrink-0 flex items-center justify-center">
+                  <div className="relative w-full h-48 md:h-56 rounded-xl overflow-hidden shadow-lg border border-gray-700/40 bg-[#232946] flex items-center justify-center">
+                    <Image src={project.image} alt={project.title} width={400} height={220} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                </div>
+                <div className="flex-1 flex flex-col justify-between h-full w-full">
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 flex items-center gap-2">
+                      {project.title}
+                      {project.badge && (
+                        <span className="ml-2 px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-badge-green animate-fade-in">
+                          {project.badge}
+                        </span>
+                      )}
+                    </h3>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {project.tech.map((t, i) => (
+                        <span key={i} className="text-xs px-2 py-1 rounded-full bg-gray-800/70 text-blue-200 font-mono border border-blue-400/30">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-gray-300 mb-4 text-base md:text-lg leading-relaxed max-w-2xl">
+                      {project.description}
+                    </p>
+                  </div>
+                  <div className="flex gap-4 mt-2">
+                    {project.links.code && (
+                      <a href={project.links.code} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-lg border border-blue-400 text-blue-400 bg-transparent hover:bg-blue-500 hover:text-white font-semibold transition-colors text-base shadow hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center gap-2">
+                        <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' className='inline-block'><path fill='currentColor' d='M9.4 16.6L4.8 12l4.6-4.6l1.4 1.4L7.6 12l3.2 3.2zm5.2 0l-1.4-1.4L16.4 12l-3.2-3.2l1.4-1.4l4.6 4.6z'/></svg>
+                        Code
+                      </a>
+                    )}
+                    {project.links.preview && (
+                      <a href={project.links.preview} target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-lg border border-green-400 text-green-400 bg-transparent hover:bg-green-500 hover:text-white font-semibold transition-colors text-base shadow hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center gap-2">
+                        <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' className='inline-block'><path fill='currentColor' d='M12 7V3l7 7l-7 7v-4.1C7.6 12.9 5.5 15.5 5.5 15.5c1.5-4.5 6.5-5.5 6.5-5.5Z'/></svg>
+                        Preview
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </SectionContainer>
@@ -293,8 +357,8 @@ export default function Home() {
           role="region"
         >
           <SectionTitle className="text-2xl font-bold flex items-center gap-2 mb-8">
-            <span className="text-white">About me</span>
             <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+            <span className="text-white">About me</span>
           </SectionTitle>
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
@@ -324,8 +388,8 @@ export default function Home() {
           role="region"
         >
           <SectionTitle className="mb-6 text-blue-400 flex items-center gap-2 text-lg md:text-xl">
-            <span>Contact</span>
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span>Contact</span>
           </SectionTitle>
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="flex-1 text-center md:text-left">
