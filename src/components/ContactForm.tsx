@@ -57,6 +57,7 @@ const ContactForm: React.FC = () => {
   return (
     <>
       <Script
+        id="recaptcha-script"
         src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
         strategy="lazyOnload"
         async

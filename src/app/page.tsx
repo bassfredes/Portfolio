@@ -9,6 +9,7 @@ import SectionScrollHandler from "@/components/SectionScrollHandler";
 import React from "react";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 import ContactFormClientWrapper from "@/components/ContactFormClientWrapper";
+import ContactInfoObfuscated from "@/components/ContactInfoObfuscated";
 
 interface Experience {
   role: string;
@@ -426,11 +427,14 @@ export default function Home() {
               <h4 className="text-2xl md:text-3xl font-extrabold mb-2 text-gray-900 dark:text-white drop-shadow-lg animate-fade-in-delay2">
                 Let&apos;s work together!
               </h4>
-              <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 mb-6 max-w-xl mx-auto md:mx-0 animate-fade-in-delay3">
+              <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 mb-2 max-w-xl mx-auto md:mx-0 animate-fade-in-delay3">
                 I&apos;m open to new opportunities, collaborations, and
                 freelance projects. You can contact me using the form or
                 directly by email.
               </p>
+              <div className="flex flex-col items-center md:items-start gap-2 mb-10 animate-fade-in-delay4">
+                <ContactInfoObfuscated email={profile.socialLinks.email} phone={profile.socialLinks.phone} />
+              </div>
               <div className="flex justify-center md:justify-start gap-4 mb-4 animate-fade-in-delay4">
                 <a
                   href="mailto:me@bassfredes.dev"
