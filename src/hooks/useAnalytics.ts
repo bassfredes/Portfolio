@@ -21,11 +21,12 @@ function pageview(url: string) {
 
 const useAnalytics = () => {
   const pathname = usePathname();
+  const safePathname = pathname ?? "";
 
   useEffect(() => {
     if (!GA_MEASUREMENT_ID) return;
-    pageview(pathname);
-  }, [pathname]);
+    pageview(safePathname);
+  }, [safePathname]);
 };
 
 export default useAnalytics;

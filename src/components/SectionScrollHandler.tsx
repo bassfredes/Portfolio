@@ -12,9 +12,10 @@ const pathToSection: Record<string, string> = {
 
 export default function SectionScrollHandler() {
   const pathname = usePathname();
+  const safePathname = pathname ?? "";
 
   useEffect(() => {
-    const sectionId = pathToSection[pathname];
+    const sectionId = pathToSection[safePathname];
     if (sectionId) {
       const el = document.getElementById(sectionId);
       if (el) {
@@ -23,7 +24,7 @@ export default function SectionScrollHandler() {
         }, 50);
       }
     }
-  }, [pathname]);
+  }, [safePathname]);
 
   return null;
 }
