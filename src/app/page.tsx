@@ -233,7 +233,10 @@ export default function Home() {
             </div>
             <div className="flex flex-col w-full">
               <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight m-0 p-0 text-left drop-shadow-lg animate-slide-in-down">
-                Hey, I&apos;m <span className="text-blue-700 dark:text-yellow-400">Bastian</span>
+                Hey, I&apos;m{" "}
+                <span className="text-blue-700 dark:text-yellow-400">
+                  Bastian
+                </span>
               </h1>
               <span className="text-sm text-gray-600 dark:text-gray-400 font-mono mt-2 mb-4 text-left animate-fade-in-delay">
                 Galway, Ireland
@@ -340,13 +343,17 @@ export default function Home() {
             {/* Primer párrafo a ancho completo */}
             <p className="text-gray-800 dark:text-gray-300 leading-relaxed text-base md:text-lg mb-2 w-full animate-fade-in-delay2">
               Hi! I&apos;m{" "}
-              <span className="font-bold text-blue-800 dark:text-blue-300">Bastian Fredes</span>, a
-              passionate{" "}
+              <span className="font-bold text-blue-800 dark:text-blue-300">
+                Bastian Fredes
+              </span>
+              , a passionate{" "}
               <span className="font-semibold text-blue-700 dark:text-yellow-300">
                 Solution Architect
               </span>{" "}
               and{" "}
-              <span className="font-semibold text-green-700 dark:text-green-300">Tech Lead</span>{" "}
+              <span className="font-semibold text-green-700 dark:text-green-300">
+                Tech Lead
+              </span>{" "}
               based in{" "}
               <span className="font-semibold text-purple-700 dark:text-purple-300">
                 Galway, Ireland
@@ -420,6 +427,47 @@ export default function Home() {
           </div>
         </SectionContainer>
 
+        {/* PERFORMANCE FOCUS */}
+        <SectionContainer
+          id="performance"
+          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          title="Performance Matters"
+          ariaLabel="Performance matters"
+          role="region"
+        >
+          <SectionTitle className="text-2xl md:text-3xl font-extrabold flex items-center gap-3 mb-10 text-green-700 dark:text-green-400">
+            <span className="w-2 h-2 bg-green-700 dark:bg-green-400 rounded-full animate-pulse"></span>
+            <span>Performance Matters</span>
+          </SectionTitle>
+          <div className="flex flex-col md:flex-row items-center gap-8 w-full">
+            <div className="flex-shrink-0 flex items-center justify-center w-full md:w-80">
+              <Image
+                src="/performance-lighthouse.jpg"
+                alt="Lighthouse performance score 100"
+                className="rounded-2xl shadow-lg border-4 border-green-400/40 bg-white dark:bg-slate-900 w-full md:w-80"
+                width={400}
+                height={250}
+                loading="lazy"
+              />
+            </div>
+            <div className="flex-1 flex flex-col gap-4">
+              <p className="text-lg md:text-xl text-gray-800 dark:text-gray-200 mb-2 font-medium animate-fade-in-delay2">
+                Performance is not just a nice to
+                have, it&apos;s a competitive advantage. Fast, accessible, and
+                reliable websites delight users, improve SEO, and drive real
+                business results. My approach is always performance first. from
+                optimizing loading times and accessibility, to ensuring best
+                practices and zero layout shift.
+              </p>
+              <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 animate-fade-in-delay3">
+                If you value speed, quality, and user experience, let&apos;s
+                connect! I&apos;m always open to discuss how we can elevate your
+                project to the next level. Scroll down to get in touch.
+              </p>
+            </div>
+          </div>
+        </SectionContainer>
+
         {/* CONTACTO */}
         <SectionContainer
           id="contact"
@@ -435,7 +483,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="flex-1 text-center md:text-left">
               <h4 className="text-2xl md:text-3xl font-extrabold mb-2 text-gray-900 dark:text-white drop-shadow-lg animate-fade-in-delay2">
-                Let&apos;s work together!
+                Let&apos;s talk!
               </h4>
               <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 mb-2 max-w-xl mx-auto md:mx-0 animate-fade-in-delay3">
                 I&apos;m open to new opportunities, collaborations, and
@@ -443,7 +491,10 @@ export default function Home() {
                 directly by email.
               </p>
               <div className="flex flex-col items-center md:items-start gap-2 mb-10 animate-fade-in-delay4">
-                <ContactInfoObfuscated email={profile.socialLinks.email} phone={profile.socialLinks.phone} />
+                <ContactInfoObfuscated
+                  email={profile.socialLinks.email}
+                  phone={profile.socialLinks.phone}
+                />
               </div>
               <div className="flex justify-center md:justify-start gap-4 mb-4 animate-fade-in-delay4">
                 <a
