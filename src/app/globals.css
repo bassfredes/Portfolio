@@ -1,7 +1,8 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
- --background: #f8fafc;
+ --background: white;
  --foreground: #030712;
  --nav-background: rgba(255, 255, 255, 0.95);
  --section-background: rgba(255, 255, 255, 0.8);
@@ -26,10 +27,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   transition: background 0.3s ease, color 0.3s ease;
-}
-
-.dark body {
-  background: var(--background);
 }
 
 .container {
@@ -65,7 +62,7 @@ h4 {
   transition: background 0.3s ease;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--section-border);
+  background: #cbd5e1; /* slate-300 para light */
   border-radius: 8px;
   transition: background 0.3s ease;
 }
@@ -74,7 +71,7 @@ h4 {
   background: var(--section-background);
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: var(--section-border);
+  background: #475569; /* slate-600 para dark */
 }
 
 /* Estilos para el header con efecto redondeado como en la referencia */

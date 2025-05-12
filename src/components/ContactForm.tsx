@@ -1,7 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
 
-// Extiende el tipo Window para grecaptcha
 declare global {
   interface Window {
     grecaptcha?: {
@@ -10,21 +9,38 @@ declare global {
   }
 }
 
-// Cargar reCAPTCHA v3 dinámicamente y exponer función para obtener el token
+// Hook para cargar reCAPTCHA solo cuando el usuario hace scroll (interacción)
 function useRecaptchaV3(siteKey: string) {
   const [ready, setReady] = useState(false);
   React.useEffect(() => {
-    if (window.grecaptcha) {
-      setReady(true);
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
-    script.async = true;
-    script.onload = () => setReady(true);
-    document.body.appendChild(script);
+    let loaded = false;
+    const loadRecaptcha = () => {
+      if (loaded || window.grecaptcha) {
+        setReady(true);
+        return;
+      }
+      loaded = true;
+      const script = document.createElement("script");
+      script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+      script.async = true;
+      script.onload = () => setReady(true);
+      document.body.appendChild(script);
+    };
+    // Cargar solo tras scroll/interacción
+    const onUserIntent = () => {
+      loadRecaptcha();
+      window.removeEventListener("scroll", onUserIntent);
+      window.removeEventListener("pointermove", onUserIntent);
+      window.removeEventListener("keydown", onUserIntent);
+    };
+    window.addEventListener("scroll", onUserIntent, { once: true });
+    window.addEventListener("pointermove", onUserIntent, { once: true });
+    window.addEventListener("keydown", onUserIntent, { once: true });
+    // Limpieza
     return () => {
-      document.body.removeChild(script);
+      window.removeEventListener("scroll", onUserIntent);
+      window.removeEventListener("pointermove", onUserIntent);
+      window.removeEventListener("keydown", onUserIntent);
     };
   }, [siteKey]);
   const execute = async (action: string) => {
@@ -77,7 +93,7 @@ const ContactForm: React.FC = () => {
   return (
     <form
       ref={formRef}
-      className="flex-1 w-full max-w-md bg-slate-800/60 rounded-xl p-6 shadow-lg space-y-4 animate-slide-up delay-800"
+      className="flex-1 w-full max-w-md bg-white dark:bg-slate-800/60 rounded-xl p-6 space-y-4 animate-slide-up delay-800 border border-slate-200 dark:border-slate-700"
       autoComplete="off"
       onSubmit={handleSubmit}
     >
@@ -85,32 +101,39 @@ const ContactForm: React.FC = () => {
         type="text"
         name="name"
         placeholder="Your Name"
-        className="w-full px-4 py-2 rounded bg-slate-900 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-base"
+        className="w-full px-4 py-2 rounded bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-base"
         required
       />
       <input
         type="email"
         name="email"
         placeholder="Your Email"
-        className="w-full px-4 py-2 rounded bg-slate-900 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-base"
+        className="w-full px-4 py-2 rounded bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-base"
         required
       />
       <textarea
         name="message"
         placeholder="Your Message"
         rows={4}
-        className="w-full px-4 py-2 rounded bg-slate-900 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-base"
+        className="w-full px-4 py-2 rounded bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-base"
         required
       ></textarea>
       <button
         type="submit"
-        className="w-full py-2 rounded bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold shadow hover:scale-[1.03] active:scale-100 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-400 text-base disabled:opacity-60"
+        className="w-full py-2 rounded bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:scale-[1.03] active:scale-100 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-500 text-base disabled:opacity-60"
         disabled={loading || !ready}
       >
-        {loading ? "Enviando..." : "Send Message"}
+        {loading ? (
+          <span className="flex items-center justify-center gap-2">
+            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
+            Sending...
+          </span>
+        ) : (
+          "Send Message"
+        )}
       </button>
-      {success && <div className="text-green-400 text-sm mt-2">{success}</div>}
-      {error && <div className="text-red-400 text-sm mt-2">{error}</div>}
+      {success && <div className="text-green-700 dark:text-green-400 text-sm mt-2">{success}</div>}
+      {error && <div className="text-red-700 dark:text-red-400 text-sm mt-2">{error}</div>}
     </form>
   );
 };

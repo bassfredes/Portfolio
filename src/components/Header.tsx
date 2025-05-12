@@ -14,7 +14,7 @@ const NAV_LINKS = [
 type Theme = "light" | "dark" | "system";
 
 const ThemeIcon: React.FC<{ theme: Theme }> = ({ theme }) => {
-  const iconClass = "transition-transform duration-300 dark:text-blue-400 text-blue-600";
+  const iconClass = "transition-transform duration-300 dark:text-blue-400 text-blue-400";
   
   if (theme === "dark")
     return (
@@ -69,11 +69,8 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Navegación SPA con rutas limpias y scroll a sección
   const handleNavClick = (id: string, path: string) => {
     if (!pathname) return; // Protección contra null
-    // Si ya estoy en una ruta de sección (ej: /about, /projects, /contact, /experience, /)
-    // y hago click en otra sección, solo cambiar la url y hacer scroll, sin refrescar/transicionar
     const isSectionRoute = ["/", "/about", "/projects", "/contact", "/experience"].includes(pathname);
     if (isSectionRoute && pathname !== path) {
       window.history.replaceState(null, "", path);
@@ -82,15 +79,12 @@ const Header: React.FC = () => {
         el.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     } else if (pathname === path) {
-      // Si hago click en la misma sección, solo scroll
       const el = document.getElementById(id);
       if (el) {
         el.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     } else {
-      // Si vengo de otra página (no una sección), navega normalmente
       router.push(path);
-      // El scroll se hará en el useEffect de la página
     }
   };
   
@@ -105,8 +99,8 @@ const Header: React.FC = () => {
         <div
           className={`transition-all duration-300 mt-4 ${
             hasScrolled
-              ? "bg-[#181c2a]/90 shadow-lg border border-gray-800"
-              : "bg-transparent border-transparent"
+              ? "bg-[#181c2a]/90 shadow-lg border border-gray-800 dark:bg-[#181c2a]/90 dark:border-gray-800"
+              : "bg-white/90 border border-slate-200 dark:bg-[#181c2a]/80 dark:border-gray-800"
           } rounded-full px-6 py-2 flex items-center pointer-events-auto backdrop-blur-md`}
           style={{ minHeight: "40px", maxWidth: "fit-content" }}
         >
@@ -115,9 +109,16 @@ const Header: React.FC = () => {
               <button
                 key={id}
                 onClick={() => handleNavClick(id, path)}
-                className={`px-1 md:px-2 transition-colors duration-200 focus:outline-none hover:text-white relative
-                  ${activeSection === id ? "font-semibold text-blue-400" : "text-gray-200"}
-                `}
+                className={`px-1 md:px-2 transition-colors duration-200 focus:outline-none
+                  ${
+                    hasScrolled
+                      ? activeSection === id
+                        ? "font-semibold text-blue-400 dark:text-blue-400"
+                        : "text-white dark:text-gray-200 hover:text-blue-400 dark:hover:text-white"
+                      : activeSection === id
+                      ? "font-semibold text-blue-400 dark:text-blue-400"
+                      : "text-gray-700 dark:text-gray-200 hover:text-blue-400 dark:hover:text-white"
+                  } relative`}
                 aria-current={activeSection === id ? "page" : undefined}
                 tabIndex={0}
               >
@@ -134,7 +135,12 @@ const Header: React.FC = () => {
                     : "dark"
                 )
               }
-              className="text-gray-200 hover:text-white transition-all duration-200 focus:outline-none ml-2"
+              className={`ml-2 transition-all duration-200 focus:outline-none
+                ${
+                  hasScrolled
+                    ? "text-gray-900 dark:text-gray-200 hover:text-blue-400 dark:hover:text-white"
+                    : "text-gray-700 dark:text-gray-200 hover:text-blue-400 dark:hover:text-white"
+                }`}
               aria-label="Change theme"
               title="Change theme"
               tabIndex={0}

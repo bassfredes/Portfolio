@@ -1,4 +1,4 @@
-import ContactForm from "@/components/ContactForm";
+import dynamic from "next/dynamic";
 import ContactScrollButton from "@/components/ContactScrollButton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -172,6 +172,10 @@ const projects = [
   },
 ];
 
+const ContactForm = dynamic(() => import("@/components/ContactForm"), {
+  loading: () => <div className="w-full max-w-md p-8 text-center text-gray-400">Loading contact form…</div>,
+});
+
 export default function Home() {
   return (
     <>
@@ -221,15 +225,15 @@ export default function Home() {
               </div>
             </div>
             <div className="flex flex-col w-full">
-              <h1 className="text-5xl md:text-6xl font-extrabold text-white leading-tight m-0 p-0 text-left drop-shadow-lg animate-slide-in-down">
-                Hey, I&apos;m <span className="text-yellow-400">Bastian</span>
+              <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight m-0 p-0 text-left drop-shadow-lg animate-slide-in-down">
+                Hey, I&apos;m <span className="text-blue-700 dark:text-yellow-400">Bastian</span>
               </h1>
-              <span className="text-sm text-gray-400 font-mono mt-2 mb-4 text-left animate-fade-in-delay">
+              <span className="text-sm text-gray-600 dark:text-gray-400 font-mono mt-2 mb-4 text-left animate-fade-in-delay">
                 Galway, Ireland
               </span>
-              <p className="text-lg md:text-2xl text-gray-200 mb-2 max-w-2xl text-left font-medium animate-fade-in-delay2">
+              <p className="text-lg md:text-2xl text-gray-900 dark:text-gray-200 mb-2 max-w-2xl text-left font-medium animate-fade-in-delay2">
                 10+ years of experience. <br className="inline md:hidden" />
-                <span className="text-yellow-400 font-bold">
+                <span className="text-blue-800 dark:text-yellow-400 font-bold">
                   Solution Architect &amp; Tech Lead
                 </span>
                 <br />
@@ -251,8 +255,8 @@ export default function Home() {
           role="region"
         >
           <SectionTitle className="text-2xl font-bold flex items-center gap-2 mb-10">
-            <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
-            <span className="text-white">Experience</span>
+            <span className="w-2 h-2 bg-blue-700 dark:bg-yellow-400 rounded-full animate-pulse"></span>
+            <span className="text-gray-900 dark:text-white">Experience</span>
           </SectionTitle>
           <div className="relative w-full grid grid-cols-1 md:grid-cols-12 gap-y-0 md:gap-y-16 gap-x-10 md:gap-x-16">
             {/* Línea de tiempo continua, visible en mobile y desktop, ahora en gris */}
@@ -269,19 +273,19 @@ export default function Home() {
                     className="absolute top-2 left-2 md:left-4 w-4 h-4 bg-yellow-400 rounded-full border-4 border-gray-500/60 shadow-md z-10"
                     style={{ transform: "translateX(-35%)" }}
                   ></span>
-                  <h4 className="flex items-center gap-2 text-lg md:text-xl font-bold mb-0.5 leading-tight text-yellow-400">
+                  <h4 className="flex items-center gap-2 text-lg md:text-xl font-bold mb-0.5 leading-tight text-blue-700 dark:text-yellow-400">
                     {exp.role}
                   </h4>
-                  <div className="text-base md:text-lg text-white font-semibold mb-0.5">
+                  <div className="text-base md:text-lg text-gray-900 dark:text-white font-semibold mb-0.5">
                     {exp.company}
                   </div>
-                  <div className="text-xs md:text-sm text-gray-400 mb-2">
+                  <div className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2">
                     {exp.duration}
                   </div>
                 </div>
                 {/* Columna derecha: responsabilidades */}
                 <div className="md:col-span-7 flex flex-col justify-start md:justify-center h-full gap-2 pl-8 md:pl-0 mb-8 md:mb-0">
-                  <ul className="list-none text-gray-300 leading-relaxed text-base md:text-lg">
+                  <ul className="list-none text-gray-800 dark:text-gray-300 leading-relaxed text-base md:text-lg">
                     {exp.responsibilities.map((res, i) => (
                       <li key={i} className="mb-2 last:mb-0">
                         {res}
@@ -302,8 +306,8 @@ export default function Home() {
           ariaLabel="Projects"
           role="region"
         >
-          <SectionTitle className="text-3xl md:text-4xl font-extrabold flex items-center gap-3 mb-12 text-white">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+          <SectionTitle className="text-3xl md:text-4xl font-extrabold flex items-center gap-3 mb-12 text-gray-900 dark:text-white">
+            <span className="w-2 h-2 bg-green-700 dark:bg-green-400 rounded-full animate-pulse"></span>
             <span>Projects</span>
           </SectionTitle>
           <div className="flex flex-col gap-12 w-full">
@@ -322,27 +326,27 @@ export default function Home() {
           role="region"
         >
           <SectionTitle className="text-2xl font-bold flex items-center gap-2 mb-8 animate-slide-in-left">
-            <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
-            <span className="text-white">About me</span>
+            <span className="w-2 h-2 bg-blue-700 dark:bg-blue-400 rounded-full animate-pulse"></span>
+            <span className="text-gray-900 dark:text-white">About me</span>
           </SectionTitle>
           <div className="flex flex-col gap-6 w-full">
             {/* Primer párrafo a ancho completo */}
-            <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-2 w-full animate-fade-in-delay2">
+            <p className="text-gray-800 dark:text-gray-300 leading-relaxed text-base md:text-lg mb-2 w-full animate-fade-in-delay2">
               Hi! I&apos;m{" "}
-              <span className="font-bold text-blue-300">Bastian Fredes</span>, a
+              <span className="font-bold text-blue-800 dark:text-blue-300">Bastian Fredes</span>, a
               passionate{" "}
-              <span className="font-semibold text-yellow-300">
+              <span className="font-semibold text-blue-700 dark:text-yellow-300">
                 Solution Architect
               </span>{" "}
               and{" "}
-              <span className="font-semibold text-green-300">Tech Lead</span>{" "}
+              <span className="font-semibold text-green-700 dark:text-green-300">Tech Lead</span>{" "}
               based in{" "}
-              <span className="font-semibold text-purple-300">
+              <span className="font-semibold text-purple-700 dark:text-purple-300">
                 Galway, Ireland
               </span>
               .<br className="hidden md:inline" />
               <br />I have{" "}
-              <span className="font-bold text-yellow-400">
+              <span className="font-bold text-blue-700 dark:text-yellow-400">
                 10+ years of experience
               </span>{" "}
               building scalable, maintainable, and delightful digital products
@@ -353,36 +357,36 @@ export default function Home() {
             {/* Luego grid para texto final + lista + imagen */}
             <div className="grid md:grid-cols-[minmax(0,1fr)_auto] gap-10 items-center w-full">
               <div className="md:max-w-2xl lg:max-w-3xl xl:max-w-4xl flex flex-col gap-4 animate-fade-in-delay3">
-                <ul className="list-disc list-inside text-gray-400 mb-2 space-y-1">
+                <ul className="list-disc list-inside text-gray-700 dark:text-gray-400 mb-2 space-y-1">
                   <li>
-                    <span className="font-semibold text-blue-200">
+                    <span className="font-semibold text-blue-800 dark:text-blue-200">
                       Led architecture
                     </span>{" "}
                     for complex Vtex IO integrations (payments, Icecat, ERP
                     sync) across LATAM and EU markets.
                   </li>
                   <li>
-                    <span className="font-semibold text-green-200">
+                    <span className="font-semibold text-green-800 dark:text-green-200">
                       Tech Lead
                     </span>{" "}
                     for distributed teams (React, Node.js, Python).
                   </li>
                   <li>
-                    <span className="font-semibold text-pink-200">
+                    <span className="font-semibold text-pink-800 dark:text-pink-200">
                       Cloud-native
                     </span>{" "}
                     solutions with CI/CD, GitHub Actions, Docker, RESTful APIs.
                   </li>
                   <li>
-                    <span className="font-semibold text-purple-200">
+                    <span className="font-semibold text-purple-800 dark:text-purple-200">
                       Certified
                     </span>{" "}
                     in Vtex IO development; experienced with Agile/Scrum.
                   </li>
                 </ul>
-                <p className="text-gray-400 text-base md:text-lg">
+                <p className="text-gray-700 dark:text-gray-400 text-base md:text-lg">
                   My mission is to{" "}
-                  <span className="font-semibold text-blue-300">
+                  <span className="font-semibold text-blue-800 dark:text-blue-300">
                     empower people and businesses
                   </span>{" "}
                   through technology, mentoring, and continuous learning. <br />
@@ -417,16 +421,16 @@ export default function Home() {
           ariaLabel="Contact"
           role="region"
         >
-          <SectionTitle className="mb-6 text-blue-400 flex items-center gap-2 text-lg md:text-xl animate-slide-in-up">
-            <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
+          <SectionTitle className="mb-6 text-blue-700 dark:text-blue-400 flex items-center gap-2 text-lg md:text-xl animate-slide-in-up">
+            <span className="w-2 h-2 bg-purple-700 dark:bg-purple-500 rounded-full animate-pulse"></span>
             <span>Contact</span>
           </SectionTitle>
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="flex-1 text-center md:text-left">
-              <h4 className="text-2xl md:text-3xl font-extrabold mb-2 text-white drop-shadow-lg animate-fade-in-delay2">
+              <h4 className="text-2xl md:text-3xl font-extrabold mb-2 text-gray-900 dark:text-white drop-shadow-lg animate-fade-in-delay2">
                 Let&apos;s work together!
               </h4>
-              <p className="text-base md:text-lg text-slate-300 mb-6 max-w-xl mx-auto md:mx-0 animate-fade-in-delay3">
+              <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 mb-6 max-w-xl mx-auto md:mx-0 animate-fade-in-delay3">
                 I&apos;m open to new opportunities, collaborations, and
                 freelance projects. You can contact me using the form or
                 directly by email.
@@ -476,51 +480,3 @@ export default function Home() {
     </>
   );
 }
-
-/*
-  Tailwind custom animations (agregar en tailwind.config.js):
-  'blob-move': {
-    '0%, 100%': { transform: 'scale(1) translateY(0px)' },
-    '50%': { transform: 'scale(1.08) translateY(-8px)' },
-  },
-  'float': {
-    '0%, 100%': { transform: 'translateY(0px)' },
-    '50%': { transform: 'translateY(-12px)' },
-  },
-  'slide-in-down': {
-    '0%': { opacity: 0, transform: 'translateY(-40px)' },
-    '100%': { opacity: 1, transform: 'translateY(0)' },
-  },
-  'slide-in-left': {
-    '0%': { opacity: 0, transform: 'translateX(-40px)' },
-    '100%': { opacity: 1, transform: 'translateX(0)' },
-  },
-  'slide-in-up': {
-    '0%': { opacity: 0, transform: 'translateY(40px)' },
-    '100%': { opacity: 1, transform: 'translateY(0)' },
-  },
-  'fade-in-delay': {
-    '0%': { opacity: 0 },
-    '100%': { opacity: 1 },
-  },
-  'fade-in-delay2': {
-    '0%': { opacity: 0 },
-    '100%': { opacity: 1 },
-  },
-  'fade-in-delay3': {
-    '0%': { opacity: 0 },
-    '100%': { opacity: 1 },
-  },
-  'fade-in-delay4': {
-    '0%': { opacity: 0 },
-    '100%': { opacity: 1 },
-  },
-  'bounce-slow': {
-    '0%, 100%': { transform: 'translateY(0)' },
-    '50%': { transform: 'translateY(-8px)' },
-  },
-  'gradient-x': {
-    '0%, 100%': { backgroundPosition: '0% 50%' },
-    '50%': { backgroundPosition: '100% 50%' },
-  },
-*/

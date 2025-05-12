@@ -54,11 +54,7 @@ export default async function handler(
     return res.status(400).json({ error: "reCAPTCHA failed" });
   }
 
-  // 2. Enviar correo usando Gmail API (sin password, con OAuth2)
-  // Debes crear un proyecto en Google Cloud, habilitar Gmail API y obtener credenciales OAuth2
-  // https://developers.google.com/gmail/api/quickstart/nodejs
-  // Aquí se usa nodemailer con OAuth2
-
+  // 2. Enviar correo usando Gmail API
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
