@@ -145,31 +145,41 @@ const profile = {
   ],
 };
 
-// Agregar badge "Featured" a los proyectos destacados
 const projects = [
   {
-    title: "SVGL – A beautiful library with SVG logos",
+    title: "E-Commerce Insights Dashboard",
     description:
-      "SVG logo library of the most popular brands. 100+ logos in one month. 24+ SVGs downloaded. Built from scratch with NextJS, React, and Tailwind CSS.",
-    tech: ["Next.js", "React", "Tailwind CSS"],
-    image: "/vercel.svg",
+      "An interactive dashboard displaying key e-commerce KPIs (revenue, average order value, orders, sessions) with period comparisons, performance in real time.",
+    tech: ["Next.js", "React", "Tailwind CSS", "Recharts"],
+    image: "/dashboard.jpg",
     links: {
-      code: "https://github.com/bassfredes/svgl",
-      preview: "https://svgl.dev",
+      code: "https://github.com/bassfredes/eCommerceDashboard",
+      preview: "https://dashboard.bassfredes.dev",
     },
     badge: "Featured",
   },
   {
-    title: "AdventJS – JavaScript and TypeScript Coding Challenges",
+    title: "SplitUp - Smart Expense Sharing App",
     description:
-      "Free platform with coding challenges. Over 1 million views in one month. 50+ challenges completed. Built from scratch with NextJS, React, and Tailwind CSS.",
-    tech: ["Next.js", "React", "Tailwind CSS"],
-    image: "/globe.svg",
+      "A minimalistic mobile app for managing and splitting group expenses in real time, with automated balance tracking, settlements, and analytics.",
+    tech: ["Firebase", "Flutter", "Dart"],
+    image: "/splitup.jpg",
     links: {
-      code: "https://github.com/bassfredes/adventjs",
-      preview: "https://adventjs.dev",
+      code: "https://github.com/bassfredes/SplitUp",
+      preview: "https://splitup.bassfredes.dev",
     },
     badge: "Featured",
+  },
+  {
+    title: "Privilege – eCommerce + Payments Integration",
+    description:
+      "A secure, scalable online fashion retail platform integrated with an private branded, offering flexible installments payments. Driving 19.7 % uplift in revenue.",
+    tech: ["React", "GraphQL", "Node.js"],
+    image: "/privilege.jpg",
+    links: {
+      code: "https://github.com/bassfredes/Privilege",
+      preview: "https://www.privilege.cl",
+    },
   },
 ];
 
@@ -305,7 +315,7 @@ export default function Home() {
         >
           <SectionTitle className="text-3xl md:text-4xl font-extrabold flex items-center gap-3 mb-12 text-gray-900 dark:text-white">
             <span className="w-2 h-2 bg-green-700 dark:bg-green-400 rounded-full animate-pulse"></span>
-            <span>Projects</span>
+            <span>Recent Projects</span>
           </SectionTitle>
           <div className="flex flex-col gap-12 w-full">
             {projects.map((project, idx) => (
