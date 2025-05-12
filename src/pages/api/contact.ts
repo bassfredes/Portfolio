@@ -75,17 +75,17 @@ export default async function handler(
     await transporter.sendMail({
       from: `Portfolio Contact <${await getEnv("GMAIL_USER")}>`,
       to: await getEnv("GMAIL_USER"),
-      subject: `Nuevo mensaje desde el portafolio de Bastian Fredes`,
+      subject: `New message from Bastian Fredes' portfolio`,
       replyTo: email,
-      text: `Nombre: ${name}\nEmail: ${email}\nMensaje: ${message}`,
-      html: `<p><b>Nombre:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Mensaje:</b><br/>${message.replace(
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      html: `<p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Message:</b><br/>${message.replace(
         /\n/g,
         "<br/>"
       )}</p>`,
     });
-    return res.status(200).json({ ok: true });
+    return res.status(200).json({ ok: true, message: "Message sent successfully!" });
   } catch (err) {
     console.error("err :>> ", err);
-    return res.status(500).json({ error: "Error enviando el correo" });
+    return res.status(500).json({ error: "Failed to send the message. Please try again later." });
   }
 }

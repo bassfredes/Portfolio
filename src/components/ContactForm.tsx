@@ -62,13 +62,13 @@ const ContactForm: React.FC = () => {
       });
       const json = await res.json();
       if (res.ok) {
-        setSuccess("¡Mensaje enviado correctamente!");
+        setSuccess("Message sent successfully!");
         form.reset();
       } else {
-        setError(json.error || "Error al enviar el mensaje");
+        setError(json.error || "Failed to send the message. Please try again later.");
       }
     } catch (err) {
-      setError((err as Error).message || "Error inesperado");
+      setError((err as Error).message || "Failed to send the message. Please try again later.");
     } finally {
       setLoading(false);
     }
