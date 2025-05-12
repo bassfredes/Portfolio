@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import ContactScrollButton from "@/components/ContactScrollButton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -9,6 +8,7 @@ import Image from "next/image";
 import SectionScrollHandler from "@/components/SectionScrollHandler";
 import React from "react";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
+import ContactFormClientWrapper from "@/components/ContactFormClientWrapper";
 
 interface Experience {
   role: string;
@@ -171,10 +171,6 @@ const projects = [
     badge: "Featured",
   },
 ];
-
-const ContactForm = dynamic(() => import("@/components/ContactForm"), {
-  loading: () => <div className="w-full max-w-md p-8 text-center text-gray-400">Loading contact form…</div>,
-});
 
 export default function Home() {
   return (
@@ -472,7 +468,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <ContactForm />
+            <ContactFormClientWrapper />
           </div>
         </SectionContainer>
       </main>
