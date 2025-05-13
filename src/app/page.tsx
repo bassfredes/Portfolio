@@ -147,7 +147,7 @@ const profile = {
 
 const projects = [
   {
-    title: "E-Commerce Insights Dashboard",
+    title: "eCommerce Insights Dashboard",
     description:
       "An interactive dashboard displaying key e-commerce KPIs (revenue, average order value, orders, sessions) with period comparisons, performance in real time.",
     tech: ["Next.js", "React", "Tailwind CSS", "Recharts"],
@@ -156,10 +156,10 @@ const projects = [
       code: "https://github.com/bassfredes/eCommerceDashboard",
       preview: "https://dashboard.bassfredes.dev",
     },
-    badge: "Featured",
+    badge: "New",
   },
   {
-    title: "SplitUp - Smart Expense Sharing App",
+    title: "SplitUp - Expense Sharing App",
     description:
       "A minimalistic mobile app for managing and splitting group expenses in real time, with automated balance tracking, settlements, and analytics.",
     tech: ["Firebase", "Flutter", "Dart"],
@@ -168,7 +168,7 @@ const projects = [
       code: "https://github.com/bassfredes/SplitUp",
       preview: "https://splitup.bassfredes.dev",
     },
-    badge: "Featured",
+    badge: "New",
   },
   {
     title: "Privilege – eCommerce + Payments Integration",

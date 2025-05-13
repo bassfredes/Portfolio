@@ -54,12 +54,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center rounded-2xl p-0 md:p-0 group bg-transparent w-full">
       <div className="w-full md:w-2/5 flex-shrink-0 flex items-center justify-center">
-        <div className="relative w-full h-48 md:h-56 rounded-xl overflow-hidden bg-[#232946] flex items-center justify-center">
+        <div className="relative w-full h-[200px] md:h-[200px] rounded-xl overflow-hidden bg-[#232946] flex items-center justify-center">
           <Image
             src={image}
             alt={title}
-            width={400}
-            height={250}
+            width={440}
+            height={220}
             loading="lazy"
             className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
           />
@@ -67,7 +67,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
       <div className="flex-1 flex flex-col justify-between h-full w-full md:pr-2">
         <div>
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 flex items-center gap-2">
+          <h3 className="text-lg md:text-xl font-bold text-white mb-1 flex items-center gap-2 line-clamp-1">
             {title}
             {badge && (
               <span className="ml-2 px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white animate-fade-in">
@@ -75,7 +75,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               </span>
             )}
           </h3>
-          <div className="flex flex-wrap gap-2 mb-3">
+          <div className="flex flex-wrap gap-2 mb-2">
             {tech.map((t, i) => (
               <span
                 key={i}
@@ -88,7 +88,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               </span>
             ))}
           </div>
-          <p className="mb-4 text-gray-800 text-base dark:text-gray-300 md:text-lg leading-relaxed max-w-2xl">
+          <p className="text-gray-300 mb-3 text-sm md:text-base leading-relaxed max-w-2xl line-clamp-3">
             {description}
           </p>
         </div>
