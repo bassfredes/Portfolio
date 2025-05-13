@@ -102,7 +102,7 @@ const profile = {
     linkedin: "https://www.linkedin.com/in/bassfredes/",
     github: "https://github.com/bassfredes",
     email: "me@bassfredes.dev",
-    phone: "+353 8308 898 60",
+    phone: "+353 8308 89 860",
     portfolio: "https://www.bassfredes.dev",
   },
   keywords: [

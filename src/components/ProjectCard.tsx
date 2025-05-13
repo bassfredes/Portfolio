@@ -88,7 +88,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               </span>
             ))}
           </div>
-          <p className="text-gray-300 mb-4 text-base md:text-lg leading-relaxed max-w-2xl">
+          <p className="mb-4 text-gray-800 text-base dark:text-gray-300 md:text-lg leading-relaxed max-w-2xl">
             {description}
           </p>
         </div>
@@ -98,7 +98,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               href={links.code}
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-5 py-2 rounded-lg border-2 border-blue-400 text-blue-400 bg-gradient-to-tr from-blue-900/60 via-blue-700/30 to-blue-400/10 hover:bg-blue-500 hover:text-white font-semibold transition-all text-base hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center gap-2 shadow-lg"
+              className="group px-5 py-2 rounded-lg border-2 border-blue-400 text-blue-400 dark:bg-gradient-to-tr from-blue-900/60 via-blue-700/30 to-blue-400/10 hover:bg-blue-500 hover:text-white font-semibold transition-all text-base hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center gap-2 shadow-lg"
             >
               <FaGithub className="text-xl transition-colors" />
               <span>Code</span>
@@ -109,7 +109,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               href={links.preview}
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-5 py-2 rounded-lg border-2 border-green-400 text-green-400 bg-gradient-to-tr from-green-900/60 via-green-700/30 to-green-400/10 hover:bg-green-500 hover:text-white font-semibold transition-all text-base hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center gap-2 shadow-lg"
+              className="group px-5 py-2 rounded-lg border-2 border-green-400 text-green-400 dark:bg-gradient-to-tr from-green-900/60 via-green-700/30 to-green-400/10 hover:bg-green-500 hover:text-white font-semibold transition-all text-base hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center gap-2 shadow-lg"
             >
               <FaExternalLinkAlt className="text-xl transition-colors" />
               <span>Preview</span>
