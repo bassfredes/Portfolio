@@ -451,19 +451,18 @@ export default function Home() {
               />
             </div>
             <div className="flex-1 flex flex-col gap-4">
-              <p className="text-lg md:text-xl text-gray-800 dark:text-gray-200 mb-2 font-medium animate-fade-in-delay2">
-                Performance is not just a nice to
-                have, it&apos;s a competitive advantage. Fast, accessible, and
-                reliable websites delight users, improve SEO, and drive real
-                business results. My approach is always performance first. from
-                optimizing loading times and accessibility, to ensuring best
-                practices and zero layout shift.
+              <h4 className="text-xl md:text-2xl font-bold text-green-700 dark:text-green-400 mb-2">Why care about performance?</h4>
+              <ul className="list-disc list-inside text-base md:text-lg text-gray-800 dark:text-gray-200 mb-2 space-y-1">
+                <li>Faster sites = happier users</li>
+                <li>Better SEO & higher conversions</li>
+                <li>Zero layout shift, smooth experience</li>
+              </ul>
+              <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 font-medium">
+                I build with performance-first principles: fast loads, accessibility, and best practices by default.
               </p>
-              <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 animate-fade-in-delay3">
-                If you value speed, quality, and user experience, let&apos;s
-                connect! I&apos;m always open to discuss how we can elevate your
-                project to the next level. Scroll down to get in touch.
-              </p>
+              <div className="mt-2">
+                <span className="inline-block px-4 py-2 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-semibold text-sm shadow animate-fade-in">Let’s make your site a 100!</span>
+              </div>
             </div>
           </div>
         </SectionContainer>
