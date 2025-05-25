@@ -3,21 +3,21 @@ title = "Gitleaks base config for Next.js"
 [allowlist]
   description = "Allowlist common files and patterns"
   paths = [
-    '''\.lock$\''',      # Lockfiles como package-lock.json, yarn.lock
-    '''\.svg$\''',       # Archivos SVG
-    '''\.png$\''',       # Archivos PNG
-    '''\.jpg$\''',       # Archivos JPG
-    '''\.jpeg$\''',      # Archivos JPEG
-    '''\.gif$\''',       # Archivos GIF
-    '''\.ico$\''',       # Archivos ICO
+    '''\.lock$''',      # Lockfiles como package-lock.json, yarn.lock
+    '''\.svg$''',       # Archivos SVG
+    '''\.png$''',       # Archivos PNG
+    '''\.jpg$''',       # Archivos JPG
+    '''\.jpeg$''',      # Archivos JPEG
+    '''\.gif$''',       # Archivos GIF
+    '''\.ico$''',       # Archivos ICO
     '''yarn\.lock''',
     '''package-lock\.json''',
     '''next\.config\.js''', # Archivo de configuración de Next.js (revisar si contiene secretos)
     '''postcss\.config\.js''',
     '''tailwind\.config\.js''',
     '''public/''',        # Carpeta pública (generalmente segura, pero revisar)
-    '''\.env\.example$\''', # Archivos de ejemplo de variables de entorno
-    '''\.env\.local$\''',   # Archivos de variables de entorno locales (si se versionan por error)
+    '''\.env\.example$''', # Archivos de ejemplo de variables de entorno
+    '''\.env\.local$''',   # Archivos de variables de entorno locales (si se versionan por error)
     '''\.gitignore''',
     '''README\.md'''
   ]
