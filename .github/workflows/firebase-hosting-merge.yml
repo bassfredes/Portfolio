@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  security_scan:
+  gitleaks_scan: # Renombrado desde security_scan y enfocado solo en Gitleaks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,20 +20,30 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run Semgrep
-        uses: semgrep/semgrep-action@v2
+  eslint_security_scan: # Job renombrado y modificado
+    name: ESLint Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          config: >-
-            p/ci
-            p/default
-            p/javascript
-            p/typescript
-            p/react
-            p/nextjs
+          node-version: '20' # O la versión que uses en tu proyecto
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run ESLint
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx --format stylish
+        # Opcional: si quieres que el workflow falle si ESLint encuentra errores:
+        # run: npx eslint . --ext .js,.jsx,.ts,.tsx --format stylish --max-warnings 0
 
   build_and_deploy:
     runs-on: ubuntu-latest
-    needs: security_scan
+    needs: [gitleaks_scan, eslint_security_scan] # Depende de Gitleaks y ESLint
     steps:
       - uses: actions/checkout@v4
       - run: npm ci

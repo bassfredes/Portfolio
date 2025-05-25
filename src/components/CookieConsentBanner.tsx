@@ -10,37 +10,28 @@ export default function CookieConsentBanner() {
   const [consentGiven, setConsentGiven] = useState(true); // Default to true to avoid flash of banner
 
   useEffect(() => {
+    // Check localStorage only on the client-side
     const storedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
-    let timerId: ReturnType<typeof setTimeout> | undefined = undefined;
-
     if (!storedConsent) {
-      // Set default consent to denied if no choice has been made (can be done immediately)
+      setIsVisible(true);
+      setConsentGiven(false);
+      // Set default consent to denied if no choice has been made
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'default', {
           'analytics_storage': 'denied',
-          'ad_storage': 'denied',
+          'ad_storage': 'denied', // Optional: if you plan to use ads
         });
       }
-      timerId = setTimeout(() => {
-        setIsVisible(true);
-        setConsentGiven(false);
-      }, 500);
     } else {
       setConsentGiven(true);
       setIsVisible(false);
-      // If consent was already given, ensure GA knows
+       // If consent was already given, ensure GA knows
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'update', {
           'analytics_storage': 'granted'
         });
       }
     }
-
-    return () => {
-      if (timerId) {
-        clearTimeout(timerId);
-      }
-    };
   }, []);
 
   const handleAccept = () => {
