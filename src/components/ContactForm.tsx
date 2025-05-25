@@ -61,6 +61,7 @@ const ContactForm: React.FC = () => {
         src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
         strategy="lazyOnload"
         async
+        defer
         onLoad={handleRecaptchaLoad}
       />
       <form
