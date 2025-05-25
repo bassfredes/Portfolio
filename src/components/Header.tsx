@@ -45,7 +45,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!pathname) { 
+      if (!pathname) {
         setActiveSection("");
         return;
       }
@@ -82,12 +82,15 @@ const Header: React.FC = () => {
       }
     };
 
-    // Determinar la sección activa basada en el pathname al cargar
-    const currentLink = NAV_LINKS.find(link => link.path === pathname || (pathname.startsWith(link.path) && link.path !== "/"));
-    if (currentLink) {
-      setActiveSection(currentLink.id);
+    if (pathname) { 
+      const currentLink = NAV_LINKS.find(link => link.path === pathname || (pathname.startsWith(link.path) && link.path !== "/"));
+      if (currentLink) {
+        setActiveSection(currentLink.id);
+      } else {
+        setActiveSection("");
+      }
     } else {
-      setActiveSection(""); // Ninguna activa si no es una ruta principal
+      setActiveSection("");
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
