@@ -1,5 +1,5 @@
 import AnalyticsScript from "@/components/AnalyticsScript";
-import CookieConsentBanner from "@/components/CookieConsentBanner";
+import CookieConsentWrapper from "@/components/CookieConsentWrapper";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -43,7 +43,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <AnalyticsScript />
         <ThemeProvider>{children}</ThemeProvider>
-        <CookieConsentBanner />
+        <CookieConsentWrapper />
       </body>
     </html>
   );

@@ -12,9 +12,8 @@ export default function CookieConsentBanner() {
   useEffect(() => {
     // Check localStorage only on the client-side
     const storedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
+
     if (!storedConsent) {
-      setIsVisible(true);
-      setConsentGiven(false);
       // Set default consent to denied if no choice has been made
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'default', {
@@ -22,16 +21,21 @@ export default function CookieConsentBanner() {
           'ad_storage': 'denied', // Optional: if you plan to use ads
         });
       }
+      // Show banner if no consent is stored
+      setIsVisible(true);
+      setConsentGiven(false);
     } else {
+      // Consent already given
       setConsentGiven(true);
       setIsVisible(false);
-       // If consent was already given, ensure GA knows
+      // If consent was already given, ensure GA knows
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'update', {
           'analytics_storage': 'granted'
         });
       }
     }
+    // No cleanup needed for a timer anymore
   }, []);
 
   const handleAccept = () => {
