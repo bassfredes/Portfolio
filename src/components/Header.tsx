@@ -38,16 +38,19 @@ const ThemeIcon: React.FC<{ theme: Theme }> = ({ theme }) => {
 
 const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const [activeSection, setActiveSection] = useState<string>(""); // Cambiado: Inicialmente ninguna activa
+  const [activeSection, setActiveSection] = useState<string>(""); 
   const [hasScrolled, setHasScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      // Si no estamos en una ruta principal de secciones, no hacer nada con el scroll
+      if (!pathname) { 
+        setActiveSection("");
+        return;
+      }
       const isMainPage = NAV_LINKS.some(link => link.path === pathname || (link.path === "/" && pathname.startsWith("/") && !NAV_LINKS.find(l => l.path !== "/" && pathname.startsWith(l.path)) ) );
-      if (!isMainPage && pathname !== "/") { // Asegurarse que la home page pueda tener scrollspy
+      if (!isMainPage && pathname !== "/") {
         setActiveSection("");
         return;
       }
