@@ -74,6 +74,6 @@ export default function CookieConsentBanner() {
 // Add gtag type to window for TypeScript
 declare global {
   interface Window {
-    gtag?: (command: string, action: string, params: Record<string, string>) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 }
