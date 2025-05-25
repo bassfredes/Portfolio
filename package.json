@@ -1,5 +1,6 @@
 {
-  "name": "out",
+  "name": "bassfredes-portfolio",
+  "description": "A portfolio website for showcasing projects and skills, built with Next.js, Firebase Functions, and Tailwind CSS.",
   "version": "0.1.0",
   "private": true,
   "scripts": {

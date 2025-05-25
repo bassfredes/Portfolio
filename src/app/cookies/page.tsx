@@ -1,0 +1,190 @@
+import Header from '@/components/Header';
+import { Metadata } from 'next';
+import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Cookie Policy - bassfredes.dev',
+  description: 'Information about how bassfredes.dev uses cookies for analytics and service improvement.',
+};
+
+export default function CookiePolicyPage() {
+  return (
+    <>
+      <Header />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-28 py-12 md:py-16 max-w-3xl pb-28 sm:pb-32">
+        <header className="mb-10 md:mb-12">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-neutral-50 mb-2 sm:mb-3">
+            Cookie Policy
+          </h1>
+          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400">
+            Last updated: May 25, 2025
+          </p>
+        </header>
+
+        <section className="mb-8 md:mb-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-5">
+            Introduction
+          </h2>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            This Cookie Policy explains how bassfredes.dev (&quot;we&quot;,
+            &quot;us&quot;, or &quot;our&quot;) uses cookies and similar
+            technologies to recognize you when you visit our website. It explains
+            what these technologies are and why we use them, as well as your
+            rights to control our use of them.
+          </p>
+        </section>
+
+        <section className="mb-8 md:mb-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-5">
+            What are cookies?
+          </h2>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            Cookies are small data files that are placed on your computer or
+            mobile device when you visit a website. Cookies are widely used by
+            website owners in order to make their websites work, or to work more
+            efficiently, as well as to provide reporting information.
+          </p>
+        </section>
+
+        <section className="mb-8 md:mb-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-5">
+            Why do we use cookies?
+          </h2>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            We use cookies for several reasons. Some cookies are required for
+            technical reasons in order for our website to operate, and we refer to
+            these as &quot;essential&quot; or &quot;strictly necessary&quot;
+            cookies. The primary cookies we use are for analytics purposes through
+            Google Analytics. These cookies help us:
+          </p>
+          <ul className="list-disc list-inside text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 pl-4 space-y-2 leading-relaxed">
+            <li className="mb-2">
+              <strong>Understand how visitors use our website:</strong> We collect
+              information such as the number of visitors to the site, the pages
+              they visit, and how long they stay on each page. This helps us
+              understand which parts of our website are popular and which areas
+              may need improvement.
+            </li>
+            <li className="mb-2">
+              <strong>Improve our services:</strong> The data gathered from
+              analytics cookies allows us to make informed decisions about website
+              design, content, and functionality, ultimately enhancing the user
+              experience.
+            </li>
+            <li className="mb-2">
+              <strong>Monitor website performance:</strong> We use cookies to
+              monitor the performance of our website, such as page load times and
+              error rates, to ensure it is functioning correctly and efficiently.
+            </li>
+          </ul>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            The information collected is aggregated and anonymous, and it does not
+            personally identify you. We do not use cookies for advertising or
+            tracking your browsing activity across other websites.
+          </p>
+        </section>
+
+        <section className="mb-8 md:mb-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-5">
+            What types of cookies do we use?
+          </h2>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            Specifically, we use Google Analytics cookies. These are third-party
+            cookies set by Google. The information generated by these cookies
+            about your use of our website (including your IP address, which is
+            anonymized before storage) will be transmitted to and stored by Google
+            on servers in the United States. Google will use this information for
+            the purpose of evaluating your use of our website, compiling reports
+            on website activity for us, and providing other services relating to
+            website activity and internet usage.
+          </p>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            For more information on Google Analytics cookies, see the official
+            Google Analytics documentation and Google&apos;s privacy policy.
+          </p>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            Learn more about how Google processes personal information:{" "}
+            <Link
+              href="https://business.safety.google/privacy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              https://business.safety.google/privacy/
+            </Link>
+            .
+          </p>
+        </section>
+
+        <section className="mb-8 md:mb-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-5">
+            How can you control cookies?
+          </h2>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            You have the right to decide whether to accept or reject cookies. When
+            you first visit our website, you will be presented with a cookie
+            consent banner. By clicking &quot;Got it&quot; or continuing to use
+            the site after seeing the banner, you consent to our use of cookies as
+            described in this policy.
+          </p>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            If you wish to withdraw your consent at any time, you can do so by
+            clearing cookies from your browser. Most web browsers allow some
+            control of most cookies through the browser settings. To find out more
+            about cookies, including how to see what cookies have been set and how
+            to manage and delete them, visit{" "}
+            <Link
+              href="https://www.allaboutcookies.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              www.allaboutcookies.org
+            </Link>
+            .
+          </p>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            Please note that if you choose to block or delete cookies, some parts
+            of our website may not function properly.
+          </p>
+        </section>
+
+        <section className="mb-8 md:mb-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-5">
+            Changes to this Cookie Policy
+          </h2>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            We may update this Cookie Policy from time to time in order to
+            reflect, for example, changes to the cookies we use or for other
+            operational, legal, or regulatory reasons. Please therefore re-visit
+            this Cookie Policy regularly to stay informed about our use of cookies
+            and related technologies.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-5">
+            Contact Us
+          </h2>
+          <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+            If you have any questions about our use of cookies or this Cookie
+            Policy, please contact us through the{" "}
+            <Link href="/contact" className="underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              contact form
+            </Link>{" "}
+            on our homepage.
+          </p>
+        </section>
+
+        <div className="mt-12 md:mt-16 text-center">
+          <Link
+            href="/"
+            className="text-blue-600 dark:text-blue-400 hover:underline text-base sm:text-lg"
+          >
+            &larr; Back to homepage
+          </Link>
+        </div>
+      </div>
+    </>
+  );
+}

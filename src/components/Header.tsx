@@ -38,27 +38,60 @@ const ThemeIcon: React.FC<{ theme: Theme }> = ({ theme }) => {
 
 const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const [activeSection, setActiveSection] = useState<string>(NAV_LINKS[0].id);
+  const [activeSection, setActiveSection] = useState<string>(""); // Cambiado: Inicialmente ninguna activa
   const [hasScrolled, setHasScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      // Detectar sección activa
+      // Si no estamos en una ruta principal de secciones, no hacer nada con el scroll
+      const isMainPage = NAV_LINKS.some(link => link.path === pathname || (link.path === "/" && pathname.startsWith("/") && !NAV_LINKS.find(l => l.path !== "/" && pathname.startsWith(l.path)) ) );
+      if (!isMainPage && pathname !== "/") { // Asegurarse que la home page pueda tener scrollspy
+        setActiveSection("");
+        return;
+      }
+
       const offsets = NAV_LINKS.map(({ id }) => {
         const el = document.getElementById(id);
         if (!el) return { id, top: Infinity };
         const rect = el.getBoundingClientRect();
-        return { id, top: Math.abs(rect.top - 80) };
+        // Ajustar el top para que la sección se active un poco antes de llegar al borde superior exacto
+        return { id, top: Math.abs(rect.top - 80) }; // 80px es un offset de ejemplo, ajustar según altura del header
       });
-      const closest = offsets.reduce((a, b) => (a.top < b.top ? a : b));
-      setActiveSection(closest.id);
+
+      const visibleSections = offsets.filter(section => {
+        const el = document.getElementById(section.id);
+        if (!el) return false;
+        const rect = el.getBoundingClientRect();
+        return rect.top < window.innerHeight && rect.bottom >= 80; // 80px es un offset de ejemplo
+      });
+
+      if (visibleSections.length > 0) {
+        // De las secciones visibles, encontrar la más cercana al top (o la primera si hay varias)
+        const closest = visibleSections.reduce((a, b) => (a.top < b.top ? a : b));
+        setActiveSection(closest.id);
+      } else {
+         // Si estamos en la página principal y no hay secciones visibles (ej. al final del scroll),
+         // intentar mantener la última sección activa o limpiar si es necesario.
+         // Opcionalmente, si se scrollea muy abajo y ninguna sección está "visible", limpiar activeSection.
+         // setActiveSection(""); // Descomentar si se prefiere limpiar
+      }
     };
+
+    // Determinar la sección activa basada en el pathname al cargar
+    const currentLink = NAV_LINKS.find(link => link.path === pathname || (pathname.startsWith(link.path) && link.path !== "/"));
+    if (currentLink) {
+      setActiveSection(currentLink.id);
+    } else {
+      setActiveSection(""); // Ninguna activa si no es una ruta principal
+    }
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    // Llamar una vez para establecer el estado inicial correctamente tras cualquier cambio de ruta
+    handleScroll(); 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]); // Añadir pathname como dependencia
 
   useEffect(() => {
     const onScroll = () => {
