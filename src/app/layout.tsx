@@ -41,9 +41,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
+        <CookieConsentWrapper />
         <AnalyticsScript />
         <ThemeProvider>{children}</ThemeProvider>
-        <CookieConsentWrapper />
       </body>
     </html>
   );

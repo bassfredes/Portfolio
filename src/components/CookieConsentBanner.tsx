@@ -14,11 +14,16 @@ export default function CookieConsentBanner() {
     const storedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
 
     if (!storedConsent) {
-      // Set default consent to denied if no choice has been made
+      // Set default consent to denied if no choice has been made.
+      // This ensures that Google tags operate in a restricted mode before explicit user consent.
+      // All categories (analytics_storage, ad_storage, ad_user_data, ad_personalization)
+      // are set to 'denied' by default.
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'default', {
           'analytics_storage': 'denied',
-          'ad_storage': 'denied', // Optional: if you plan to use ads
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
         });
       }
       // Show banner if no consent is stored
@@ -40,15 +45,23 @@ export default function CookieConsentBanner() {
 
   const handleAccept = () => {
     localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
+    // Flag to indicate that the GTM script can be loaded by AnalyticsScript.tsx
+    // This is set upon user acceptance of cookie consent.
+    localStorage.setItem('gtm_script_loaded', 'true');
     setIsVisible(false);
     setConsentGiven(true);
+    // When the user accepts, update the consent state for Google tags.
+    // All relevant categories are set to 'granted'.
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', {
-        'analytics_storage': 'granted'
+        'analytics_storage': 'granted',
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
       });
       // You might want to trigger a pageview or event here if needed
       // window.gtag('event', 'consent_given', { 'event_category': 'cookie_consent', 'event_label': 'accepted' });
-      console.log('Cookie consent granted and analytics updated.');
+      console.log('Cookie consent granted and all categories updated to granted.');
     }
   };
 
