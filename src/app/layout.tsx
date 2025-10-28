@@ -1,6 +1,7 @@
 import AnalyticsScript from "@/components/AnalyticsScript";
 import AnalyticsProvider from "@/components/AnalyticsProvider";
 import CookieConsentWrapper from "@/components/CookieConsentWrapper";
+import GTMNoScript from "@/components/GTMNoScript";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -42,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
+        <GTMNoScript />
         <AnalyticsScript />
         <AnalyticsProvider />
         <ThemeProvider>{children}</ThemeProvider>

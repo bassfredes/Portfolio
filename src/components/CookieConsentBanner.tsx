@@ -24,6 +24,9 @@ export default function CookieConsentBanner() {
       // If consent was already given, ensure GA knows
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'update', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
           'analytics_storage': 'granted',
           'functionality_storage': 'granted',
           'personalization_storage': 'granted'
@@ -38,6 +41,9 @@ export default function CookieConsentBanner() {
     setConsentGiven(true);
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
         'analytics_storage': 'granted',
         'functionality_storage': 'granted',
         'personalization_storage': 'granted'
@@ -58,7 +64,8 @@ export default function CookieConsentBanner() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-neutral-800 text-white p-4 shadow-lg z-50 md:flex md:items-center md:justify-between">
       <p className="text-sm mb-3 md:mb-0 md:mr-4">
-        bassfredes.dev uses cookies from Google to deliver and enhance the quality of its services and to analyze traffic.
+        bassfredes.dev uses cookies to deliver and enhance the quality of its services and to analyze traffic.
+        Essential functionality data is collected regardless of consent.{" "}
         <Link href="/cookies" className="underline hover:text-neutral-300 ml-1">
           Learn more.
         </Link>
