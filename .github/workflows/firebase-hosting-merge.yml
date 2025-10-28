@@ -46,16 +46,41 @@ jobs:
     needs: [gitleaks_scan, eslint_security_scan] # Depende de Gitleaks y ESLint
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci
-      - run: |
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Clean install dependencies
+        run: npm ci
+      
+      - name: Setup environment variables
+        run: |
           echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> .env
           echo "GMAIL_CLIENT_ID=${{ secrets.GMAIL_CLIENT_ID }}" >> .env
           echo "GMAIL_CLIENT_SECRET=${{ secrets.GMAIL_CLIENT_SECRET }}" >> .env
           echo "GMAIL_REFRESH_TOKEN=${{ secrets.GMAIL_REFRESH_TOKEN }}" >> .env
           echo "RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}" >> .env
           echo "NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}" >> .env
-      - run: npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+          echo "NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }}" >> .env
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Cache build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+            .next/static
+            .next/standalone
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASSFREDES_PORTFOLIO }}
@@ -63,3 +88,10 @@ jobs:
           projectId: bassfredes-portfolio
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
+      
+      - name: Cleanup local artifacts
+        if: always()
+        run: |
+          rm -rf .next/cache
+          rm -f .env
+          echo "Temporary build artifacts cleaned up"

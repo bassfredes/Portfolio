@@ -7,7 +7,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean": "./scripts/cleanup.sh",
+    "clean:firebase": "./scripts/cleanup.sh --firebase",
+    "deploy": "firebase deploy --project bassfredes-portfolio --force",
+    "deploy:hosting": "firebase deploy --only hosting --project bassfredes-portfolio"
   },
   "dependencies": {
     "firebase-functions": "^6.3.2",
