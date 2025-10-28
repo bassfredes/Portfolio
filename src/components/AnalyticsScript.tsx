@@ -6,6 +6,10 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
 const AnalyticsScript = () => {
   // Prefer GTM if available, fallback to direct GA4
   const useGTM = !!GTM_ID;
+  
+  // Always load analytics infrastructure for Consent Mode v2
+  // Even without actual IDs for development/testing
+  const shouldLoadAnalytics = useGTM || GA_MEASUREMENT_ID || process.env.NODE_ENV === 'development';
 
   return (
     <>
@@ -42,19 +46,27 @@ const AnalyticsScript = () => {
           </Script>
         </>
       ) : (
-        GA_MEASUREMENT_ID && (
+        shouldLoadAnalytics && (
           <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-              strategy="afterInteractive"
-            />
+            {/* Always load gtag infrastructure for Consent Mode v2 */}
+            <Script id="gtag-lib" strategy="afterInteractive">
+              {GA_MEASUREMENT_ID ? `
+                // Load gtag library
+                (function() {
+                  var script = document.createElement('script');
+                  script.async = true;
+                  script.src = 'https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}';
+                  document.head.appendChild(script);
+                })();
+              ` : '// No GA library loaded - using mock gtag for development'}
+            </Script>
             <Script id="gtag-init" strategy="afterInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 
-                // Set default consent mode v2
+                // Set default consent mode v2 (always deny by default)
                 gtag('consent', 'default', {
                   'ad_storage': 'denied',
                   'ad_user_data': 'denied',
@@ -65,12 +77,15 @@ const AnalyticsScript = () => {
                   'security_storage': 'granted'
                 });
                 
+                // Only configure GA if we have an actual measurement ID
+                ${GA_MEASUREMENT_ID ? `
                 gtag('config', '${GA_MEASUREMENT_ID}', {
-                  page_path: window.location.pathname,
+                  send_page_view: false, // Deshabilitar pageview automático
                   anonymize_ip: true,
                   allow_google_signals: false,
                   allow_ad_personalization_signals: false
                 });
+                ` : '// No GA_MEASUREMENT_ID - consent mode still available for testing'}
               `}
             </Script>
           </>
