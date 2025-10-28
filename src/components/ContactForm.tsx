@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import Script from "next/script";
+import { trackEvent } from "@/utils/analytics";
 
 declare global {
   interface Window {
@@ -44,11 +45,29 @@ const ContactForm: React.FC = () => {
       if (res.ok) {
         setSuccess("Message sent successfully!");
         form.reset();
+        // Track successful form submission
+        trackEvent({
+          action: 'contact_form_submit',
+          category: 'engagement',
+          label: 'success'
+        });
       } else {
         setError(json.error || "Failed to send the message. Please try again later.");
+        // Track form submission error
+        trackEvent({
+          action: 'contact_form_submit',
+          category: 'engagement',
+          label: 'error'
+        });
       }
     } catch (err) {
       setError((err as Error).message || "Failed to send the message. Please try again later.");
+      // Track form submission failure
+      trackEvent({
+        action: 'contact_form_submit',
+        category: 'engagement',
+        label: 'failure'
+      });
     } finally {
       setLoading(false);
     }

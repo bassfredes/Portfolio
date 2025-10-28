@@ -1,4 +1,5 @@
 import AnalyticsScript from "@/components/AnalyticsScript";
+import AnalyticsProvider from "@/components/AnalyticsProvider";
 import CookieConsentWrapper from "@/components/CookieConsentWrapper";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
@@ -42,6 +43,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
         <AnalyticsScript />
+        <AnalyticsProvider />
         <ThemeProvider>{children}</ThemeProvider>
         <CookieConsentWrapper />
       </body>

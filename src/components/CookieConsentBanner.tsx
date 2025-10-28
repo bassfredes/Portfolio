@@ -14,13 +14,6 @@ export default function CookieConsentBanner() {
     const storedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
 
     if (!storedConsent) {
-      // Set default consent to denied if no choice has been made
-      if (typeof window.gtag === 'function') {
-        window.gtag('consent', 'default', {
-          'analytics_storage': 'denied',
-          'ad_storage': 'denied', // Optional: if you plan to use ads
-        });
-      }
       // Show banner if no consent is stored
       setIsVisible(true);
       setConsentGiven(false);
@@ -31,11 +24,12 @@ export default function CookieConsentBanner() {
       // If consent was already given, ensure GA knows
       if (typeof window.gtag === 'function') {
         window.gtag('consent', 'update', {
-          'analytics_storage': 'granted'
+          'analytics_storage': 'granted',
+          'functionality_storage': 'granted',
+          'personalization_storage': 'granted'
         });
       }
     }
-    // No cleanup needed for a timer anymore
   }, []);
 
   const handleAccept = () => {
@@ -44,10 +38,15 @@ export default function CookieConsentBanner() {
     setConsentGiven(true);
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', {
-        'analytics_storage': 'granted'
+        'analytics_storage': 'granted',
+        'functionality_storage': 'granted',
+        'personalization_storage': 'granted'
       });
-      // You might want to trigger a pageview or event here if needed
-      // window.gtag('event', 'consent_given', { 'event_category': 'cookie_consent', 'event_label': 'accepted' });
+      // Track consent acceptance event
+      window.gtag('event', 'consent_granted', {
+        'event_category': 'privacy',
+        'event_label': 'cookie_consent_accepted'
+      });
       console.log('Cookie consent granted and analytics updated.');
     }
   };

@@ -2,31 +2,24 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-// Google Analytics measurement ID (replace with your own)
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
-
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-  }
-}
-
-function pageview(url: string) {
-  if (typeof window.gtag === "function") {
-    window.gtag("config", GA_MEASUREMENT_ID, {
-      page_path: url,
-    });
-  }
-}
-
 const useAnalytics = () => {
   const pathname = usePathname();
-  const safePathname = pathname ?? "";
 
   useEffect(() => {
-    if (!GA_MEASUREMENT_ID) return;
-    pageview(safePathname);
-  }, [safePathname]);
+    const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
+    
+    if (!GA_MEASUREMENT_ID || !pathname) return;
+    
+    // Usar el método estándar recomendado de GA4
+    if (typeof window !== 'undefined' && window.gtag) {
+      // Método estándar para tracking de páginas en SPA
+      window.gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: pathname,
+      });
+    }
+  }, [pathname]);
 };
 
 export default useAnalytics;

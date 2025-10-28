@@ -15,8 +15,21 @@ const AnalyticsScript = () => (
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            
+            // Set default consent mode
+            gtag('consent', 'default', {
+              'analytics_storage': 'denied',
+              'ad_storage': 'denied',
+              'functionality_storage': 'denied',
+              'personalization_storage': 'denied',
+              'security_storage': 'granted'
+            });
+            
             gtag('config', '${GA_MEASUREMENT_ID}', {
               page_path: window.location.pathname,
+              anonymize_ip: true,
+              allow_google_signals: false,
+              allow_ad_personalization_signals: false
             });
           `}
         </Script>
