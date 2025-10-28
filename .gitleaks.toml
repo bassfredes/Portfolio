@@ -17,7 +17,6 @@ title = "Gitleaks base config for Next.js"
     '''tailwind\.config\.js''',
     '''public/''',        # Carpeta pública (generalmente segura, pero revisar)
     '''\.env\.example$''', # Archivos de ejemplo de variables de entorno
-    '''\.env\.local$''',   # Archivos de variables de entorno locales (si se versionan por error)
     '''\.gitignore''',
     '''README\.md'''
   ]
