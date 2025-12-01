@@ -27,7 +27,7 @@ export default function BlogCard({ post }: BlogCardProps) {
           />
         </Link>
       )}
-      <div className="flex flex-col flex-grow p-6">
+      <div className="flex flex-col grow p-6">
         <div className="flex items-center justify-between mb-3">
         <span className="text-xs font-mono text-gray-500 dark:text-gray-400">
           {post.date}
@@ -45,7 +45,7 @@ export default function BlogCard({ post }: BlogCardProps) {
         </h3>
       </Link>
       
-      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
+      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3 grow">
         {post.excerpt}
       </p>
       

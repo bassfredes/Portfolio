@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getSortedPostsData, getAllCategories, slugify } from '@/utils/posts';
 
+// Forzar generación estática y revalidación cada 24 horas
+export const dynamic = 'force-static';
+export const revalidate = 86400; // 24 horas en segundos
+
 // Función para escapar caracteres especiales de XML y prevenir XSS
 function escapeXml(text: string): string {
   const xmlEscapes: Record<string, string> = {
@@ -40,6 +44,9 @@ export async function GET() {
     ...categoryUrls
   ];
 
+  // Usar fecha fija para evitar regeneración innecesaria (se actualiza con cada build/revalidación)
+  const lastmod = new Date().toISOString().split('T')[0]; // Solo fecha YYYY-MM-DD
+
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${allUrls
@@ -47,7 +54,7 @@ export async function GET() {
         (url) => `
       <url>
         <loc>${escapeXml(baseUrl)}${escapeXml(url)}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
+        <lastmod>${lastmod}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
       </url>
