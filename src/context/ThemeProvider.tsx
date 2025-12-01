@@ -18,13 +18,16 @@ function getSystemTheme(): "light" | "dark" {
 }
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>("system");
+  const [theme, setThemeState] = useState<Theme>("dark");
 
   useEffect(() => {
     const saved =
       typeof window !== "undefined" ? localStorage.getItem("theme") : null;
     if (saved === "light" || saved === "dark" || saved === "system") {
       setThemeState(saved);
+    } else {
+      // Default to dark if no preference is saved
+      setThemeState("dark");
     }
   }, []);
 
