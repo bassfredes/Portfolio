@@ -1,6 +1,18 @@
 import { NextResponse } from 'next/server';
 import { getSortedPostsData, getAllCategories, slugify } from '@/utils/posts';
 
+// Función para escapar caracteres especiales de XML y prevenir XSS
+function escapeXml(text: string): string {
+  const xmlEscapes: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&apos;',
+  };
+  return text.replace(/[&<>"']/g, (char) => xmlEscapes[char]);
+}
+
 export async function GET() {
   const baseUrl = 'https://www.bassfredes.dev';
   
@@ -34,7 +46,7 @@ export async function GET() {
       .map(
         (url) => `
       <url>
-        <loc>${baseUrl}${url}</loc>
+        <loc>${escapeXml(baseUrl)}${escapeXml(url)}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>

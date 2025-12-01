@@ -6,11 +6,19 @@ interface BlogCardProps {
   post: PostData;
 }
 
+// Función para sanitizar el ID del post y prevenir XSS
+function sanitizeSlug(slug: string): string {
+  // Solo permite caracteres alfanuméricos, guiones y guiones bajos
+  return encodeURIComponent(slug.replace(/[^a-zA-Z0-9-_]/g, ''));
+}
+
 export default function BlogCard({ post }: BlogCardProps) {
+  const safePostId = sanitizeSlug(post.id);
+  
   return (
     <article className="flex flex-col h-full bg-white dark:bg-gray-800/50 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 overflow-hidden">
       {post.thumbnail && (
-        <Link href={`/blog/${post.id}`} className="block relative w-full h-48 overflow-hidden">
+        <Link href={`/blog/${safePostId}`} className="block relative w-full h-48 overflow-hidden">
           <Image
             src={post.thumbnail}
             alt={post.title}
@@ -31,7 +39,7 @@ export default function BlogCard({ post }: BlogCardProps) {
         )}
       </div>
       
-      <Link href={`/blog/${post.id}`} className="group block mb-3">
+      <Link href={`/blog/${safePostId}`} className="group block mb-3">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
           {post.title}
         </h3>
@@ -43,7 +51,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       
       <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
         <Link 
-          href={`/blog/${post.id}`}
+          href={`/blog/${safePostId}`}
           className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
         >
           Read more <span>→</span>

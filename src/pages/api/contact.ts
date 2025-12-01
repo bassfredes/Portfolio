@@ -1,6 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 
+// Función para escapar caracteres HTML y prevenir XSS
+function escapeHtml(text: string): string {
+  const htmlEscapes: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return text.replace(/[&<>"']/g, (char) => htmlEscapes[char]);
+}
+
 // ENV: process.env.RECAPTCHA_SECRET_KEY, process.env.GMAIL_USER
 
 // Utilidad para obtener variables de entorno compatible con local (.env), GitHub Actions y Firebase Functions
@@ -73,13 +85,18 @@ export default async function handler(
   });
 
   try {
+    // Sanitizar inputs para prevenir XSS en el HTML del email
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeMessage = escapeHtml(message);
+
     await transporter.sendMail({
       from: `Portfolio Contact <${await getEnv("GMAIL_USER")}>`,
       to: await getEnv("GMAIL_USER"),
       subject: `New message from Bastian Fredes' portfolio`,
       replyTo: email,
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-      html: `<p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Message:</b><br/>${message.replace(
+      html: `<p><b>Name:</b> ${safeName}</p><p><b>Email:</b> ${safeEmail}</p><p><b>Message:</b><br/>${safeMessage.replace(
         /\n/g,
         "<br/>"
       )}</p>`,
