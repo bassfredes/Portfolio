@@ -1,4 +1,4 @@
-import { getSortedPostsData, getAllCategories } from '@/utils/posts';
+import { getSortedPostsData, getAllCategories, slugify } from '@/utils/posts';
 import Link from 'next/link';
 import SectionContainer from '@/components/SectionContainer';
 import SectionTitle from '@/components/SectionTitle';
@@ -6,6 +6,10 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SectionScrollHandler from '@/components/SectionScrollHandler';
 import BlogCard from '@/components/BlogCard';
+
+// Forzar generación estática y revalidación para asegurar que los posts siempre se carguen
+export const dynamic = 'force-static';
+export const revalidate = 3600; // Revalidar cada hora
 
 export const metadata = {
   title: 'Blog | Bastian Fredes',
@@ -48,7 +52,7 @@ export default function Blog() {
                   {categories.map((category) => (
                     <Link
                       key={category}
-                      href={`/blog/category/${category.toLowerCase()}`}
+                      href={`/blog/category/${slugify(category)}`}
                       className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-medium text-sm"
                     >
                       {category}

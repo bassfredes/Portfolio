@@ -196,6 +196,7 @@ h4 {
   margin-top: 1.25em;
   margin-bottom: 1.25em;
   line-height: 1.75;
+  text-align: justify;
 }
 
 .prose hr {

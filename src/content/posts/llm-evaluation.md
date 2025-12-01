@@ -231,6 +231,8 @@ Companies that embrace this do not tell stories of dramatic AI failures. They te
 
 ## References
 
-- McKinsey & Company. (2024). The state of AI 2024. https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2024
+- McKinsey & Company. (2024). The state of AI 2024.
+https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2024
 
-- Tom's Hardware. (2024). 95% of generative AI implementations in enterprise have no measurable impact on P&L. https://www.tomshardware.com/tech-industry/artificial-intelligence/95-percent-of-generative-ai-implementations-in-enterprise-have-no-measurable-impact-on-p-and-l-says-mit-flawed-integration-key-reason-why-ai-projects-underperform
+- Tom's Hardware. (2024). 95% of generative AI implementations in enterprise have no measurable impact on P&L.
+https://www.tomshardware.com/tech-industry/artificial-intelligence/95-percent-of-generative-ai-implementations-in-enterprise-have-no-measurable-impact-on-p-and-l-says-mit-flawed-integration-key-reason-why-ai-projects-underperform

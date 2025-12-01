@@ -8,7 +8,27 @@ import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
 
-const postsDirectory = path.join(process.cwd(), 'src/content/posts');
+// Usar __dirname alternativo para mejor compatibilidad con diferentes entornos
+function getPostsDirectory(): string {
+  // Intentar múltiples rutas para mayor robustez
+  const possiblePaths = [
+    path.join(process.cwd(), 'src/content/posts'),
+    path.join(process.cwd(), 'src', 'content', 'posts'),
+    path.resolve(__dirname, '../content/posts'),
+    path.resolve(__dirname, '../../content/posts'),
+  ];
+
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      return p;
+    }
+  }
+
+  // Fallback al path original
+  return path.join(process.cwd(), 'src/content/posts');
+}
+
+const postsDirectory = getPostsDirectory();
 
 export interface PostData {
   id: string;
@@ -25,37 +45,51 @@ export interface PostData {
 }
 
 export function getSortedPostsData(): PostData[] {
-  // Crear directorio si no existe
-  if (!fs.existsSync(postsDirectory)) {
+  try {
+    // Crear directorio si no existe
+    if (!fs.existsSync(postsDirectory)) {
+      console.warn(`[posts] Directory not found: ${postsDirectory}`);
+      return [];
+    }
+    
+    const fileNames = fs.readdirSync(postsDirectory);
+    const mdFiles = fileNames.filter(fileName => fileName.endsWith('.md'));
+    
+    if (mdFiles.length === 0) {
+      console.warn(`[posts] No markdown files found in: ${postsDirectory}`);
+      return [];
+    }
+
+    const allPostsData = mdFiles.map((fileName) => {
+      // Remove ".md" from file name to get id
+      const id = fileName.replace(/\.md$/, '');
+
+      // Read markdown file as string
+      const fullPath = path.join(postsDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+      // Use gray-matter to parse the post metadata section
+      const matterResult = matter(fileContents);
+
+      // Combine the data with the id
+      return {
+        id,
+        ...(matterResult.data as { title: string; date: string }),
+      };
+    });
+    
+    // Sort posts by date
+    return allPostsData.sort((a, b) => {
+      if (a.date < b.date) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+  } catch (error) {
+    console.error(`[posts] Error reading posts:`, error);
     return [];
   }
-  
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.filter(fileName => fileName.endsWith('.md')).map((fileName) => {
-    // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '');
-
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-    // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
-
-    // Combine the data with the id
-    return {
-      id,
-      ...(matterResult.data as { title: string; date: string }),
-    };
-  });
-  // Sort posts by date
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
 }
 
 export function slugify(text: string): string {
@@ -85,41 +119,57 @@ export function getPostsByCategorySlug(slug: string): PostData[] {
 }
 
 export function getAllPostIds() {
-  if (!fs.existsSync(postsDirectory)) {
+  try {
+    if (!fs.existsSync(postsDirectory)) {
+      console.warn(`[posts] Directory not found for getAllPostIds: ${postsDirectory}`);
+      return [];
+    }
+    const fileNames = fs.readdirSync(postsDirectory);
+    return fileNames.filter(fileName => fileName.endsWith('.md')).map((fileName) => {
+      return {
+        params: {
+          slug: fileName.replace(/\.md$/, ''),
+        },
+      };
+    });
+  } catch (error) {
+    console.error(`[posts] Error in getAllPostIds:`, error);
     return [];
   }
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames.filter(fileName => fileName.endsWith('.md')).map((fileName) => {
-    return {
-      params: {
-        slug: fileName.replace(/\.md$/, ''),
-      },
-    };
-  });
 }
 
 export async function getPostData(id: string): Promise<PostData> {
-  const fullPath = path.join(postsDirectory, `${id}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  try {
+    const fullPath = path.join(postsDirectory, `${id}.md`);
+    
+    if (!fs.existsSync(fullPath)) {
+      throw new Error(`Post not found: ${id}`);
+    }
+    
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-  // Use gray-matter to parse the post metadata section
-  const matterResult = matter(fileContents);
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark()
-    .use(remarkGfm)
-    .use(remarkBreaks)
-    .use(remarkRehype)
-    .use(rehypeHighlight)
-    .use(rehypeStringify)
-    .process(matterResult.content);
-  const contentHtml = processedContent.toString();
+    // Use gray-matter to parse the post metadata section
+    const matterResult = matter(fileContents);
+    // Use remark to convert markdown into HTML string
+    const processedContent = await remark()
+      .use(remarkGfm)
+      .use(remarkBreaks)
+      .use(remarkRehype)
+      .use(rehypeHighlight)
+      .use(rehypeStringify)
+      .process(matterResult.content);
+    const contentHtml = processedContent.toString();
 
-  // Combine the data with the id and contentHtml
-  return {
-    id,
-    contentHtml,
-    ...(matterResult.data as { title: string; date: string }),
-  };
+    // Combine the data with the id and contentHtml
+    return {
+      id,
+      contentHtml,
+      ...(matterResult.data as { title: string; date: string }),
+    };
+  } catch (error) {
+    console.error(`[posts] Error getting post data for ${id}:`, error);
+    throw error;
+  }
 }
 
 export function getRelatedPosts(currentPostId: string, category?: string, limit: number = 3): PostData[] {

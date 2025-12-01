@@ -8,6 +8,10 @@ import BlogCard from '@/components/BlogCard';
 import Link from 'next/link';
 import Image from 'next/image';
 
+// Forzar generación estática y revalidación
+export const dynamic = 'force-static';
+export const revalidate = 3600;
+
 export async function generateStaticParams() {
   const paths = getAllPostIds();
   return paths.map((path) => ({
