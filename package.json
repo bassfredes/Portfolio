@@ -16,15 +16,25 @@
   "dependencies": {
     "@opentelemetry/api": "^1.9.0",
     "firebase-functions": "^7.0.0",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
     "next": "16.0.6",
     "nodemailer": "^7.0.11",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "rehype-highlight": "^7.0.2",
+    "rehype-stringify": "^10.0.1",
+    "remark": "^15.0.1",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-html": "^16.0.1",
+    "remark-rehype": "^11.1.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^24.10.1",
     "@types/nodemailer": "^7.0.4",
     "@types/react": "^19.2.7",

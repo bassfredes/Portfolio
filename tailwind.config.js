@@ -55,7 +55,53 @@ module.exports = {
           '50%': { backgroundPosition: '100% 50%' },
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.gray.700'),
+            a: {
+              color: theme('colors.blue.600'),
+              '&:hover': {
+                color: theme('colors.blue.800'),
+              },
+            },
+            'h1, h2, h3, h4': {
+              color: theme('colors.gray.900'),
+              fontWeight: '700',
+            },
+            code: {
+              color: theme('colors.pink.500'),
+              fontWeight: '600',
+            },
+          },
+        },
+        dark: {
+          css: {
+            color: theme('colors.gray.300'),
+            a: {
+              color: theme('colors.blue.400'),
+              '&:hover': {
+                color: theme('colors.blue.300'),
+              },
+            },
+            'h1, h2, h3, h4': {
+              color: theme('colors.white'),
+            },
+            strong: {
+              color: theme('colors.white'),
+            },
+            code: {
+              color: theme('colors.pink.400'),
+            },
+            hr: {
+              borderColor: theme('colors.gray.700'),
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };

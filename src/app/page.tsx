@@ -10,6 +10,9 @@ import React from "react";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
 import ContactFormClientWrapper from "@/components/ContactFormClientWrapper";
 import ContactInfoObfuscated from "@/components/ContactInfoObfuscated";
+import { getSortedPostsData } from "@/utils/posts";
+import BlogCard from "@/components/BlogCard";
+import Link from "next/link";
 
 interface Experience {
   role: string;
@@ -189,7 +192,7 @@ export default function Home() {
       <SectionScrollHandler />
       <Header />
       <main className="flex flex-col items-center w-full min-h-screen px-4 pt-20">
-        {/* HERO / PRESENTACIÓN */}
+        {/* HERO / PRESENTATION */}
         <SectionContainer
           id="hero"
           className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
@@ -198,9 +201,9 @@ export default function Home() {
         >
           <div className="flex flex-col items-center gap-6 mb-8 w-full">
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full">
-              <div className="flex-shrink-0 flex flex-col items-center">
+              <div className="shrink-0 flex flex-col items-center">
                 <div className="relative group">
-                  <span className="absolute -inset-2 z-0 rounded-full bg-gradient-to-tr from-blue-400 via-purple-500 to-pink-400 blur opacity-60 animate-blob-move"></span>
+                  <span className="absolute -inset-2 z-0 rounded-full bg-linear-to-tr from-blue-400 via-purple-500 to-pink-400 blur opacity-60 animate-blob-move"></span>
                   <Image
                     src="/me.jpg"
                     alt="Bastian Fredes profile"
@@ -221,7 +224,7 @@ export default function Home() {
                   className="flex items-center transition md:justify-center md:hover:scale-105 mb-4"
                 >
                   <div className="flex items-center">
-                    <span className="relative inline-flex overflow-hidden rounded-full p-[1px] animate-gradient-x">
+                    <span className="relative inline-flex overflow-hidden rounded-full p-px animate-gradient-x">
                       <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#51E4B8_0%,#21554E_50%,#51E4B8_100%)]"></span>
                       <div className="inline-flex items-center justify-center w-full px-3 py-1 text-sm text-green-800 bg-green-100 rounded-full cursor-pointer dark:bg-gray-800 dark:text-white/80 backdrop-blur-3xl whitespace-nowrap">
                         Open to work
@@ -256,7 +259,7 @@ export default function Home() {
           </div>
         </SectionContainer>
 
-        {/* EXPERIENCIA */}
+        {/* EXPERIENCE */}
         <SectionContainer
           id="experience"
           className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-slide-in-up mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
@@ -308,7 +311,7 @@ export default function Home() {
           </div>
         </SectionContainer>
 
-        {/* PROYECTOS */}
+        {/* PROJECTS */}
         <SectionContainer
           id="projects"
           className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
@@ -327,7 +330,50 @@ export default function Home() {
           </div>
         </SectionContainer>
 
-        {/* SOBRE MÍ */}
+        {/* BLOG SECTION */}
+        <SectionContainer
+          id="blog"
+          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          title="Latest Articles"
+          ariaLabel="Latest Articles"
+          role="region"
+        >
+          <SectionTitle className="text-3xl md:text-4xl font-extrabold flex items-center gap-3 mb-12 text-gray-900 dark:text-white">
+            <span className="w-2 h-2 bg-blue-700 dark:bg-blue-400 rounded-full animate-pulse"></span>
+            <span>Latest Articles</span>
+          </SectionTitle>
+
+          <div className="w-full">
+            {getSortedPostsData().length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {getSortedPostsData()
+                  .slice(0, 3)
+                  .map((post) => (
+                    <BlogCard key={post.id} post={post} />
+                  ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 bg-gray-50 dark:bg-gray-800/30 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700">
+                <p className="text-gray-600 dark:text-gray-400 text-lg">
+                  No articles yet. Stay tuned!
+                </p>
+              </div>
+            )}
+
+            {getSortedPostsData().length > 0 && (
+              <div className="mt-10 text-center">
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-full transition-colors shadow-md hover:shadow-lg"
+                >
+                  View all articles
+                </Link>
+              </div>
+            )}
+          </div>
+        </SectionContainer>
+
+        {/* ABOUT ME */}
         <SectionContainer
           id="about"
           className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
@@ -410,7 +456,7 @@ export default function Home() {
               </div>
               <div className="flex justify-center md:justify-end md:pl-8 animate-float">
                 <div className="relative group w-40 h-40 md:w-56 md:h-56">
-                  <div className="absolute inset-0 z-0 bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-60 group-hover:opacity-80 transition duration-500 animate-blob-move"></div>
+                  <div className="absolute inset-0 z-0 bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-60 group-hover:opacity-80 transition duration-500 animate-blob-move"></div>
                   <Image
                     src="/me.jpg"
                     alt="Bastian Fredes profile"
@@ -440,7 +486,7 @@ export default function Home() {
             <span>Performance Matters</span>
           </SectionTitle>
           <div className="flex flex-col md:flex-row items-center gap-8 w-full">
-            <div className="flex-shrink-0 flex items-center justify-center w-full md:w-80">
+            <div className="shrink-0 flex items-center justify-center w-full md:w-80">
               <Image
                 src="/performance-lighthouse.jpg"
                 alt="Lighthouse performance score 100"
@@ -451,23 +497,28 @@ export default function Home() {
               />
             </div>
             <div className="flex-1 flex flex-col gap-4">
-              <h4 className="text-xl md:text-2xl font-bold text-green-700 dark:text-green-400 mb-2">Why care about performance?</h4>
+              <h4 className="text-xl md:text-2xl font-bold text-green-700 dark:text-green-400 mb-2">
+                Why care about performance?
+              </h4>
               <ul className="list-disc list-inside text-base md:text-lg text-gray-800 dark:text-gray-200 mb-2 space-y-1">
                 <li>Faster sites = happier users</li>
                 <li>Better SEO & higher conversions</li>
                 <li>Zero layout shift, smooth experience</li>
               </ul>
               <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 font-medium">
-                I build with performance-first principles: fast loads, accessibility, and best practices by default.
+                I build with performance-first principles: fast loads,
+                accessibility, and best practices by default.
               </p>
               <div className="mt-2">
-                <span className="inline-block px-4 py-2 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-semibold text-sm shadow animate-fade-in">Let’s make your site a 100!</span>
+                <span className="inline-block px-4 py-2 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-semibold text-sm shadow animate-fade-in">
+                  Let’s make your site a 100!
+                </span>
               </div>
             </div>
           </div>
         </SectionContainer>
 
-        {/* CONTACTO */}
+        {/* CONTACT */}
         <SectionContainer
           id="contact"
           className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-24 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
@@ -498,7 +549,7 @@ export default function Home() {
               <div className="flex justify-center md:justify-start gap-4 mb-4 animate-fade-in-delay4">
                 <a
                   href="mailto:me@bassfredes.dev"
-                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-red-400 via-pink-500 to-yellow-400 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-red-400 animate-bounce-slow"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-linear-to-tr from-red-400 via-pink-500 to-yellow-400 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-red-400 animate-bounce-slow"
                   aria-label="Email"
                 >
                   <FaEnvelope
@@ -510,7 +561,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/bassfredes/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 via-cyan-400 to-blue-700 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-400 animate-bounce-slow"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-linear-to-tr from-blue-500 via-cyan-400 to-blue-700 shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-400 animate-bounce-slow"
                   aria-label="LinkedIn"
                 >
                   <FaLinkedin
@@ -522,7 +573,7 @@ export default function Home() {
                   href="https://github.com/bassfredes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-gray-700 via-gray-900 to-black shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-gray-400 animate-bounce-slow"
+                  className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-linear-to-tr from-gray-700 via-gray-900 to-black shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-gray-400 animate-bounce-slow"
                   aria-label="GitHub"
                 >
                   <FaGithub

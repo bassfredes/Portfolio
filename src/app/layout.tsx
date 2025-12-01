@@ -5,6 +5,7 @@ import GTMNoScript from "@/components/GTMNoScript";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "highlight.js/styles/github-dark.css";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,11 +21,11 @@ export const metadata: Metadata = {
     title: "Bastian Fredes - Portfolio",
     description:
       "Solution Architect, Technical Lead, and Web Developer 10+ years of experience - Galway, Ireland.",
-    url: "https://www.Bastian Fredes.dev",
+    url: "https://www.bassfredes.dev",
     siteName: "Bastian Fredes - Portfolio",
     images: [
       {
-        url: "https://www.Bastian Fredes.dev/og-image.jpg",
+        url: "https://www.bassfredes.dev/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Bastian Fredes - Portfolio",

@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { id: "hero", label: "About", path: "/" },
   { id: "experience", label: "Experience", path: "/experience" },
   { id: "projects", label: "Projects", path: "/projects" },
+  { id: "blog", label: "Blog", path: "/blog" },
   { id: "contact", label: "Contact", path: "/contact" },
 ];
 
@@ -15,7 +16,6 @@ type Theme = "light" | "dark" | "system";
 
 const ThemeIcon: React.FC<{ theme: Theme }> = ({ theme }) => {
   const iconClass = "transition-transform duration-300 dark:text-blue-400 text-blue-400";
-  
   if (theme === "dark")
     return (
       <span className={iconClass} title="Dark mode" aria-label="Dark mode">
@@ -38,7 +38,7 @@ const ThemeIcon: React.FC<{ theme: Theme }> = ({ theme }) => {
 
 const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const [activeSection, setActiveSection] = useState<string>(""); 
+  const [activeSection, setActiveSection] = useState<string>("");
   const [hasScrolled, setHasScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -49,7 +49,11 @@ const Header: React.FC = () => {
         setActiveSection("");
         return;
       }
-      const isMainPage = NAV_LINKS.some(link => link.path === pathname || (link.path === "/" && pathname.startsWith("/") && !NAV_LINKS.find(l => l.path !== "/" && pathname.startsWith(l.path)) ) );
+      const isMainPage = NAV_LINKS.some(
+        (link) =>
+          link.path === pathname ||
+          (link.path === "/" && pathname.startsWith("/") && !NAV_LINKS.find((l) => l.path !== "/" && pathname.startsWith(l.path)))
+      );
       if (!isMainPage && pathname !== "/") {
         setActiveSection("");
         return;
@@ -63,7 +67,7 @@ const Header: React.FC = () => {
         return { id, top: Math.abs(rect.top - 80) }; // 80px es un offset de ejemplo, ajustar según altura del header
       });
 
-      const visibleSections = offsets.filter(section => {
+      const visibleSections = offsets.filter((section) => {
         const el = document.getElementById(section.id);
         if (!el) return false;
         const rect = el.getBoundingClientRect();
@@ -75,15 +79,15 @@ const Header: React.FC = () => {
         const closest = visibleSections.reduce((a, b) => (a.top < b.top ? a : b));
         setActiveSection(closest.id);
       } else {
-         // Si estamos en la página principal y no hay secciones visibles (ej. al final del scroll),
-         // intentar mantener la última sección activa o limpiar si es necesario.
-         // Opcionalmente, si se scrollea muy abajo y ninguna sección está "visible", limpiar activeSection.
-         // setActiveSection(""); // Descomentar si se prefiere limpiar
+        // Si estamos en la página principal y no hay secciones visibles (ej. al final del scroll),
+        // intentar mantener la última sección activa o limpiar si es necesario.
+        // Opcionalmente, si se scrollea muy abajo y ninguna sección está "visible", limpiar activeSection.
+        // setActiveSection(""); // Descomentar si se prefiere limpiar
       }
     };
 
-    if (pathname) { 
-      const currentLink = NAV_LINKS.find(link => link.path === pathname || (pathname.startsWith(link.path) && link.path !== "/"));
+    if (pathname) {
+      const currentLink = NAV_LINKS.find((link) => link.path === pathname || (pathname.startsWith(link.path) && link.path !== "/"));
       if (currentLink) {
         setActiveSection(currentLink.id);
       } else {
@@ -95,7 +99,7 @@ const Header: React.FC = () => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     // Llamar una vez para establecer el estado inicial correctamente tras cualquier cambio de ruta
-    handleScroll(); 
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]); // Añadir pathname como dependencia
 
@@ -103,9 +107,9 @@ const Header: React.FC = () => {
     const onScroll = () => {
       setHasScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleNavClick = (id: string, path: string) => {
@@ -126,7 +130,7 @@ const Header: React.FC = () => {
       router.push(path);
     }
   };
-  
+
   return (
     <>
       <div
@@ -148,7 +152,7 @@ const Header: React.FC = () => {
               <button
                 key={id}
                 onClick={() => handleNavClick(id, path)}
-                className={`px-1 md:px-2 transition-colors duration-200 focus:outline-none
+                className={`px-1 md:px-2 transition-colors duration-200 focus:outline-none cursor-pointer
                   ${
                     hasScrolled
                       ? activeSection === id
@@ -174,7 +178,7 @@ const Header: React.FC = () => {
                     : "dark"
                 )
               }
-              className={`ml-2 transition-all duration-200 focus:outline-none
+              className={`ml-2 transition-all duration-200 focus:outline-none cursor-pointer
                 ${
                   hasScrolled
                     ? "text-gray-900 dark:text-gray-200 hover:text-blue-400 dark:hover:text-white"

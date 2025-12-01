@@ -26,6 +26,32 @@ This portfolio implements Google Consent Mode v2 with Google Tag Manager integra
 
 To enable analytics, set `NEXT_PUBLIC_GTM_ID` (preferred) or `NEXT_PUBLIC_GA_ID` in your environment variables.
 
+## Blog Management
+
+The blog uses Markdown files located in `src/content/posts/`.
+
+### Post Format
+Each post must be a `.md` file with the following Frontmatter structure:
+
+```markdown
+---
+title: "Post Title"
+date: "YYYY-MM-DD"
+excerpt: "Brief summary of the post content."
+author: "Author Name"
+category: "Category"
+tags: ["Tag1", "Tag2"]
+---
+
+# Content
+Your Markdown content here...
+```
+
+### Categories
+Categories are defined in the `category` field of the Frontmatter.
+- The system automatically generates category pages based on these values.
+- Use consistent casing (e.g., "Development", "Architecture").
+
 ---
 
 © 2025 Bastian Fredes
