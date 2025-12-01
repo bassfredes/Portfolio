@@ -10,9 +10,14 @@ async function getEnv(key: string, fallback?: string): Promise<string> {
     try {
       // Import dinámico para evitar require en Next.js puro y soportar ESM
       const functions = await import('firebase-functions');
-      const config = functions.default?.config ? functions.default.config() : functions.config();
+      const configModule = functions as {
+        config?: () => Record<string, Record<string, string>>;
+        default?: { config?: () => Record<string, Record<string, string>> };
+      };
+      const configFn = configModule.config ?? configModule.default?.config;
+      const config = typeof configFn === "function" ? configFn() : undefined;
       const [namespace, prop] = key.toLowerCase().split('_');
-      if (config[namespace] && config[namespace][prop]) {
+      if (config && config[namespace] && config[namespace][prop]) {
         return config[namespace][prop];
       }
     } catch {
