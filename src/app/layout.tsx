@@ -5,7 +5,6 @@ import GTMNoScript from "@/components/GTMNoScript";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "highlight.js/styles/github-dark.css";
 import "./globals.css";
 
 const inter = Inter({

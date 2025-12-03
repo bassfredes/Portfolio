@@ -203,7 +203,7 @@ h4 {
   margin-top: 3em;
   margin-bottom: 3em;
   border-top-width: 1px;
-  border-color: var(--section-border);
+  border-color: var(--foreground);
 }
 
 .prose blockquote {

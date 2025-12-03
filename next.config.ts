@@ -52,6 +52,21 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Redirects para archivos .py a sus imágenes correspondientes
+  async redirects() {
+    return [
+      {
+        source: '/blog/:slug.py',
+        destination: '/blog/:slug.jpg',
+        permanent: true,
+      },
+      {
+        source: '/:path*.py',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -7,6 +7,7 @@ import remarkBreaks from 'remark-breaks';
 import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
+import rehypeSlug from 'rehype-slug';
 
 // Usar __dirname alternativo para mejor compatibilidad con diferentes entornos
 function getPostsDirectory(): string {
@@ -155,6 +156,7 @@ export async function getPostData(id: string): Promise<PostData> {
       .use(remarkGfm)
       .use(remarkBreaks)
       .use(remarkRehype)
+      .use(rehypeSlug)
       .use(rehypeHighlight)
       .use(rehypeStringify)
       .process(matterResult.content);

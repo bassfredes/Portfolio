@@ -9,13 +9,26 @@
       "**/coverage/**",
       "**/.nyc_output/**",
       "**/logs/**",
-      "**/*.log"
+      "**/*.log",
+      "**/*.py"
     ],
     "frameworksBackend": {
       "region": "us-east1"
     },
     "cleanUrls": true,
     "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "/blog/**/*.py",
+        "destination": "/blog/:slug.jpg",
+        "type": 301
+      },
+      {
+        "source": "/**/*.py",
+        "destination": "/",
+        "type": 301
+      }
+    ],
     "headers": [
       {
         "source": "**/*.@(js|css)",
