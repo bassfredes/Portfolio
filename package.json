@@ -43,6 +43,7 @@
     "eslint": "^9.39.1",
     "eslint-config-next": "16.0.7",
     "eslint-plugin-security": "^3.0.1",
+    "firebase-tools": "^14.27.0",
     "googleapis": "^166.0.0",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
