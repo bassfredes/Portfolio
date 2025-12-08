@@ -21,11 +21,12 @@ This document describes the security enhancements made to the contact form to pr
 
 ### 3. IP-Based Rate Limiting
 - **Limit**: 5 requests per 10 minutes per IP
-- **Implementation**: In-memory map (for production, consider Redis/Upstash)
-- **Cleanup**: Automatic cleanup of expired entries during rate limit checks
+- **Implementation**: Upstash Redis (production) with in-memory fallback (development)
+- **Automatic switching**: Uses Upstash if environment variables are set, otherwise falls back to in-memory
+- **Cleanup**: Automatic cleanup of expired entries during rate limit checks (in-memory mode)
 - **Privacy**: IPs are hashed before logging
 
-**Protection**: Prevents spam flooding and abuse
+**Protection**: Prevents spam flooding and abuse. Upstash ensures rate limiting works correctly in serverless environments across multiple instances.
 
 ### 4. Honeypot Field
 - Hidden "website" field in the form
@@ -154,24 +155,39 @@ GMAIL_USER=your_email@gmail.com
 GMAIL_CLIENT_ID=your_oauth_client_id
 GMAIL_CLIENT_SECRET=your_oauth_client_secret
 GMAIL_REFRESH_TOKEN=your_refresh_token
+
+# Optional: Upstash Redis for production rate limiting (recommended for serverless)
+UPSTASH_REDIS_REST_URL=https://your-redis-url.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your-token-here
 ```
 
-### Optional: Redis-based Rate Limiting
+### Upstash Redis Rate Limiting (Recommended for Production)
+
+The contact form now automatically uses Upstash Redis for rate limiting when the environment variables are configured. This ensures proper rate limiting in serverless environments across multiple instances.
+
+**Setup:**
+1. Create a free Upstash Redis database at https://upstash.com
+2. Add the environment variables to your deployment:
+   - `UPSTASH_REDIS_REST_URL`
+   - `UPSTASH_REDIS_REST_TOKEN`
+3. The API will automatically detect and use Upstash for rate limiting
+
+**Fallback:**
+If Upstash environment variables are not set, the API falls back to in-memory rate limiting (suitable for development or single-instance deployments).
+
+The implementation is already integrated in `src/pages/api/contact.ts`:
 ```typescript
-// Example with Upstash Redis
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
-
-const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(5, "10 m"),
-});
-
-// In handler:
-const { success } = await ratelimit.limit(ip);
-if (!success) {
-  return res.status(429).json({ error: "Too many requests" });
+// Automatically detects Upstash configuration
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  // Uses Upstash Redis with sliding window (5 requests per 10 minutes)
+  const upstashRatelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(5, "10 m"),
+    analytics: true,
+    prefix: "portfolio-contact",
+  });
 }
+// Otherwise falls back to in-memory Map
 ```
 
 ## Security Checklist
@@ -192,8 +208,8 @@ if (!success) {
 
 ## Known Limitations
 
-1. **In-memory rate limiter**: Resets on server restart and doesn't work across multiple instances
-   - **Solution**: Use Redis in production
+1. **Rate limiter fallback**: In-memory rate limiting (when Upstash is not configured) resets on server restart and doesn't work across multiple instances
+   - **Solution**: Configure Upstash Redis environment variables for production deployments
 2. **IP-based limiting**: Can affect users behind NAT/proxy
    - **Mitigation**: Adjust limits or implement user-based limiting
 3. **No CAPTCHA challenge fallback**: Low-score users are blocked

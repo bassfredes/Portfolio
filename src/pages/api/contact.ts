@@ -43,12 +43,45 @@ const contactSchema = z.object({
   formRenderTime: z.number().optional(),
 });
 
-// Simple in-memory rate limiter (para producción, usar Redis/Upstash)
+// Rate limiting con soporte para Upstash (producción) o in-memory (desarrollo/fallback)
+let upstashRatelimit: any = null;
+
+// Intentar inicializar Upstash si las variables de entorno están disponibles
+try {
+  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+    const { Ratelimit } = require("@upstash/ratelimit");
+    const { Redis } = require("@upstash/redis");
+    
+    upstashRatelimit = new Ratelimit({
+      redis: Redis.fromEnv(),
+      limiter: Ratelimit.slidingWindow(5, "10 m"),
+      analytics: true,
+      prefix: "portfolio-contact",
+    });
+    console.log("Rate limiting: Using Upstash Redis (production mode)");
+  }
+} catch (error) {
+  console.warn("Upstash not configured, falling back to in-memory rate limiting:", error instanceof Error ? error.message : "unknown error");
+}
+
+// Fallback: Simple in-memory rate limiter
 const rateLimiter = new Map<string, { count: number; resetAt: number }>();
 let lastCleanup = Date.now();
 const CLEANUP_INTERVAL = 5 * 60 * 1000; // 5 minutos
 
-function checkRateLimit(ip: string, maxRequests = 5, windowMs = 10 * 60 * 1000): boolean {
+async function checkRateLimit(ip: string, maxRequests = 5, windowMs = 10 * 60 * 1000): Promise<boolean> {
+  // Usar Upstash si está disponible (recomendado para producción)
+  if (upstashRatelimit) {
+    try {
+      const { success } = await upstashRatelimit.limit(ip);
+      return success;
+    } catch (error) {
+      console.warn("Upstash rate limit check failed, falling back to in-memory:", error instanceof Error ? error.message : "unknown error");
+      // Continuar con in-memory fallback si Upstash falla
+    }
+  }
+  
+  // Fallback a in-memory rate limiter (solo para desarrollo o cuando Upstash no está disponible)
   const now = Date.now();
   
   // Limpiar entradas viejas solo cada CLEANUP_INTERVAL para evitar O(n) en cada request
@@ -196,7 +229,7 @@ export default async function handler(
   }
 
   // Rate limiting: 5 requests por 10 minutos
-  if (!checkRateLimit(ip)) {
+  if (!(await checkRateLimit(ip))) {
     console.warn(`Rate limit exceeded for IP hash: ${hashIP(ip)}`);
     return res.status(429).json({ error: "Too many requests. Please try again later." });
   }
