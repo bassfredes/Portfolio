@@ -14,8 +14,9 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (char) => htmlEscapes[char]);
 }
 
-// Función para sanitizar texto plano y prevenir header injection
-function sanitizePlainText(text: string): string {
+// Función para sanitizar campos de cabecera (name, email) y prevenir header injection.
+// No usar en campos que permiten saltos de línea (como message).
+function sanitizeHeaderField(text: string): string {
   // Eliminar caracteres de control y saltos de línea múltiples que puedan usarse para ataques de header injection
   return text.replace(/[\r\n]+/g, ' ').trim();
 }
