@@ -119,7 +119,7 @@ const ContactForm: React.FC = () => {
           type="text"
           name="website"
           placeholder="Website"
-          className="hidden"
+          className="absolute left-[-9999px] w-px h-px opacity-0"
           tabIndex={-1}
           autoComplete="off"
         />
