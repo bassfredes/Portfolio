@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 import { z } from "zod";
+import { createHash } from "crypto";
 
 // Función para escapar caracteres HTML y prevenir XSS
 function escapeHtml(text: string): string {
@@ -44,15 +45,20 @@ const contactSchema = z.object({
 
 // Simple in-memory rate limiter (para producción, usar Redis/Upstash)
 const rateLimiter = new Map<string, { count: number; resetAt: number }>();
+let lastCleanup = Date.now();
+const CLEANUP_INTERVAL = 5 * 60 * 1000; // 5 minutos
 
 function checkRateLimit(ip: string, maxRequests = 5, windowMs = 10 * 60 * 1000): boolean {
   const now = Date.now();
   
-  // Limpiar entradas viejas mientras verificamos el rate limit
-  for (const [key, record] of rateLimiter.entries()) {
-    if (now > record.resetAt) {
-      rateLimiter.delete(key);
+  // Limpiar entradas viejas solo cada CLEANUP_INTERVAL para evitar O(n) en cada request
+  if (now - lastCleanup > CLEANUP_INTERVAL) {
+    for (const [key, record] of rateLimiter.entries()) {
+      if (now > record.resetAt) {
+        rateLimiter.delete(key);
+      }
     }
+    lastCleanup = now;
   }
   
   const record = rateLimiter.get(ip);
@@ -72,13 +78,18 @@ function checkRateLimit(ip: string, maxRequests = 5, windowMs = 10 * 60 * 1000):
 
 // Función auxiliar para hashear IP (mejor privacidad en logs)
 function hashIP(ip: string): string {
-  let hash = 0;
-  for (let i = 0; i < ip.length; i++) {
-    const char = ip.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return Math.abs(hash).toString(36).substring(0, 8);
+  // Usar crypto.createHash para mejor seguridad y evitar colisiones
+  return createHash('sha256').update(ip).digest('hex').substring(0, 12);
+}
+
+// Función para validar formato de IP (IPv4 o IPv6)
+function isValidIP(ip: string): boolean {
+  // IPv4 regex
+  const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  // IPv6 regex (simplificado)
+  const ipv6Regex = /^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}$|^[0-9a-fA-F]{1,4}::(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}$/;
+  
+  return ipv4Regex.test(ip) || ipv6Regex.test(ip);
 }
 
 // ENV: process.env.RECAPTCHA_SECRET_KEY, process.env.GMAIL_USER
@@ -161,10 +172,28 @@ export default async function handler(
   if (req.method !== "POST") return res.status(405).end();
 
   // Obtener IP para rate limiting (compatible con proxies)
-  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() 
-    || (req.headers['x-real-ip'] as string) 
-    || req.socket.remoteAddress 
-    || 'unknown';
+  let ip = 'unknown';
+  const forwardedFor = req.headers['x-forwarded-for'] as string;
+  const realIp = req.headers['x-real-ip'] as string;
+  const socketIp = req.socket.remoteAddress;
+  
+  // Intentar obtener IP de x-forwarded-for y validarla
+  if (forwardedFor) {
+    const firstIp = forwardedFor.split(',')[0]?.trim();
+    if (firstIp && isValidIP(firstIp)) {
+      ip = firstIp;
+    }
+  }
+  
+  // Fallback a x-real-ip si es válida
+  if (ip === 'unknown' && realIp && isValidIP(realIp)) {
+    ip = realIp;
+  }
+  
+  // Fallback a socket address si es válida
+  if (ip === 'unknown' && socketIp && isValidIP(socketIp)) {
+    ip = socketIp;
+  }
 
   // Rate limiting: 5 requests por 10 minutos
   if (!checkRateLimit(ip)) {
@@ -175,7 +204,12 @@ export default async function handler(
   // Validar el schema de entrada
   const validation = contactSchema.safeParse(req.body);
   if (!validation.success) {
-    console.warn("Validation failed:", validation.error.issues[0].message);
+    const errorMessages = validation.error.issues.map(issue => issue.message);
+    console.warn(
+      "Validation failed:",
+      errorMessages,
+      `Total errors: ${validation.error.issues.length}`
+    );
     return res.status(400).json({ error: "Invalid input. Please check your data." });
   }
 
@@ -199,7 +233,22 @@ export default async function handler(
 
   // 1. Validar reCAPTCHA v3 con score más alto y verificación de action
   const recaptcha = await verifyRecaptcha(recaptchaToken, "contact");
-  if (!recaptcha.success || recaptcha.score < 0.5) {
+  
+  // Manejar tipos específicos de error de reCAPTCHA
+  if (!recaptcha.success) {
+    if (recaptcha.error === "action_mismatch") {
+      console.warn("reCAPTCHA action mismatch - possible token reuse attempt from IP hash:", hashIP(ip));
+      return res.status(400).json({ error: "Security verification failed. Please try again." });
+    } else if (recaptcha.error === "verification_failed") {
+      console.warn("reCAPTCHA verification request failed for IP hash:", hashIP(ip));
+      return res.status(400).json({ error: "Security verification failed. Please try again." });
+    }
+    console.warn("reCAPTCHA failed - success:", recaptcha.success, "score:", recaptcha.score, "error:", recaptcha.error);
+    return res.status(400).json({ error: "Security verification failed. Please try again." });
+  }
+  
+  // Verificar score con diferentes umbrales
+  if (recaptcha.score < 0.5) {
     console.warn("reCAPTCHA failed - success:", recaptcha.success, "score:", recaptcha.score, "error:", recaptcha.error);
     return res.status(400).json({ error: "Security verification failed. Please try again." });
   } else if (recaptcha.score < 0.7) {
@@ -227,8 +276,8 @@ export default async function handler(
     const safeMessage = escapeHtml(message.trim());
 
     // Sanitizar para texto plano (prevenir header injection)
-    const plainName = sanitizePlainText(name.trim());
-    const plainEmail = sanitizePlainText(email.trim());
+    const plainName = sanitizeHeaderField(name.trim());
+    const plainEmail = sanitizeHeaderField(email.trim());
     const plainMessage = message.trim(); // mantener saltos de línea en el mensaje
 
     await transporter.sendMail({
