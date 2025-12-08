@@ -33,7 +33,8 @@ const contactSchema = z.object({
     .refine((val) => !/[\r\n]/.test(val), "Email cannot contain line breaks"),
   message: z.string()
     .min(1, "Message is required")
-    .max(2000, "Message must be less than 2000 characters"),
+    .max(2000, "Message must be less than 2000 characters")
+    .refine((val) => !/\n{4,}/.test(val), "Message cannot contain more than 3 consecutive newlines"),
   recaptchaToken: z.string().min(1, "reCAPTCHA token is required"),
   // Honeypot field - should be empty
   website: z.string().optional(),
