@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 import { z } from "zod";
+import { isIP } from "net";
 import { createHash } from "crypto";
 
 // Función para escapar caracteres HTML y prevenir XSS
@@ -117,12 +118,8 @@ function hashIP(ip: string): string {
 
 // Función para validar formato de IP (IPv4 o IPv6)
 function isValidIP(ip: string): boolean {
-  // IPv4 regex
-  const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-  // IPv6 regex (simplificado)
-  const ipv6Regex = /^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}$|^[0-9a-fA-F]{1,4}::(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}$/;
-  
-  return ipv4Regex.test(ip) || ipv6Regex.test(ip);
+  // Use Node's robust IP parser to handle IPv4, IPv6 (including compressed) and IPv4-mapped IPv6
+  return isIP(ip) !== 0;
 }
 
 // ENV: process.env.RECAPTCHA_SECRET_KEY, process.env.GMAIL_USER
