@@ -199,9 +199,12 @@ export default async function handler(
 
   // 1. Validar reCAPTCHA v3 con score más alto y verificación de action
   const recaptcha = await verifyRecaptcha(recaptchaToken, "contact");
-  if (!recaptcha.success || recaptcha.score < 0.7) {
+  if (!recaptcha.success || recaptcha.score < 0.5) {
     console.warn("reCAPTCHA failed - success:", recaptcha.success, "score:", recaptcha.score, "error:", recaptcha.error);
     return res.status(400).json({ error: "Security verification failed. Please try again." });
+  } else if (recaptcha.score < 0.7) {
+    console.warn("reCAPTCHA score low but not blocked - score:", recaptcha.score, "IP hash:", hashIP(ip));
+    return res.status(400).json({ error: "We couldn't verify you're not a bot. Please try again or complete additional verification." });
   }
 
   // 2. Enviar correo usando Gmail API
