@@ -191,7 +191,7 @@ export default async function handler(
   // Timing check - el formulario debe tomar al menos 2 segundos para completarse
   if (formRenderTime) {
     const timeTaken = Date.now() - formRenderTime;
-    if (timeTaken < 2000) {
+    if (timeTaken < 1000) {
       console.warn("Form submitted too quickly:", timeTaken, "ms for IP hash:", hashIP(ip));
       return res.status(400).json({ error: "Please take your time filling the form" });
     }
