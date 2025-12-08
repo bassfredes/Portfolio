@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import Script from "next/script";
 import { trackEvent } from "@/utils/analytics";
 
