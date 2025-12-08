@@ -19,6 +19,7 @@ const ContactForm: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [grecaptchaReady, setGrecaptchaReady] = useState(false);
+  const [formRenderTime] = useState<number>(Date.now()); // Timestamp para timing check
 
   const handleRecaptchaLoad = () => {
     if (window.grecaptcha) setGrecaptchaReady(true);
@@ -39,7 +40,7 @@ const ContactForm: React.FC = () => {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, recaptchaToken }),
+        body: JSON.stringify({ ...data, recaptchaToken, formRenderTime }),
       });
       const json = await res.json();
       if (res.ok) {
@@ -95,6 +96,7 @@ const ContactForm: React.FC = () => {
           placeholder="Your Name"
           className="w-full px-4 py-2 rounded bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-base"
           required
+          maxLength={100}
         />
         <input
           type="email"
@@ -102,6 +104,7 @@ const ContactForm: React.FC = () => {
           placeholder="Your Email"
           className="w-full px-4 py-2 rounded bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-base"
           required
+          maxLength={254}
         />
         <textarea
           name="message"
@@ -109,7 +112,17 @@ const ContactForm: React.FC = () => {
           rows={4}
           className="w-full px-4 py-2 rounded bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-base"
           required
+          maxLength={2000}
         ></textarea>
+        {/* Honeypot field - hidden from users, catches bots */}
+        <input
+          type="text"
+          name="website"
+          placeholder="Website"
+          className="absolute left-[-9999px] w-px h-px opacity-0"
+          tabIndex={-1}
+          autoComplete="off"
+        />
         <button
           type="submit"
           className="w-full py-2 rounded bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:scale-[1.03] active:scale-100 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-500 text-base disabled:opacity-60"

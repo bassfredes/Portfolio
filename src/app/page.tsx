@@ -195,7 +195,7 @@ export default function Home() {
         {/* HERO / PRESENTATION */}
         <SectionContainer
           id="hero"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-6xl md:max-w-4xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           ariaLabel="Hero section"
           role="region"
         >
@@ -262,7 +262,7 @@ export default function Home() {
         {/* EXPERIENCE */}
         <SectionContainer
           id="experience"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-slide-in-up mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-6xl md:max-w-4xl mx-auto text-left py-20 md:py-28 animate-slide-in-up mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           title="Experience"
           ariaLabel="Work experience"
           role="region"
@@ -314,7 +314,7 @@ export default function Home() {
         {/* PROJECTS */}
         <SectionContainer
           id="projects"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-6xl md:max-w-4xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           title="Projects"
           ariaLabel="Projects"
           role="region"
@@ -333,7 +333,7 @@ export default function Home() {
         {/* BLOG SECTION */}
         <SectionContainer
           id="blog"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-6xl md:max-w-4xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           title="Latest Articles"
           ariaLabel="Latest Articles"
           role="region"
@@ -376,7 +376,7 @@ export default function Home() {
         {/* ABOUT ME */}
         <SectionContainer
           id="about"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-6xl md:max-w-4xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           title="About me"
           ariaLabel="About me"
           role="region"
@@ -476,7 +476,7 @@ export default function Home() {
         {/* PERFORMANCE FOCUS */}
         <SectionContainer
           id="performance"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-6xl md:max-w-4xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           title="Performance Matters"
           ariaLabel="Performance matters"
           role="region"
@@ -521,7 +521,7 @@ export default function Home() {
         {/* CONTACT */}
         <SectionContainer
           id="contact"
-          className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-24 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          className="w-full lg:max-w-6xl md:max-w-4xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-24 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
           title="Contact"
           ariaLabel="Contact"
           role="region"

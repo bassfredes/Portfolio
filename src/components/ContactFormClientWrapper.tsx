@@ -16,7 +16,7 @@ export default function ContactFormClientWrapper() {
   });
 
   return (
-    <div ref={ref} className="w-full flex justify-center min-h-[400px]">
+    <div ref={ref} className="w-full md:w-1/2 flex justify-center min-h-[400px]">
       {isVisible ? <ContactForm /> : null}
     </div>
   );
