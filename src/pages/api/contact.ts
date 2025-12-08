@@ -45,6 +45,14 @@ const rateLimiter = new Map<string, { count: number; resetAt: number }>();
 
 function checkRateLimit(ip: string, maxRequests = 5, windowMs = 10 * 60 * 1000): boolean {
   const now = Date.now();
+  
+  // Limpiar entradas viejas mientras verificamos el rate limit
+  for (const [key, record] of rateLimiter.entries()) {
+    if (now > record.resetAt) {
+      rateLimiter.delete(key);
+    }
+  }
+  
   const record = rateLimiter.get(ip);
   
   if (!record || now > record.resetAt) {
@@ -60,15 +68,16 @@ function checkRateLimit(ip: string, maxRequests = 5, windowMs = 10 * 60 * 1000):
   return true;
 }
 
-// Limpiar entradas viejas del rate limiter cada 15 minutos
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, record] of rateLimiter.entries()) {
-    if (now > record.resetAt) {
-      rateLimiter.delete(ip);
-    }
+// Función auxiliar para hashear IP (mejor privacidad en logs)
+function hashIP(ip: string): string {
+  let hash = 0;
+  for (let i = 0; i < ip.length; i++) {
+    const char = ip.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
   }
-}, 15 * 60 * 1000);
+  return Math.abs(hash).toString(36).substring(0, 8);
+}
 
 // ENV: process.env.RECAPTCHA_SECRET_KEY, process.env.GMAIL_USER
 
@@ -157,7 +166,7 @@ export default async function handler(
 
   // Rate limiting: 5 requests por 10 minutos
   if (!checkRateLimit(ip)) {
-    console.warn(`Rate limit exceeded for IP: ${ip.substring(0, 10)}...`);
+    console.warn(`Rate limit exceeded for IP hash: ${hashIP(ip)}`);
     return res.status(429).json({ error: "Too many requests. Please try again later." });
   }
 
@@ -172,7 +181,7 @@ export default async function handler(
 
   // Honeypot check - si el campo "website" está lleno, es un bot
   if (website && website.trim() !== "") {
-    console.warn("Honeypot triggered for IP:", ip.substring(0, 10));
+    console.warn("Honeypot triggered for IP hash:", hashIP(ip));
     // Devolver éxito falso para no revelar la defensa
     return res.status(400).json({ error: "Invalid request" });
   }
@@ -181,7 +190,7 @@ export default async function handler(
   if (formRenderTime) {
     const timeTaken = Date.now() - formRenderTime;
     if (timeTaken < 2000) {
-      console.warn("Form submitted too quickly:", timeTaken, "ms for IP:", ip.substring(0, 10));
+      console.warn("Form submitted too quickly:", timeTaken, "ms for IP hash:", hashIP(ip));
       return res.status(400).json({ error: "Please take your time filling the form" });
     }
   }
