@@ -24,10 +24,12 @@ export default function Blog() {
     <>
       <SectionScrollHandler />
       <Header />
-      <main className="flex flex-col items-center w-full min-h-screen px-4 pt-20">
+      <main className="flex flex-col items-center w-full min-h-screen px-4 pt-20 overflow-x-hidden">
         <SectionContainer
           id="blog"
-          className="w-full lg:max-w-6xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+          fullWidth
+          disableXPadding
+          className="w-full md:max-w-5xl lg:max-w-6xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 flex flex-col items-start bg-transparent border-none shadow-none"
           title="Blog"
           ariaLabel="Blog posts"
           role="region"

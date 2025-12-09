@@ -39,12 +39,14 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
     <>
       <SectionScrollHandler />
       <Header />
-      <main className="flex flex-col items-center w-full min-h-screen px-4 pt-20">
-        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 relative">
+      <main className="flex flex-col items-center w-full min-h-screen px-4 pt-20 overflow-x-hidden">
+        <div className="w-full mx-auto lg:max-w-7xl flex flex-col lg:flex-row gap-12 relative">
           <div className="w-full lg:w-auto lg:flex-1 min-w-0">
             <SectionContainer
               id="post"
-              className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+              fullWidth
+              disableXPadding
+              className="w-full lg:max-w-4xl mx-auto text-left py-20 md:py-28 animate-fade-in mb-20 flex flex-col items-start bg-transparent border-none shadow-none"
               ariaLabel={postData.title}
               role="article"
             >
@@ -123,7 +125,9 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         {relatedPosts.length > 0 && (
           <SectionContainer
             id="related-posts"
-            className="w-full lg:max-w-4xl md:max-w-2xl mx-auto text-left py-10 md:py-14 animate-fade-in mb-20 px-0 flex flex-col items-start bg-transparent border-none shadow-none"
+            fullWidth
+            disableXPadding
+            className="w-full md:max-w-3xl lg:max-w-4xl mx-auto text-left py-10 md:py-14 animate-fade-in mb-20 flex flex-col items-start bg-transparent border-none shadow-none"
             title="Related Posts"
             ariaLabel="Related Posts"
             role="complementary"

@@ -7,6 +7,7 @@ import remarkBreaks from 'remark-breaks';
 import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
+import { visit } from 'unist-util-visit';
 import rehypeSlug from 'rehype-slug';
 
 // Usar __dirname alternativo para mejor compatibilidad con diferentes entornos
@@ -156,6 +157,16 @@ export async function getPostData(id: string): Promise<PostData> {
       .use(remarkGfm)
       .use(remarkBreaks)
       .use(remarkRehype)
+      .use(() => (tree) => {
+        let removed = false;
+        visit(tree, 'element', (node: any, index: number | null, parent: any) => {
+          if (removed || !parent || typeof index !== 'number') return;
+          if (node.tagName === 'h1') {
+            parent.children.splice(index, 1);
+            removed = true;
+          }
+        });
+      })
       .use(rehypeSlug)
       .use(rehypeHighlight)
       .use(rehypeStringify)

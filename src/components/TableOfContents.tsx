@@ -84,11 +84,11 @@ const TableOfContents = () => {
       {/* Container - Sidebar on Desktop, Drawer on Mobile */}
       <nav
         className={`
-          fixed lg:sticky lg:top-32 top-0 right-0 h-full lg:max-h-[calc(100vh-10rem)]
-          w-72 lg:w-64 bg-white dark:bg-gray-900 lg:bg-transparent lg:dark:bg-transparent
+          fixed lg:sticky lg:top-32 top-0 right-0 lg:right-0 h-full lg:max-h-[calc(100vh-10rem)]
+          w-[min(18rem,calc(100vw-0.75rem))] lg:w-64 bg-white dark:bg-gray-900 lg:bg-transparent lg:dark:bg-transparent
           shadow-2xl lg:shadow-none z-50 lg:z-0
           transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
+          ${isOpen ? 'translate-x-0 pointer-events-auto' : 'translate-x-[110%] pointer-events-none lg:translate-x-0 lg:pointer-events-auto'}
           p-6 lg:p-0 overflow-y-auto
           border-l lg:border-l-0 border-gray-200 dark:border-gray-800
         `}

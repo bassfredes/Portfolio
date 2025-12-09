@@ -9,6 +9,8 @@ interface SectionContainerProps {
   title?: string;
   ariaLabel?: string;
   role?: string;
+  fullWidth?: boolean;
+  disableXPadding?: boolean;
 }
 
 const SectionContainer: React.FC<SectionContainerProps> = ({
@@ -18,6 +20,8 @@ const SectionContainer: React.FC<SectionContainerProps> = ({
   title,
   ariaLabel,
   role,
+  fullWidth = false,
+  disableXPadding = false,
 }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -51,7 +55,7 @@ const SectionContainer: React.FC<SectionContainerProps> = ({
       data-section={id}
       role={role || "region"}
       aria-label={ariaLabel || title || id}
-      className={`scroll-m-20 w-full mx-auto max-w-3xl px-4 md:px-0 py-12 md:py-20 ${className}`}
+      className={`scroll-m-20 w-full mx-auto ${fullWidth ? "max-w-none" : "max-w-3xl"} ${disableXPadding ? "px-0 md:px-0" : "px-4 md:px-0"} py-12 md:py-20 ${className}`}
     >
       {children}
     </section>
