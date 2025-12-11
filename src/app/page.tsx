@@ -238,7 +238,7 @@ export default function Home() {
               </div>
             </div>
             <div className="flex flex-col w-full">
-              <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight m-0 p-0 text-left drop-shadow-lg animate-slide-in-down">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight m-0 p-0 text-left drop-shadow-lg">
                 Hey, I&apos;m{" "}
                 <span className="text-blue-700 dark:text-yellow-400">
                   Bastian

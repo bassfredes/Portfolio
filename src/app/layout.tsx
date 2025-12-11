@@ -43,22 +43,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} antialiased`}>
-        <Script id="trusted-types-polyfill" strategy="beforeInteractive">
-          {`
-            if (typeof window !== 'undefined' && window.trustedTypes && window.trustedTypes.createPolicy) {
-              try {
-                window.trustedTypes.createPolicy('default', {
-                  createHTML: (string) => string,
-                  createScript: (string) => string,
-                  createScriptURL: (string) => string,
-                });
-              } catch (e) {
-                console.warn('Trusted Types policy "default" could not be created:', e);
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (typeof window !== 'undefined' && window.trustedTypes && window.trustedTypes.createPolicy) {
+                try {
+                  window.trustedTypes.createPolicy('default', {
+                    createHTML: (string) => string,
+                    createScript: (string) => string,
+                    createScriptURL: (string) => string,
+                  });
+                } catch (e) {
+                  console.warn('Trusted Types policy "default" could not be created:', e);
+                }
               }
-            }
-          `}
-        </Script>
+            `,
+          }}
+        />
+      </head>
+      <body className={`${inter.variable} antialiased`}>
         <GTMNoScript />
         <AnalyticsScript />
         <AnalyticsProvider />

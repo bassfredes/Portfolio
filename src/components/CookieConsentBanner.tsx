@@ -125,9 +125,8 @@ export default function CookieConsentBanner() {
     <div className="fixed bottom-0 left-0 right-0 bg-neutral-800 text-white p-4 shadow-lg z-50">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <p className="text-sm md:flex-1">
-          bassfredes.dev uses cookies to deliver and enhance the quality of its services and to analyze traffic.
-          Essential functionality data is collected regardless of consent.{" "}
-          <Link href="/cookies" className="underline hover:text-neutral-300">
+          We use cookies to improve your experience and analyze traffic.
+          <Link href="/cookies" className="underline hover:text-neutral-300 ml-1">
             Learn more.
           </Link>
         </p>
