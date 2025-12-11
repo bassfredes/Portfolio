@@ -138,7 +138,7 @@ export default function CookieConsentBanner() {
           </button>
           <button
             onClick={handleAccept}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md text-sm transition-colors duration-150"
+            className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-md text-sm transition-colors duration-150"
             aria-label="Accept all cookies"
           >
             Accept All

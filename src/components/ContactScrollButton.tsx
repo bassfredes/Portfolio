@@ -37,7 +37,7 @@ const ContactScrollButton: React.FC<ContactScrollButtonProps> = ({ className = "
     <div className={`flex gap-3 ${className}`}>
       <button
         type="button"
-        className="flex items-center gap-2 px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-colors text-base focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer scroll-smooth duration-300"
+        className="flex items-center gap-2 px-6 py-2 rounded-full bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow-lg transition-colors text-base focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer scroll-smooth duration-300"
         onClick={() => {
           if (pathname !== "/contact") {
             router.push("/contact");

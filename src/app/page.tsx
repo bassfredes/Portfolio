@@ -13,6 +13,8 @@ import ContactInfoObfuscated from "@/components/ContactInfoObfuscated";
 import { getSortedPostsData } from "@/utils/posts";
 import BlogCard from "@/components/BlogCard";
 import Link from "next/link";
+import meImg from "@/assets/me.jpg";
+import bassfredesImg from "@/assets/bassfredes.jpg";
 
 interface Experience {
   role: string;
@@ -205,13 +207,12 @@ export default function Home() {
                 <div className="relative group">
                   <span className="absolute -inset-2 z-0 rounded-full bg-linear-to-tr from-blue-400 via-purple-500 to-pink-400 blur opacity-60 animate-blob-move"></span>
                   <Image
-                    src="/me.jpg"
+                    src={meImg}
                     alt="Bastian Fredes profile"
-                    width={112}
-                    height={112}
                     className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover ring-4 ring-blue-400/40 shadow-xl border-4 border-[#232946] bg-[#232946] relative z-10 group-hover:scale-105 group-hover:rotate-2 transition-transform duration-500"
                     priority
                     loading="eager"
+                    placeholder="blur"
                     sizes="(max-width: 768px) 96px, 112px"
                   />
                 </div>
@@ -221,16 +222,15 @@ export default function Home() {
                   href={profile.socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center transition md:justify-center md:hover:scale-105 mb-4"
+                  className="group flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-gray-800/50 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 mb-4"
                 >
-                  <div className="flex items-center">
-                    <span className="relative inline-flex overflow-hidden rounded-full p-px animate-gradient-x">
-                      <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#51E4B8_0%,#21554E_50%,#51E4B8_100%)]"></span>
-                      <div className="inline-flex items-center justify-center w-full px-3 py-1 text-sm text-green-800 bg-green-100 rounded-full cursor-pointer dark:bg-gray-800 dark:text-white/80 backdrop-blur-3xl whitespace-nowrap">
-                        Open to work
-                      </div>
-                    </span>
-                  </div>
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                  </span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    Open to work
+                  </span>
                 </a>
               </div>
             </div>
@@ -286,9 +286,9 @@ export default function Home() {
                     className="absolute top-2 left-2 md:left-4 w-4 h-4 bg-yellow-400 rounded-full border-4 border-gray-500/60 shadow-md z-10"
                     style={{ transform: "translateX(-35%)" }}
                   ></span>
-                  <h4 className="flex items-center gap-2 text-lg md:text-xl font-bold mb-0.5 leading-tight text-blue-700 dark:text-yellow-400">
+                  <h3 className="flex items-center gap-2 text-lg md:text-xl font-bold mb-0.5 leading-tight text-blue-700 dark:text-yellow-400">
                     {exp.role}
-                  </h4>
+                  </h3>
                   <div className="text-base md:text-lg text-gray-900 dark:text-white font-semibold mb-0.5">
                     {exp.company}
                   </div>
@@ -455,15 +455,14 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex justify-center md:justify-end md:pl-8 animate-float">
-                <div className="relative group w-40 h-40 md:w-56 md:h-56">
+                <div className="relative group w-40 h-52 md:w-56 md:h-72">
                   <div className="absolute inset-0 z-0 bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-60 group-hover:opacity-80 transition duration-500 animate-blob-move"></div>
                   <Image
-                    src="/me.jpg"
+                    src={bassfredesImg}
                     alt="Bastian Fredes profile"
-                    width={220}
-                    height={220}
-                    className="rounded-3xl object-cover w-40 h-40 md:w-56 md:h-56 border-4 border-[#232946] shadow-xl rotate-2 group-hover:rotate-0 transition-transform duration-500 relative z-10 animate-float"
+                    className="rounded-3xl object-cover w-40 h-52 md:w-56 md:h-72 border-4 border-[#232946] shadow-xl rotate-2 group-hover:rotate-0 transition-transform duration-500 relative z-10 animate-float"
                     loading="lazy"
+                    placeholder="blur"
                     sizes="(max-width: 768px) 160px, 220px"
                     priority={false}
                   />
@@ -497,9 +496,9 @@ export default function Home() {
               />
             </div>
             <div className="flex-1 flex flex-col gap-4">
-              <h4 className="text-xl md:text-2xl font-bold text-green-700 dark:text-green-400 mb-2">
+              <h3 className="text-xl md:text-2xl font-bold text-green-700 dark:text-green-400 mb-2">
                 Why care about performance?
-              </h4>
+              </h3>
               <ul className="list-disc list-inside text-base md:text-lg text-gray-800 dark:text-gray-200 mb-2 space-y-1">
                 <li>Faster sites = happier users</li>
                 <li>Better SEO & higher conversions</li>
@@ -532,9 +531,9 @@ export default function Home() {
           </SectionTitle>
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="flex-1 text-center md:text-left">
-              <h4 className="text-2xl md:text-3xl font-extrabold mb-2 text-gray-900 dark:text-white drop-shadow-lg animate-fade-in-delay2">
+              <h3 className="text-2xl md:text-3xl font-extrabold mb-2 text-gray-900 dark:text-white drop-shadow-lg animate-fade-in-delay2">
                 Let&apos;s talk!
-              </h4>
+              </h3>
               <p className="text-base md:text-lg text-gray-700 dark:text-slate-300 mb-2 max-w-xl mx-auto md:mx-0 animate-fade-in-delay3">
                 I&apos;m open to new opportunities, collaborations, and
                 freelance projects. You can contact me using the form or
