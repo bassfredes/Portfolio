@@ -53,7 +53,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   return (
     <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center rounded-2xl p-0 md:p-0 group bg-transparent w-full">
-      <div className="w-full md:w-2/5 flex-shrink-0 flex items-center justify-center">
+      <div className="w-full md:w-2/5 shrink-0 flex items-center justify-center">
         <div className="relative w-full h-[200px] md:h-[200px] rounded-xl overflow-hidden bg-gray-100 dark:bg-[#232946] flex items-center justify-center border border-gray-200 dark:border-none">
           <Image
             src={image}
@@ -71,7 +71,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-1 flex items-center gap-2 line-clamp-1">
             {title}
             {badge && (
-              <span className="ml-2 px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white animate-fade-in">
+              <span className="ml-2 px-3 py-1 text-xs font-semibold rounded-full bg-linear-to-r from-blue-500 to-purple-500 text-white animate-fade-in">
                 {badge}
               </span>
             )}
@@ -99,9 +99,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               href={links.code}
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-5 py-2 rounded-lg border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 dark:bg-gradient-to-tr from-blue-900/60 via-blue-700/30 to-blue-400/10 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white font-semibold transition-all text-base hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center gap-2 shadow-lg"
+              aria-label={`View source code for ${title} on GitHub`}
+              className="group px-5 py-2 rounded-lg border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 dark:bg-linear-to-tr from-blue-900/60 via-blue-700/30 to-blue-400/10 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white font-semibold transition-all text-base hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center gap-2 shadow-lg"
             >
-              <FaGithub className="text-xl transition-colors" />
+              <FaGithub className="text-xl transition-colors" aria-hidden="true" />
               <span>Code</span>
             </a>
           )}
@@ -110,9 +111,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               href={links.preview}
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-5 py-2 rounded-lg border-2 border-green-600 dark:border-green-400 text-green-600 dark:text-green-400 dark:bg-gradient-to-tr from-green-900/60 via-green-700/30 to-green-400/10 hover:bg-green-600 dark:hover:bg-green-500 hover:text-white font-semibold transition-all text-base hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center gap-2 shadow-lg"
+              aria-label={`View live preview of ${title}`}
+              className="group px-5 py-2 rounded-lg border-2 border-green-600 dark:border-green-400 text-green-600 dark:text-green-400 dark:bg-linear-to-tr from-green-900/60 via-green-700/30 to-green-400/10 hover:bg-green-600 dark:hover:bg-green-500 hover:text-white font-semibold transition-all text-base hover:scale-105 active:scale-100 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center gap-2 shadow-lg"
             >
-              <FaExternalLinkAlt className="text-xl transition-colors" />
+              <FaExternalLinkAlt className="text-xl transition-colors" aria-hidden="true" />
               <span>Preview</span>
             </a>
           )}
