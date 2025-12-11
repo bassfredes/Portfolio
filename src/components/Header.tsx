@@ -76,72 +76,53 @@ const Header: FC = () => {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!pathname) {
-        setActiveSection("");
-        return;
-      }
-      const isMainPage = NAV_LINKS.some(
-        (link) =>
-          link.path === pathname ||
-          (link.path === "/" && pathname.startsWith("/") && !NAV_LINKS.find((l) => l.path !== "/" && pathname.startsWith(l.path)))
-      );
-      if (!isMainPage && pathname !== "/") {
-        setActiveSection("");
-        return;
-      }
+    if (!pathname) return;
 
-      const offsets = NAV_LINKS.map(({ id }) => {
-        const el = document.getElementById(id);
-        if (!el) return { id, top: Infinity };
-        const rect = el.getBoundingClientRect();
-        // Ajustar el top para que la sección se active un poco antes de llegar al borde superior exacto
-        return { id, top: Math.abs(rect.top - 80) }; // 80px es un offset de ejemplo, ajustar según altura del header
-      });
-
-      const visibleSections = offsets.filter((section) => {
-        const el = document.getElementById(section.id);
-        if (!el) return false;
-        const rect = el.getBoundingClientRect();
-        return rect.top < window.innerHeight && rect.bottom >= 80; // 80px es un offset de ejemplo
-      });
-
-      if (visibleSections.length > 0) {
-        // De las secciones visibles, encontrar la más cercana al top (o la primera si hay varias)
-        const closest = visibleSections.reduce((a, b) => (a.top < b.top ? a : b));
-        setActiveSection(closest.id);
-      } else {
-        // Si estamos en la página principal y no hay secciones visibles (ej. al final del scroll),
-        // intentar mantener la última sección activa o limpiar si es necesario.
-        // Opcionalmente, si se scrollea muy abajo y ninguna sección está "visible", limpiar activeSection.
-        // setActiveSection(""); // Descomentar si se prefiere limpiar
-      }
-    };
-
-    if (pathname) {
+    // If not on home page, just highlight the matching link based on path
+    if (pathname !== "/") {
       const currentLink = NAV_LINKS.find((link) => link.path === pathname || (pathname.startsWith(link.path) && link.path !== "/"));
-      if (currentLink) {
-        setActiveSection(currentLink.id);
-      } else {
-        setActiveSection("");
-      }
-    } else {
-      setActiveSection("");
+      setActiveSection(currentLink ? currentLink.id : "");
+      return;
     }
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    // Llamar una vez para establecer el estado inicial correctamente tras cualquier cambio de ruta
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [pathname]); // Añadir pathname como dependencia
+    // If on home page, use IntersectionObserver to highlight sections as we scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px", // Active zone is near the top
+      threshold: 0
+    };
+
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    NAV_LINKS.forEach(({ id }) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [pathname]);
 
   useEffect(() => {
-    const onScroll = () => {
-      setHasScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    const sentinel = document.getElementById("scroll-sentinel");
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setHasScrolled(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
   }, []);
 
   const handleNavClick = (id: string, path: string) => {
@@ -168,6 +149,7 @@ const Header: FC = () => {
 
   return (
     <>
+      <div id="scroll-sentinel" className="absolute top-0 left-0 w-full h-2.5 pointer-events-none opacity-0 z-[-10]" />
       <div
         className="absolute top-0 bottom-0 z-[-2] min-h-screen w-full
         bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(217,216,255,0.5),rgba(255,255,255,0.9))]
