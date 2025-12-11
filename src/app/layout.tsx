@@ -5,6 +5,7 @@ import GTMNoScript from "@/components/GTMNoScript";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -43,6 +44,21 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
+        <Script id="trusted-types-polyfill" strategy="beforeInteractive">
+          {`
+            if (typeof window !== 'undefined' && window.trustedTypes && window.trustedTypes.createPolicy) {
+              try {
+                window.trustedTypes.createPolicy('default', {
+                  createHTML: (string) => string,
+                  createScript: (string) => string,
+                  createScriptURL: (string) => string,
+                });
+              } catch (e) {
+                console.warn('Trusted Types policy "default" could not be created:', e);
+              }
+            }
+          `}
+        </Script>
         <GTMNoScript />
         <AnalyticsScript />
         <AnalyticsProvider />

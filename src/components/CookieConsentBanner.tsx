@@ -14,9 +14,12 @@ export default function CookieConsentBanner() {
     const storedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
 
     if (!storedConsent) {
-      // Show banner if no consent is stored
-      setIsVisible(true);
-      setConsentGiven(false);
+      // Show banner if no consent is stored, but with a delay to avoid LCP impact
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+        setConsentGiven(false);
+      }, 2500);
+      return () => clearTimeout(timer);
     } else {
       // Consent already given/declined
       setConsentGiven(true);

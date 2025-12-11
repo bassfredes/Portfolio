@@ -61,7 +61,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             width={440}
             height={220}
             loading="lazy"
-            sizes="(max-width: 768px) 100vw, 40vw"
+            quality={70}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
           />
         </div>
