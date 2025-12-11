@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     root: path.join(__dirname),
   },
   images: {
+    qualities: [70, 75],
     minimumCacheTTL: 31536000,
     remotePatterns: [
       {
