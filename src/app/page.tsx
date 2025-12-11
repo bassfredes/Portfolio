@@ -16,6 +16,9 @@ import Link from "next/link";
 import meImg from "@/assets/me.jpg";
 import bassfredesImg from "@/assets/bassfredes.jpg";
 
+// Forzar generación estática para la home page
+export const dynamic = 'force-static';
+
 interface Experience {
   role: string;
   company: string;

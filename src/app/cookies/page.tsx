@@ -2,6 +2,9 @@ import Header from '@/components/Header';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
+// Forzar generación estática
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: 'Cookie Policy - bassfredes.dev',
   description: 'Information about how bassfredes.dev uses cookies for analytics and service improvement.',

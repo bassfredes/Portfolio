@@ -9,7 +9,7 @@ import BlogCard from '@/components/BlogCard';
 
 // Forzar generación estática y revalidación para asegurar que los posts siempre se carguen
 export const dynamic = 'force-static';
-export const revalidate = 3600; // Revalidar cada hora
+// export const revalidate = 3600; // Revalidar cada hora (Comentado para evitar uso excesivo de funciones, se actualizará al desplegar)
 
 export const metadata = {
   title: 'Blog | Bastian Fredes',

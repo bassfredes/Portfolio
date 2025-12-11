@@ -12,7 +12,7 @@ import "highlight.js/styles/github-dark.css";
 
 // Forzar generación estática y revalidación
 export const dynamic = 'force-static';
-export const revalidate = 3600;
+// export const revalidate = 3600; // Comentado para evitar uso excesivo de funciones
 
 export async function generateStaticParams() {
   const paths = getAllPostIds();

@@ -3,7 +3,7 @@ import Home from "../page";
 // Forzar generación estática
 export const dynamic = 'force-static';
 export const dynamicParams = false; // 404 para rutas no generadas en generateStaticParams
-export const revalidate = 3600; // Revalidar cada hora
+// export const revalidate = 3600; // Revalidar cada hora
 
 // Generar rutas estáticas para las secciones conocidas
 export function generateStaticParams() {
