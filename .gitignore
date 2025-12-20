@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -39,4 +39,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.history
+
+# IDE / Editor
+.history/
+.scannerwork/
+.vscode/
+*.swp
+*.swo
+
+# Firebase
+.firebase/
+firebase-debug.log*
+*.local
+
+# Functions build output
+functions/lib/
+
+# OS files
+Thumbs.db
+
+# Lighthouse/temp files
+C:\Users\*

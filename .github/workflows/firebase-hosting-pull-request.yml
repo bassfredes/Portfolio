@@ -17,14 +17,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch full history for gitleaks
+          fetch-depth: 0
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  eslint_security_scan: # Job renombrado y modificado
+  eslint_security_scan:
     name: ESLint Security Scan
     runs-on: ubuntu-latest
     steps:
@@ -34,7 +34,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # O la versión que uses en tu proyecto
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
@@ -42,8 +42,6 @@ jobs:
       
       - name: Run ESLint
         run: npx eslint . --ext .js,.jsx,.ts,.tsx --format stylish
-        # Opcional: si quieres que el workflow falle si ESLint encuentra errores:
-        # run: npx eslint . --ext .js,.jsx,.ts,.tsx --format stylish --max-warnings 0
 
   build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
@@ -58,20 +56,16 @@ jobs:
           node-version: '20'
           cache: 'npm'
       
-      - name: Clean install dependencies
+      - name: Install main dependencies
         run: npm ci
       
-      - name: Setup environment variables
+      - name: Setup environment variables for Next.js build
         run: |
-          echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> .env
-          echo "GMAIL_CLIENT_ID=${{ secrets.GMAIL_CLIENT_ID }}" >> .env
-          echo "GMAIL_CLIENT_SECRET=${{ secrets.GMAIL_CLIENT_SECRET }}" >> .env
-          echo "GMAIL_REFRESH_TOKEN=${{ secrets.GMAIL_REFRESH_TOKEN }}" >> .env
-          echo "RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}" >> .env
           echo "NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}" >> .env
           echo "NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }}" >> .env
+          echo "NEXT_PUBLIC_CONTACT_API_URL=https://us-east1-bassfredes-portfolio.cloudfunctions.net/contact" >> .env
       
-      - name: Build project
+      - name: Build Next.js static site
         run: npm run build
       
       - name: Deploy preview to Firebase Hosting
@@ -80,12 +74,9 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASSFREDES_PORTFOLIO }}
           projectId: bassfredes-portfolio
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks
       
       - name: Cleanup local artifacts
         if: always()
         run: |
-          rm -rf .next/cache
           rm -f .env
           echo "Temporary build artifacts cleaned up"

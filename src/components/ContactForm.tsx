@@ -12,6 +12,8 @@ declare global {
 }
 
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
+// En producción usa la Cloud Function, en desarrollo usa la API route local o emulador
+const CONTACT_API_URL = process.env.NEXT_PUBLIC_CONTACT_API_URL || "/api/contact";
 
 const ContactForm: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -37,7 +39,7 @@ const ContactForm: React.FC = () => {
     try {
       if (!window.grecaptcha) throw new Error("reCAPTCHA not loaded");
       const recaptchaToken = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "contact" });
-      const res = await fetch("/api/contact", {
+      const res = await fetch(CONTACT_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, recaptchaToken, formRenderTime }),

@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getSortedPostsData, getAllCategories, slugify } from '@/utils/posts';
 
-// Forzar generación estática y revalidación cada 24 horas
+// Forzar generación estática (se regenera solo en cada build/deploy)
 export const dynamic = 'force-static';
-export const revalidate = 86400; // 24 horas en segundos
+// Removido revalidate para compatibilidad con output: 'export'
 
 // Función para escapar caracteres especiales de XML y prevenir XSS
 function escapeXml(text: string): string {
